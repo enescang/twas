@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "630230388612",
+    "firebase_url": "https://twas-think-write-access.firebaseio.com",
+    "project_id": "twas-think-write-access",
+    "storage_bucket": "twas-think-write-access.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:630230388612:android:4e077411b9f7b412",
+        "android_client_info": {
+          "package_name": "com.friday.twas"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "630230388612-ebn6lgkipov8kkpjvrhqbk23oom2aptn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAX5fEpHVoCnlNKvp6ThQSfk7_UwpVMRIU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "630230388612-ebn6lgkipov8kkpjvrhqbk23oom2aptn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
