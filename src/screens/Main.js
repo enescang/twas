@@ -141,9 +141,14 @@ const styles = StyleSheet.create({
     margin: 2,
     width: Dimensions.get('window').width / 4 -6,
     height: 200,
+    borderWidth: 1,
+    borderColor: '#ddd',
+    shadowColor: 'black',
+    shadowOpacity: .2,
+    shadowRadius: 2,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: '#f1c40f'
+    backgroundColor: 'white'
   }
 })
 
