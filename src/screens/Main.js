@@ -71,7 +71,6 @@ return (
           return (
               
             <View key={index}>
-
      <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not)} underlayColor="white">
         
             <Text style={styles.itemtext}>{item.not}</Text>
@@ -84,8 +83,6 @@ return (
         })}
       </View>
  </ScrollView>
-
-
 
 
 
