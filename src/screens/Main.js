@@ -86,7 +86,7 @@ return (
  </ScrollView>
 
 
-
+<View style = {styles.footer}>
 
 
 
@@ -110,7 +110,7 @@ return (
         />
 
         
-
+</View>
       
 
       </View>
@@ -123,6 +123,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
     
+  },
+  footer :
+  {
+    
+    borderWidth: 1,
+    borderColor: '#ddd',
+    shadowColor: 'black',
+    shadowOpacity: .2,
+    shadowRadius: 2,
   },
 
   
@@ -139,7 +148,7 @@ const styles = StyleSheet.create({
   itemtext: {
     
     margin: 2,
-    width: Dimensions.get('window').width / 4 -6,
+    width: Dimensions.get('window').width / 2 -6,
     height: 200,
     borderWidth: 1,
     borderColor: '#ddd',
