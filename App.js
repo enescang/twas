@@ -22,8 +22,10 @@ const AppNavigator = createStackNavigator ({
   ItemComponent,
 },
 {
-  initialRouteName: 'Loading'
-}
+  initialRouteName: 'Loading',
+  headerLayoutPreset: 'center'
+},
+
 );
 
 const AppContainer = createAppContainer(AppNavigator);

@@ -1,9 +1,15 @@
 import React from 'react'
-import { StyleSheet, Platform, Image, Text, View, Button, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
+import { StyleSheet, Platform, Image, Text, View, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
 import PropTypes from 'prop-types';
 import firebase from 'react-native-firebase'
 import {NavigationActions} from 'react-navigation'
 import ItemComponent from '../components/ItemComponent'
+import {Button} from 'react-native-elements'
+import { Icon } from 'react-native-elements'
+
+
+
+
 
 
 export default class Main extends React.Component {
@@ -12,6 +18,7 @@ export default class Main extends React.Component {
 
   
 yonlendir = () =>{
+  
     this.props.navigation.navigate('Addnote');
     /*
     {this.state.items.length > 0 ? (
@@ -23,9 +30,9 @@ yonlendir = () =>{
 }
 
 
-_onPressButton=(itemq)=>{
-  /*alert(itemq)*/
-this.props.navigation.navigate('Show', { data: itemq });
+_onPressButton=(itemq, itemk)=>{
+  alert(itemq+itemk)
+/*this.props.navigation.navigate('Show', { data: itemq });*/
   }
 
   componentDidMount() {
@@ -69,10 +76,11 @@ return (
         {this.state.items.map((item, index) => { 
            
           return (
-              
-            <View key={index}>
+            
+            
 
-     <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not)} underlayColor="white">
+            <View key={index}>
+     <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not, item.refkey)} underlayColor="white">
         
             <Text style={styles.itemtext}>{item.not}</Text>
            
@@ -88,26 +96,36 @@ return (
 
 <View style = {styles.footer}>
 
-
-
-        <Text>
-          Hi WE ARE FRİDAY TEAM {currentUser && currentUser.email}!
+        <Text style={{color: 'purple', fontSize: 25, fontWeight: 'bold', height: 30,}}>
+          MERHABA HOŞGELDİNİZ. 
         </Text>
 
-        <Button 
-        title="Ekle"
+        <Text style={{color: 'black', fontSize: 15, height: 30,}}>
+          Not Eklemeye Başlayabilirsiniz.
+        </Text>
+
+        <View style={{ height: 65, marginTop: 0 }}>
+
+        <Button style={styles.kaydir}
+        
+        icon={<Icon name="add" size={30} color="white" />}
+
+        containerStyle={{ padding: 15, height: 110, width: 150, overflow: 'scroll', borderRadius: 4,  }} 
+        title="Not Ekle"
         onPress={this.yonlendir}
+
         />
+        </View>
+
 
         <Button 
+        icon={<Icon name="close" size={25} color="white" />}
+        containerStyle={{ padding: 8,}}
         title="Çıkış"
         onPress={this.cik}
         />    
 
-        <Button 
-        title="Göster"
-        onPress={this.readDataUser}
-        />
+       
 
         
 </View>
@@ -134,6 +152,12 @@ const styles = StyleSheet.create({
     shadowRadius: 2,
   },
 
+
+  kaydir: {
+    
+    
+    
+  },
   
   ScrollContainer:{
     flex: 1,
@@ -160,4 +184,5 @@ const styles = StyleSheet.create({
     backgroundColor: 'white'
   }
 })
+
 
