@@ -30,9 +30,9 @@ yonlendir = () =>{
 }
 
 
-_onPressButton=(itemq)=>{
-  /*alert(itemq)*/
-this.props.navigation.navigate('Show', { data: itemq });
+_onPressButton=(itemq, itemk)=>{
+  alert(itemq+itemk)
+/*this.props.navigation.navigate('Show', { data: itemq });*/
   }
 
   componentDidMount() {
@@ -80,7 +80,7 @@ return (
             
 
             <View key={index}>
-     <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not)} underlayColor="white">
+     <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not, item.refkey)} underlayColor="white">
         
             <Text style={styles.itemtext}>{item.not}</Text>
            

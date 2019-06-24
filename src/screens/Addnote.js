@@ -19,11 +19,14 @@ export default class Loading extends React.Component {
         const { currentUser } = firebase.auth();
         this.setState({ currentUser });
        const mail = currentUser.email;
-       const ref ="Users/"+currentUser.uid;
-        firebase.database().ref(ref).push({
+       const refkey= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+       const ref ="/Users/"+currentUser.uid+"/"+refkey;
+      
+        firebase.database().ref(ref).set({
             mail,
             noteTitle,
-            not
+            not,
+            refkey
         }).then((data)=>{
             //success callback
            alert("Başarılı");
@@ -49,13 +52,14 @@ export default class Loading extends React.Component {
         });
       }
        /* Auto Growing TextInput END */
+
        static navigationOptions = {
         title: 'Yeni Not Ekle',
         headerStyle: {
-        backgroundColor: '#f4511e', 
+        backgroundColor: '#f4511e'
         },
         headerTintColor: '#fff',
-       
+       /* header: null*/
       };
 
   render() {
@@ -64,7 +68,7 @@ export default class Loading extends React.Component {
     const {height} = this.state;
     let newStyle = {
       height,
-      backgroundColor: 'purple',
+      backgroundColor: 'white',
     }
     /* Auto change TextInput Size END */
 
