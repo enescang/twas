@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text, TextInput, View, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text,Image, TextInput, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
 
 
@@ -17,7 +17,7 @@ export default class SignUp extends React.Component {
     headerStyle: {
       backgroundColor: 'orange',
     },
-    
+    header:null
 
   /* render function, etc */
 }
@@ -25,11 +25,12 @@ render() {
     return (
       <View style={styles.container}>
         <View style = {styles.background}/>
+        <Image
+        style= {styles.image}
+          source={require('../../images/1561341823874.png')}
+        /> 
         
-        <View>
-          <Text style = {styles.logo}>Friday Team</Text>
-          <Text style = {styles.logoDescription}>Friday Team Twas Application</Text>
-        </View>
+       
        
         
           <View style = {styles.loginArea}>
@@ -85,6 +86,12 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     paddingVertical: 80,
   },
+  image: {
+    height: 350,
+    justifyContent: "center",    //  <-- you can use "center", "flex-start",
+    resizeMode: "contain",  
+    marginBottom: 80,           //      "flex-end" or "space-between" here
+  },
   tiklayazi : {
     fontWeight : '600'
   },
@@ -105,7 +112,8 @@ const styles = StyleSheet.create({
     color : '#999'
   },
   loginArea : {
-    marginTop : 10,
+    
+    marginTop : Dimensions.get('window').width / 2-350 ,
     marginHorizontal : 50,
     marginVertical: 40,
     backgroundColor : 'white',
@@ -118,6 +126,7 @@ const styles = StyleSheet.create({
     elevation : 4
   },
   background : {
+    
     position : 'absolute',
     top : 0,
     left : 0,
@@ -132,7 +141,8 @@ const styles = StyleSheet.create({
     paddingBottom: 50,
     fontSize : 40,
     fontWeight: 'bold',
-    color : 'white'
+    color : 'white',
+    marginTop : Dimensions.get('window').width / 2-250 
   },
   logoDescription : {
     
@@ -141,7 +151,8 @@ const styles = StyleSheet.create({
     top : 60,
     left : 12,
     textAlign : 'center',
-    color :'#999'
+    color :'#999',
+    marginTop : Dimensions.get('window').width / 2-248 
   },
   textInput: {
     height: 40,
