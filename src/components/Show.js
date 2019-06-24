@@ -3,11 +3,7 @@ import { StyleSheet, Platform, Image, Text, View, ScrollView } from 'react-nativ
 import { createStackNavigator, createAppContainer } from 'react-navigation';
  
 
-
 export default class Show extends React.Component {
-  
-
-
   render() {
     return (
            <Text>..{this.props.navigation.state.params.data}....jhgfd</Text>
