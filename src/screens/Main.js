@@ -94,7 +94,7 @@ return (
  </ScrollView>
 
 
-
+<View style = {styles.footer}>
 
         <Text style={{color: 'purple', fontSize: 25, fontWeight: 'bold', height: 30,}}>
           MERHABA HOŞGELDİNİZ. 
@@ -128,7 +128,7 @@ return (
        
 
         
-
+</View>
       
 
       </View>
@@ -141,6 +141,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center'
     
+  },
+  footer :
+  {
+    
+    borderWidth: 1,
+    borderColor: '#ddd',
+    shadowColor: 'black',
+    shadowOpacity: .2,
+    shadowRadius: 2,
   },
 
 
