@@ -16,8 +16,8 @@ export default class Loading extends React.Component {
         const { not }       = this.state;
         const { noteTitle } = this.state; /*24.06.2019 eklenme tarihi.*/
 
-        const { currentUser } = firebase.auth();
-        this.setState({ currentUser });
+       const { currentUser } = firebase.auth();
+       this.setState({ currentUser });
        const mail = currentUser.email;
        const refkey= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
        const ref ="/Users/"+currentUser.uid+"/"+refkey;
@@ -29,7 +29,8 @@ export default class Loading extends React.Component {
             refkey
         }).then((data)=>{
             //success callback
-           alert("Başarılı");
+           //alert("Başarılı");
+           this.props.navigation.navigate('Main');
         }).catch((error)=>{
             //error callback
             alert(error);
@@ -69,21 +70,25 @@ export default class Loading extends React.Component {
     let newStyle = {
       height,
       backgroundColor: 'white',
+      fontSize:18,
+      marginLeft:7
     }
     /* Auto change TextInput Size END */
 
     return (
       <View style={styles.container}>
-        <Text>Note Gir</Text>
-        
         <TextInput style={styles.notetitle}
         placeholder ="Not Başlığı....."
         editable = {true}
         maxLength = {50}
+        returnKeyType={"next"}
+        onSubmitEditing={() => { this.not.focus(); }}
+        autoFocus = {true}   
         onChangeText={(noteTitle) => this.setState({noteTitle})}
       />
 
         <TextInput style={[newStyle]}
+        ref={(input) => { this.not = input; }}
         multiline={true}
         placeholder ="Not gir"
         editable = {true}
@@ -93,24 +98,13 @@ export default class Loading extends React.Component {
       />
 
       <View style={styles.savecontainer}>
-        <Button style={styles.savebutton}
-        title="+"
-        onPress={this.git}
-        />
-
+       <TouchableOpacity style={styles.savebutton} onPress={this.git}>
+      <Text style={{textAlign:'center', fontSize:20}}>+</Text>
+       </TouchableOpacity>
         </View>
 
 
 </View>
-  
-
-
-        
-
-
-
-
-
     )
   }
 }
@@ -138,7 +132,9 @@ const styles = StyleSheet.create({
   },
 
   notetitle:{
-    fontSize:38
+    fontSize:30,
+    marginLeft:10,
+    fontWeight: 'bold'
   },
   
   savecontainer:{
@@ -151,8 +147,21 @@ const styles = StyleSheet.create({
   },
 
   savebutton:{
-    width:50,
-    marginRight:90
+    borderWidth:2,
+    width:80,
+    marginRight:90,
+    backgroundColor:'#fff', 
+    paddingVertical:15,
+    paddingHorizontal:20,
+    marginVertical:18,
+    borderRadius:15,
+    shadowColor:'black',
+    shadowOpacity:.8,
+    shadowRadius:3,
+    shadowOffset:{width:0, height:2},
+    elevation:4
+    
+
   }
 })
 
