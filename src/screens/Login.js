@@ -1,7 +1,7 @@
 import React from 'react'
 import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
-import MainService from '../services/mainservice';
+
 import * as Progress from 'react-native-progress';
 
 export default class Login extends React.Component {

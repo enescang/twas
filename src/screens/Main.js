@@ -110,7 +110,7 @@ return (
         <View style={styles.savecontainer}>
         <Button style={styles.savebutton}
         title="+"
-        onPress={this.git}
+        onPress={this.yonlendir}
         />
 
         </View>
