@@ -80,6 +80,7 @@ const styles = StyleSheet.create({
   },
   modulesHeader: {
     fontSize: 16,
+    
     marginBottom: 8,
   },
   module: {

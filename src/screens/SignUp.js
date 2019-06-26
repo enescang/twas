@@ -1,16 +1,80 @@
 import React from 'react'
-import { StyleSheet, Text,Image, TextInput, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
-
+import * as Progress from 'react-native-progress';
 
 export default class SignUp extends React.Component {
+
+  constructor(){
+    super();
+
+    this.state = {
+      kayitolBtn : 
+      {
+        marginVertical: 15,
+        paddingHorizontal : 25,
+        paddingVertical: 20,
+        backgroundColor : '#8c52ff',
+        borderRadius : 10,
+        alignItems : 'center',
+      },
+      kayitolProgress :{
+        alignItems : 'center',
+        width:0,
+        height:0,
+      }
+    };
+
+  }
+  
   state = { email: '', password: '', errorMessage: null }
   handleSignUp = () => {
+
+    this.setState(
+      {
+        kayitolBtn : {
+          display: 'none',
+          marginVertical: 15,
+          paddingHorizontal : 25,
+          paddingVertical: 20,
+          backgroundColor : '#8c52ff',
+          borderRadius : 10,
+          alignItems : 'center',
+        },
+        kayitolProgress :{   
+           width : 40,
+           height : 40,
+           marginTop : 15,
+           marginLeft: 90,
+        }
+      }
+    );
+ 
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('Main'))
-      .catch(error => this.setState({ errorMessage: error.message }))
+      .then(() => this.props.navigation.navigate('Login'))
+      .catch(error => this.setState(
+        { errorMessage: error.message,
+          kayitolBtn : {
+            marginVertical: 15,
+            paddingHorizontal : 25,
+            paddingVertical: 20,
+            backgroundColor : '#8c52ff',
+            borderRadius : 10,
+            alignItems : 'center',
+          },
+          kayitolProgress :{   
+             width : 0,
+             height : 0,
+             marginTop : 15,
+             marginLeft: 90,
+          }
+        
+        },
+        )
+      )
+      
   }
   static navigationOptions = {
     title: 'Home',
@@ -23,13 +87,15 @@ export default class SignUp extends React.Component {
 }
 render() {
     return (
+      
       <View style={styles.container}>
         <View style = {styles.background}/>
+        <View >
         <Image
         style= {styles.image}
-          source={require('../../images/1561341823874.png')}
+          source={require('../../images/twas3.png')}
         /> 
-        
+        </View>
        
        
         
@@ -59,22 +125,46 @@ render() {
           returnKeyType = {"go"}
           ref = {(input) => this.passwordInput = input}
         />
+       
         <View>
-        <TouchableOpacity style = {styles.butonlar1} onPress={this.handleSignUp}>
-          <Text style = {this.tiklayazi}>Tıkla</Text>
-        </TouchableOpacity>
         
-        </View>
+
+        <TouchableOpacity style = {this.state.kayitolBtn} onPress={this.handleSignUp}>
+    <Text style = {{color: 'white'}}>Kayıt Ol</Text>
+          
+        </TouchableOpacity>
+        <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/>
+
+        
+        
+        
+        </View> 
         
         
         
       </View>
-      <Text>Henüz Hesabın Yok mu?</Text>
+      <Text>Hesabın Varmı?</Text>
       <TouchableOpacity style = {styles.butonlar2} onPress={() => this.props.navigation.navigate('Login')}>
-          <Text>Kayıt Ol</Text>
+          <Text>Giriş Yap</Text>
         </TouchableOpacity>
+        <View style= {styles.imageFacebook1}>
+        <Image
+        style= {styles.imageFacebook}
+          source={require('../../images/facebook.png')}
+        />
+        <Image
+        style= {styles.imageFacebook2}
+          source={require('../../images/twitter.png')}
+        />  
+        
+        <Image
+         style= {styles.imageFacebook}
+        source={require('../../images/instagram.png')}
+      />  
+      </View>
         
       </View>
+      
       
     )
   }
@@ -85,15 +175,40 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     paddingVertical: 80,
+    backgroundColor : '#FBFBFB'
+  },
+  imageFacebook1 : 
+  {
+    
+   
+   flexDirection: 'row',
+   justifyContent: 'space-between',
+  },
+  imageFacebook : {
+   // marginRight: 120,
+   
+   flexDirection: 'row',
+   
+   padding : 1,
+    width : 40,
+    height : 40,
+  },
+  imageFacebook2 : {
+    width : 45,
+    height : 45,
   },
   image: {
-    height: 350,
-    justifyContent: "center",    //  <-- you can use "center", "flex-start",
-    resizeMode: "contain",  
-    marginBottom: 80,           //      "flex-end" or "space-between" here
+    width : 500,
+    height : 300,
+    marginBottom : '50%'
+    
+
+       
+
   },
   tiklayazi : {
-    fontWeight : '600'
+    fontWeight : '600',
+    color : 'white'
   },
   kayitOl : {
     fontWeight :'600'
@@ -103,7 +218,7 @@ const styles = StyleSheet.create({
     marginVertical: 15,
     paddingHorizontal : 25,
     paddingVertical: 20,
-    backgroundColor : 'orange',
+    backgroundColor : '#8c52ff',
     borderRadius : 10,
     alignItems : 'center',
     
@@ -113,7 +228,7 @@ const styles = StyleSheet.create({
   },
   loginArea : {
     
-    marginTop : Dimensions.get('window').width / 2-350 ,
+    marginTop : Dimensions.get('window').width / 2-450 ,
     marginHorizontal : 50,
     marginVertical: 40,
     backgroundColor : 'white',
@@ -132,18 +247,11 @@ const styles = StyleSheet.create({
     left : 0,
     height : 250,
     width : '100%',
-    backgroundColor : 'orange',
-    paddingVertical : 80
+    backgroundColor : '#f4f1f1',
+    paddingVertical : 80,
+    
   },
-  logo : {
-  
-    textAlign : 'center',
-    paddingBottom: 50,
-    fontSize : 40,
-    fontWeight: 'bold',
-    color : 'white',
-    marginTop : Dimensions.get('window').width / 2-250 
-  },
+ 
   logoDescription : {
     
     fontSize : 15,
