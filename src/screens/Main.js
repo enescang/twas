@@ -13,7 +13,7 @@ export default class Main extends React.Component {
 
 
   
-  yonlendir = () => {
+  git = () => {
   
       this.props.navigation.navigate('Addnote');
       /*
