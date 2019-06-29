@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator,Linking, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
 
 import * as Progress from 'react-native-progress';
@@ -24,11 +24,27 @@ export default class Login extends React.Component {
         height:0,
       }
     };
-
   }
+
+  //Url açma fonksiyonu
+  openUrl = (url) =>{
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        alert("url açılamıyor.");
+      }
+    });
+  }
+  //Url açma fonksiyonu
+
+
+
   
-  state = { email: '', password: '', errorMessage: null }
+  state = { email: 'ml', password: '', errorMessage: null }
   handleLogin = () => {
+    const { email, password } = this.state
+   
     this.setState(
       {
         kayitolBtn : {
@@ -48,10 +64,10 @@ export default class Login extends React.Component {
         }
       }
     );
-    const { email, password } = this.state
+   
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.trim(), password) //trim() fonksiyonu email için boşluk oluştuğunda onu kesiyor. @canesnet
       .then(() => this.props.navigation.navigate('Main'))
       .catch(error => this.setState(
         { errorMessage: error.message,
@@ -73,7 +89,6 @@ export default class Login extends React.Component {
         },
         )
       )
-      
   }
   static navigationOptions = {
     title: 'Home',
@@ -90,11 +105,12 @@ export default class Login extends React.Component {
       <View style={styles.container}>
         <View style = {styles.background}/>
         <View >
-        <Image
+
+          <Image
         style= {styles.image}
           source={require('../../images/twas3.png')}
         /> 
-        </View>
+     </View>
        
        
         
@@ -142,19 +158,29 @@ export default class Login extends React.Component {
           <Text>Kayıt Ol</Text>
         </TouchableOpacity>
         <View style= {styles.imageFacebook1}>
+
+          <TouchableOpacity onPress={this.openUrl.bind(this, "https://facebook.com/fridayteam23")}>
         <Image
         style= {styles.imageFacebook}
           source={require('../../images/facebook.png')}
-        />
+        /> 
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.openUrl.bind(this, "https://twitter.com/fridayteam23")}>
         <Image
         style= {styles.imageFacebook2}
           source={require('../../images/twitter.png')}
         />  
+        </TouchableOpacity>
         
+        <TouchableOpacity onPress={this.openUrl.bind(this, "https://instagram.com/fridayteam23")}>
         <Image
          style= {styles.imageFacebook}
         source={require('../../images/instagram.png')}
       />  
+      </TouchableOpacity>
+
+
       </View>
         
       </View>
