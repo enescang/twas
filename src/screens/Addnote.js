@@ -86,7 +86,8 @@ export default class Loading extends React.Component {
         autoFocus = {true}   
         onChangeText={(noteTitle) => this.setState({noteTitle})}
       />
-
+  <View style={{borderBottomColor:'gray',
+  borderBottomWidth:1,}} />
         <TextInput style={[newStyle]}
         ref={(input) => { this.not = input; }}
         multiline={true}
