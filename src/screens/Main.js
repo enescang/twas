@@ -27,8 +27,7 @@ export default class Main extends React.Component {
 
 
   _onPressButton=(itemq, itemk)=>{
-      
-      this.props.navigation.navigate('Show', { data: itemq, notkey: itemq });
+      this.props.navigation.navigate('Show', { data: itemq, notkey: itemk });
   }
 
 
@@ -99,6 +98,8 @@ export default class Main extends React.Component {
           title="+"
           onPress={this.git}
       />
+
+
     </View>
   </View>
 

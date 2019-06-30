@@ -1,13 +1,11 @@
 import React from 'react'
 import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator,Linking, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
-import firebase from 'react-native-firebase'
-
+import firebase from 'react-native-firebase';
 import * as Progress from 'react-native-progress';
 
 export default class Login extends React.Component {
   constructor(){
     super();
-
     this.state = {
       kayitolBtn : 
       {
@@ -38,7 +36,7 @@ export default class Login extends React.Component {
   }
   //Url açma fonksiyonu
 
-
+ 
 
   
   state = { email: 'ml', password: '', errorMessage: null }
@@ -61,7 +59,9 @@ export default class Login extends React.Component {
            height : 40,
            marginTop : 15,
            marginLeft: 90,
-        }
+        },
+        text:'',
+        visible:false,
       }
     );
    
@@ -86,7 +86,7 @@ export default class Login extends React.Component {
              marginLeft: 90,
           }
         
-        },
+        }
         )
       )
   }
@@ -123,7 +123,7 @@ export default class Login extends React.Component {
         <TextInput
           placeholder="Mail Adresi"
           autoCapitalize="none"
-          style={styles.textInput}
+          style={styles.textInput} 
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
           returnKeyType = {"next"}
@@ -146,8 +146,12 @@ export default class Login extends React.Component {
     <Text style = {{color: 'white'}}>Giriş</Text>
           
         </TouchableOpacity>
-        <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/>
-        
+          <Button
+            title="Şifremi Unuttum"
+            onPress={()=> this.props.navigation.navigate('Forgotpassword')}
+            style={styles.forgetpassword}
+          />
+    <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/> 
         </View>
 
         
@@ -211,7 +215,7 @@ const styles = StyleSheet.create({
    
    padding : 1,
     width : 40,
-    height : 40,
+    height : 40, 
   },
   imageFacebook2 : {
     width : 45,
@@ -221,10 +225,6 @@ const styles = StyleSheet.create({
     width : 500,
     height : 300,
     marginBottom : '50%'
-    
-
-       
-
   },
   tiklayazi : {
     fontWeight : '600',
@@ -294,5 +294,10 @@ const styles = StyleSheet.create({
     
     width: 220,
     marginTop: 8
+  },
+
+  forgetpassword:{
+    alignItems:'center',
+    marginLeft:55,
   }
 })
