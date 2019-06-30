@@ -3,6 +3,7 @@ import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Im
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
+import { Icon } from 'react-native-elements';
 
 export default class Loading extends React.Component {
   state = { not: '', 
@@ -100,7 +101,11 @@ export default class Loading extends React.Component {
 
       <View style={styles.savecontainer}>
        <TouchableOpacity style={styles.savebutton} onPress={this.git}>
-      <Text style={{textAlign:'center', fontSize:20}}>+</Text>
+      <Icon
+        name="check"
+        color="#db3434"
+        size={25}
+      />
        </TouchableOpacity>
         </View>
 
