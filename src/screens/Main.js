@@ -27,8 +27,8 @@ export default class Main extends React.Component {
 
 
   _onPressButton=(itemq, itemk)=>{
-      alert(itemq+itemk)
-      /*this.props.navigation.navigate('Show', { data: itemq });*/
+      
+      this.props.navigation.navigate('Show', { data: itemq, notkey: itemq });
   }
 
 
