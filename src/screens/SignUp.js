@@ -28,6 +28,27 @@ export default class SignUp extends React.Component {
   }
   
   state = { email: '', password: '', errorMessage: null }
+
+  makeSignUp=()=>{
+    const id =10000;
+    const { currentUser } = firebase.auth();
+    const refkey= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+    const ref ="/LastId/"+currentUser.uid;
+    const mail = this.state.email;
+    firebase.database().ref(ref).set({
+      mail, 
+      id,
+      refkey
+    }).then((data)=>{
+        //success callback
+       //alert("Başarılı");
+       this.props.navigation.navigate('Main');
+    }).catch((error)=>{
+        //error callback
+        alert(error);
+    })
+  }
   handleSignUp = () => {
 
     this.setState(
@@ -53,7 +74,7 @@ export default class SignUp extends React.Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('Login'))
+      .then(this.makeSignUp)
       .catch(error => this.setState(
         { errorMessage: error.message,
           kayitolBtn : {

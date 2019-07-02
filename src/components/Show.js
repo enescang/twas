@@ -2,7 +2,7 @@ import React from 'react';
 import { StyleSheet, Platform, Image, Text, View, ScrollView, TextInput } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Button } from 'react-native-elements';
- import firebase from 'react-native-firebase';
+import firebase from 'react-native-firebase';
 
 export default class Show extends React.Component {
   state = { not: this.props.navigation.state.params.data, 

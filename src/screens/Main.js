@@ -9,13 +9,13 @@ import { Icon } from 'react-native-elements'
 
 
 export default class Main extends React.Component {
-    state = { currentUser: null , items : [], son: []}
+    state = { currentUser: null , items : [], son: [], numChild:null}
 
 
   
   git = () => {
   
-      this.props.navigation.navigate('Addnote');
+      this.props.navigation.navigate('Addnote', {num:this.state.numChild});
       /*
       {this.state.items.length > 0 ? (
         <ItemComponent items={this.state.items} />
@@ -26,8 +26,8 @@ export default class Main extends React.Component {
   }
 
 
-  _onPressButton=(itemq, itemk)=>{
-      this.props.navigation.navigate('Show', { data: itemq, notkey: itemk });
+  _onPressButton=(itemq, itemk, num)=>{
+      this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, num:num });
   }
 
 
@@ -35,13 +35,17 @@ export default class Main extends React.Component {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
     const referans = "/Users/"+currentUser.uid;
-    firebase.database().ref(referans).limitToFirst(1000).on('value', snapshot => {
+    firebase.database().ref(referans).orderByKey().limitToLast(10).on('value', snapshot => {
 
       snapshot.forEach((child) => {
 
         let data = snapshot.val();
         let items = Object.values(data);
         this.setState({ items });
+
+       //   const numChild = snapshot.numChildren();
+        //  this.setState({ numChild });
+      //  alert(snapshot.numChildren());
 
         let key = child.key;
         let son = Object.values(key);
@@ -72,7 +76,7 @@ export default class Main extends React.Component {
             return (  
               <View key={index}>
                 <TouchableOpacity onPress={this._onPressButton.bind(this, item.not, item.refkey)} underlayColor="white">
-                  <Text style={styles.itemtext}>{item.not}</Text>
+                  <Text style={styles.itemtext}>{item.yazid}....=>{item.not}</Text>
                 </TouchableOpacity>
               </View>
             );

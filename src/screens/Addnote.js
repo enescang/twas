@@ -10,7 +10,43 @@ export default class Loading extends React.Component {
   currentUser : null,
   newValue: 'qwertw',
   height: 10,
-  noteTitle:''}
+  noteTitle:'',
+  date:'',
+  id:1,
+  lastId:1,
+  items:[],
+  howmany:5}
+
+//
+
+componentDidMount=()=>{
+  const { currentUser } = firebase.auth();
+  this.setState({ currentUser });
+  const updateref= "/LastId/"+currentUser.uid;
+
+  firebase.database().ref(updateref).on('value', snapshot => {
+    snapshot.forEach((child) => {
+      let data = snapshot.val();
+      let items = Object.values(data);
+      this.setState({ items });
+
+        const howmany = snapshot.val().id;
+        this.setState({ howmany });
+    ///  alert(snapshot.val().id);
+  })
+  });
+
+//alert(this.state.howmany)
+
+}
+
+///
+
+
+
+
+
+
 
   /* Gelen verileri firebase'e kaydetme START */
        git = () =>{
@@ -20,17 +56,42 @@ export default class Loading extends React.Component {
        const { currentUser } = firebase.auth();
        this.setState({ currentUser });
        const mail = currentUser.email;
-       const refkey= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
-       const ref ="/Users/"+currentUser.uid+"/"+refkey;
+       const random= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       
+       const refkey =this.state.howmany-1;
+      const ref ="/Users/"+currentUser.uid+"/"+refkey;
+      const tarih =firebase.database.ServerValue.TIMESTAMP;
+
+      //  const referans ="/LastId/"+currentUser.uid;
+      //  const yazid = 0;
+    
+
+  const updateref= "/LastId/"+currentUser.uid;
+    
+      const yazid = this.state.howmany-1;
         firebase.database().ref(ref).set({
             mail,
             noteTitle,
             not,
-            refkey
+            refkey,
+            yazid,
         }).then((data)=>{
             //success callback
            //alert("Başarılı");
+
+           firebase.database().ref(updateref).update({
+            id:this.state.howmany-1
+        }).then((data)=>{
+            //success callback
+          // alert("Başarılı");
+        }).catch((error)=>{
+            //error callback
+            alert(error);
+        })
+
+
+
+
            this.props.navigation.navigate('Main');
         }).catch((error)=>{
             //error callback
@@ -40,13 +101,13 @@ export default class Loading extends React.Component {
   /* Gelen verileri firebase'e kaydetme END */
 
 
-
       username = () =>{
         const { currentUser } = firebase.auth()
         this.setState({ currentUser })
 
         alert(currentUser.uid);
       }
+
       /*Auto Growing Text Input START */
       updateSize = (height) => {
         this.setState({
@@ -54,6 +115,22 @@ export default class Loading extends React.Component {
         });
       }
        /* Auto Growing TextInput END */
+
+
+       componentDidMount() {
+        var that = this;
+        var date = new Date().getDate(); //Current Date
+        var month = new Date().getMonth() + 1; //Current Month
+        var year = new Date().getFullYear(); //Current Year
+        var hours = new Date().getHours(); //Current Hours
+        var min = new Date().getMinutes(); //Current Minutes
+        var sec = new Date().getSeconds(); //Current Seconds
+        that.setState({
+          //Setting the value of the date time
+          date:
+            date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
+        });
+      }
 
        static navigationOptions = {
         title: 'Yeni Not Ekle',
@@ -78,13 +155,14 @@ export default class Loading extends React.Component {
 
     return (
       <View style={styles.container}>
+        
         <TextInput style={styles.notetitle}
         placeholder ="Not Başlığı....."
         editable = {true}
         maxLength = {50}
         returnKeyType={"next"}
         onSubmitEditing={() => { this.not.focus(); }}
-        autoFocus = {true}   
+     //   autoFocus = {true}   
         onChangeText={(noteTitle) => this.setState({noteTitle})}
       />
   <View style={{borderBottomColor:'gray',
@@ -102,12 +180,27 @@ export default class Loading extends React.Component {
       <View style={styles.savecontainer}>
        <TouchableOpacity style={styles.savebutton} onPress={this.git}>
       <Icon
-        name="check"
+        name="toys"
         color="#db3434"
         size={25}
       />
        </TouchableOpacity>
+
+
+
+
+
+       
+
+
+
+       <Button
+       title="Bilal bas"
+        onPress={this.lastid}
+        />
+    <Text>{this.state.date}  </Text>
         </View>
+       
 
 
 </View>
@@ -166,8 +259,21 @@ const styles = StyleSheet.create({
     shadowRadius:3,
     shadowOffset:{width:0, height:2},
     elevation:4
-    
-
+  },
+  savebutton:{
+    borderWidth:2,
+    width:80,
+    marginRight:150,
+    backgroundColor:'#fff', 
+    paddingVertical:15,
+    paddingHorizontal:20,
+    marginVertical:18,
+    borderRadius:15,
+    shadowColor:'black',
+    shadowOpacity:.8,
+    shadowRadius:3,
+    shadowOffset:{width:0, height:2},
+    elevation:4
   }
 })
 
