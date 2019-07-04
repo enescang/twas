@@ -2,11 +2,18 @@ import React from 'react';
 import { StyleSheet, Platform, Image, Text, View, ScrollView, TextInput } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Button } from 'react-native-elements';
+
+import InputScrollView from 'react-native-input-scroll-view';
+
 import firebase from 'react-native-firebase';
 
 export default class Show extends React.Component {
   state = { not: this.props.navigation.state.params.data, 
-  currentUser : null}
+  currentUser : null,
+  text: '',
+  textareaHeight: null,
+
+}
   update = () =>{
     const { not }       = this.state;
     const { noteTitle } = this.state; /*24.06.2019 eklenme tarihi.*/
@@ -29,9 +36,13 @@ export default class Show extends React.Component {
 }
 
 
-
+_onContentSizeChange = ({nativeEvent:event}) => {
+  this.setState({ textareaHeight: event.contentSize.height });
+};
   render() {
+    const { text, textareaHeight } = this.state;
     return (
+
       <View>
   
            <Text>..{this.props.navigation.state.params.data}....jhgfd</Text>
@@ -40,20 +51,41 @@ export default class Show extends React.Component {
            <TextInput style={styles.notetitle}
         placeholder ="Not Başlığı....."
         editable = {true}
-        maxLength = {50}
+        maxLength = {5000}
         autoFocus = {true}   
         multiline={true}
         onChangeText={(not) => this.setState({not})}
         value={this.state.not}
-       
       />
+            <InputScrollView> 
+            <View>
+            <TextInput style={{ height: textareaHeight, backgroundColor:'#db3434' }}
+                       value={text}
+                       onChangeText={text => this.setState({ text })}
+                       onContentSizeChange={this._onContentSizeChange}
+                       multiline={true} />
+                       
+         
+                       </View>
 
-
-           <Button style={styles.savebutton}
+      	</InputScrollView>
+        
+        <View style={{position: 'absolute', top: 550, left: 0, right: 0, bottom: 0, justifyContent: 'center', alignItems: 'center'}}>
+                       <Button 
            title="+"
            onPress={this.update}
            />
+
+                       </View>
+<Text>askdas hdıadıasjdıjaısdss</Text>
+
+
+    
+         
+      
+
            </View>
+           
 
     );
   }

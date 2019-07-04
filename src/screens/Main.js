@@ -35,7 +35,7 @@ export default class Main extends React.Component {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
     const referans = "/Users/"+currentUser.uid;
-    firebase.database().ref(referans).orderByKey().limitToLast(10).on('value', snapshot => {
+    firebase.database().ref(referans).orderByKey().limitToLast(10000).on('value', snapshot => {
 
       snapshot.forEach((child) => {
 

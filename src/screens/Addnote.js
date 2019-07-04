@@ -15,10 +15,12 @@ export default class Loading extends React.Component {
   id:1,
   lastId:1,
   items:[],
-  howmany:5}
+  howmany:5,
+  noteBgColor:'white'}
+
+
 
 //
-
 componentDidMount=()=>{
   const { currentUser } = firebase.auth();
   this.setState({ currentUser });
@@ -26,9 +28,9 @@ componentDidMount=()=>{
 
   firebase.database().ref(updateref).on('value', snapshot => {
     snapshot.forEach((child) => {
-      let data = snapshot.val();
-      let items = Object.values(data);
-      this.setState({ items });
+  //    let data = snapshot.val();
+    //  let items = Object.values(data);
+    //  this.setState({ items });
 
         const howmany = snapshot.val().id;
         this.setState({ howmany });
@@ -37,15 +39,9 @@ componentDidMount=()=>{
   });
 
 //alert(this.state.howmany)
-
 }
 
 ///
-
-
-
-
-
 
 
   /* Gelen verileri firebase'e kaydetme START */
@@ -59,14 +55,14 @@ componentDidMount=()=>{
        const random= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
       
        const refkey =this.state.howmany-1;
-      const ref ="/Users/"+currentUser.uid+"/"+refkey;
-      const tarih =firebase.database.ServerValue.TIMESTAMP;
+       const ref ="/Users/"+currentUser.uid+"/"+refkey;
+       const tarih =firebase.database.ServerValue.TIMESTAMP;
 
       //  const referans ="/LastId/"+currentUser.uid;
       //  const yazid = 0;
     
-
-  const updateref= "/LastId/"+currentUser.uid;
+          //Notları listelemek için tuttuğumuz LastId için ref
+        const updateref= "/LastId/"+currentUser.uid;
     
       const yazid = this.state.howmany-1;
         firebase.database().ref(ref).set({
@@ -76,26 +72,21 @@ componentDidMount=()=>{
             refkey,
             yazid,
         }).then((data)=>{
-            //success callback
-           //alert("Başarılı");
 
-           firebase.database().ref(updateref).update({
+          //Eğer notu kaydederse notu listelemek için firebase üzerinde LastId ile
+          //id tutup teker teker azaltıyoruz
+         firebase.database().ref(updateref).update({
             id:this.state.howmany-1
         }).then((data)=>{
-            //success callback
-          // alert("Başarılı");
+          //if it is success
         }).catch((error)=>{
             //error callback
-            alert(error);
+            console.log(error);
         })
-
-
-
-
            this.props.navigation.navigate('Main');
         }).catch((error)=>{
             //error callback
-            alert(error);
+            console.log(error);
         })
     }
   /* Gelen verileri firebase'e kaydetme END */
@@ -115,24 +106,9 @@ componentDidMount=()=>{
         });
       }
        /* Auto Growing TextInput END */
-
-
-       componentDidMount() {
-        var that = this;
-        var date = new Date().getDate(); //Current Date
-        var month = new Date().getMonth() + 1; //Current Month
-        var year = new Date().getFullYear(); //Current Year
-        var hours = new Date().getHours(); //Current Hours
-        var min = new Date().getMinutes(); //Current Minutes
-        var sec = new Date().getSeconds(); //Current Seconds
-        that.setState({
-          //Setting the value of the date time
-          date:
-            date + '/' + month + '/' + year + ' ' + hours + ':' + min + ':' + sec,
-        });
-      }
-
+       
        static navigationOptions = {
+         
         title: 'Yeni Not Ekle',
         headerStyle: {
         backgroundColor: '#f4511e'
@@ -147,14 +123,15 @@ componentDidMount=()=>{
     const {height} = this.state;
     let newStyle = {
       height,
-      backgroundColor: 'white',
+     // backgroundColor: 'white',
       fontSize:18,
       marginLeft:7
     }
     /* Auto change TextInput Size END */
 
     return (
-      <View style={styles.container}>
+      <View style={{  flex: 1,
+        backgroundColor:this.state.noteBgColor}}>
         
         <TextInput style={styles.notetitle}
         placeholder ="Not Başlığı....."
@@ -167,12 +144,17 @@ componentDidMount=()=>{
       />
   <View style={{borderBottomColor:'gray',
   borderBottomWidth:1,}} />
+
         <TextInput style={[newStyle]}
         ref={(input) => { this.not = input; }}
         multiline={true}
         placeholder ="Not gir"
         editable = {true}
-        maxLength = {500}
+        maxLength = {5000}
+
+        autoCorrect={false}
+        autoCapitalize={'none'}
+
         onChangeText={(not) => this.setState({not})}
         onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
       />
@@ -186,20 +168,31 @@ componentDidMount=()=>{
       />
        </TouchableOpacity>
 
-
-
-
-
-       
-
-
-
-       <Button
-       title="Bilal bas"
-        onPress={this.lastid}
-        />
-    <Text>{this.state.date}  </Text>
         </View>
+
+        <View style={{ flexDirection: 'row', backgroundColor:'white', borderColor:'white', borderWidth:2, zIndex:50}}>
+          {/*
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#e38923'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#e38923'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#72e0d9'}) } ><View style={{borderRadius:600, width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#72e0d9'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#ffffb3'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#ffffb3'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f9ddd6'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f9ddd6'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#92374d'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#92374d'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f6aa1c'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f6aa1c'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14e2af'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14e2af'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
+          */}
+
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#e38923'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#e38923'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#72e0d9'}) } ><View style={{ width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#72e0d9'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#ffffb3'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#ffffb3'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f9ddd6'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f9ddd6'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#92374d'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#92374d'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f6aa1c'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f6aa1c'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14e2af'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14e2af'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
+
+    
+      </View>
        
 
 
@@ -226,9 +219,7 @@ const styles = StyleSheet.create({
     width :280
      
   },
-  container: {
-    flex: 1,
-  },
+
 
   notetitle:{
     fontSize:30,
@@ -239,7 +230,7 @@ const styles = StyleSheet.create({
   savecontainer:{
     flex: 1,
     justifyContent: 'flex-end',
-    marginBottom: 20,
+    marginBottom: 1,
     width:80,
     marginLeft: Dimensions.get('window').width / 2-40 ,
 
@@ -249,21 +240,6 @@ const styles = StyleSheet.create({
     borderWidth:2,
     width:80,
     marginRight:90,
-    backgroundColor:'#fff', 
-    paddingVertical:15,
-    paddingHorizontal:20,
-    marginVertical:18,
-    borderRadius:15,
-    shadowColor:'black',
-    shadowOpacity:.8,
-    shadowRadius:3,
-    shadowOffset:{width:0, height:2},
-    elevation:4
-  },
-  savebutton:{
-    borderWidth:2,
-    width:80,
-    marginRight:150,
     backgroundColor:'#fff', 
     paddingVertical:15,
     paddingHorizontal:20,
