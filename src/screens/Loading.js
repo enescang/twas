@@ -13,7 +13,7 @@ export default class Loading extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <Text>Az bekle şimdi geliyor</Text>
+        <Text>{" "}Sometimes you always wait, and nothing will be happened. Like this...</Text>
         <ActivityIndicator size="large" />
       </View>
     )

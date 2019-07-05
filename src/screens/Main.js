@@ -85,14 +85,13 @@ export default class Main extends React.Component {
                    //shadowColor: 'black',
                    //shadowOpacity: .2,
                   // shadowRadius: 2,
-                   justifyContent: 'center',
-                   alignItems: 'center',
+                  borderRadius:10,
                    color:'black',
                    backgroundColor: item.noteBgColor}}> 
-                   <Text style={{fontWeight:'bold'}}>{item.noteTitle}{"\n"}</Text>
+                   <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{"\n"}</Text>
                   
                    
-                   {item.not}</Text>
+                  {" "} {item.not}</Text>
                 </TouchableOpacity>
               </View>
             );

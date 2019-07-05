@@ -168,7 +168,8 @@ componentDidMount=()=>{
       <View style={styles.savecontainer}>
        <TouchableOpacity style={styles.savebutton} onPress={this.git}>
       <Icon
-        name="toys"
+        name="create"
+        type='material'
         color="#db3434"
         size={25}
       />
@@ -188,12 +189,12 @@ componentDidMount=()=>{
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
           */}
 
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#e38923'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#e38923'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#72e0d9'}) } ><View style={{ width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#72e0d9'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f6aa1c'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f6aa1c'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#72e0d9'}) } ><View style={{ width: Dimensions.get('window').width / 8, height: 50, backgroundColor:'#72e0d9'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#ffffb3'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#ffffb3'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f9ddd6'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f9ddd6'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#92374d'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#92374d'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f6aa1c'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f6aa1c'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#fff'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50,    backgroundColor: '#fff'   }} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14e2af'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14e2af'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
 
