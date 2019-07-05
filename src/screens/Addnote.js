@@ -155,7 +155,7 @@ componentDidMount=()=>{
 
 <ScrollView>
             <InputScrollView>        
-            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500 }}
+            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:20 }}
                        value={this.state.not}
                        placeholder={"Not Gir"}
                        ref={(input) => { this.not = input; }}
