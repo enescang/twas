@@ -1,14 +1,15 @@
 import React from 'react'
-import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image, Dimensions } from 'react-native'
+import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements';
+import InputScrollView from 'react-native-input-scroll-view';
 
 export default class Loading extends React.Component {
   state = { not: '', 
   currentUser : null,
-  newValue: 'qwertw',
+  textareaHeight:null,
   height: 10,
   noteTitle:'',
   date:'',
@@ -57,6 +58,7 @@ componentDidMount=()=>{
        const refkey =this.state.howmany-1;
        const ref ="/Users/"+currentUser.uid+"/"+refkey;
        const tarih =firebase.database.ServerValue.TIMESTAMP;
+       const noteBgColor = this.state.noteBgColor;
 
       //  const referans ="/LastId/"+currentUser.uid;
       //  const yazid = 0;
@@ -69,7 +71,7 @@ componentDidMount=()=>{
             mail,
             noteTitle,
             not,
-            refkey,
+            noteBgColor,
             yazid,
         }).then((data)=>{
 
@@ -117,8 +119,12 @@ componentDidMount=()=>{
        /* header: null*/
       };
 
-  render() {
+      _onContentSizeChange = ({nativeEvent:event}) => {
+        this.setState({ textareaHeight: event.contentSize.height });
+      };
 
+  render() {
+    const { text, textareaHeight } = this.state;
     /* Auto change TextInput Size START */
     const {height} = this.state;
     let newStyle = {
@@ -145,19 +151,19 @@ componentDidMount=()=>{
   <View style={{borderBottomColor:'gray',
   borderBottomWidth:1,}} />
 
-        <TextInput style={[newStyle]}
-        ref={(input) => { this.not = input; }}
-        multiline={true}
-        placeholder ="Not gir"
-        editable = {true}
-        maxLength = {5000}
+   
 
-        autoCorrect={false}
-        autoCapitalize={'none'}
-
-        onChangeText={(not) => this.setState({not})}
-        onContentSizeChange={(e) => this.updateSize(e.nativeEvent.contentSize.height)}
-      />
+<ScrollView>
+            <InputScrollView>        
+            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500 }}
+                       value={this.state.not}
+                       placeholder={"Not Gir"}
+                       ref={(input) => { this.not = input; }}
+                       onChangeText={not => this.setState({ not })}
+                       onContentSizeChange={this._onContentSizeChange}
+                       multiline={true} />
+      	</InputScrollView>
+        </ScrollView>
 
       <View style={styles.savecontainer}>
        <TouchableOpacity style={styles.savebutton} onPress={this.git}>
@@ -228,8 +234,6 @@ const styles = StyleSheet.create({
   },
   
   savecontainer:{
-    flex: 1,
-    justifyContent: 'flex-end',
     marginBottom: 1,
     width:80,
     marginLeft: Dimensions.get('window').width / 2-40 ,

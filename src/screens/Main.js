@@ -26,8 +26,8 @@ export default class Main extends React.Component {
   }
 
 
-  _onPressButton=(itemq, itemk, num)=>{
-      this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, num:num });
+  _onPressButton=(itemq, itemk, itemc, itemt)=>{
+      this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, noteBgColor:itemc, noteTitle:itemt});
   }
 
 
@@ -74,9 +74,25 @@ export default class Main extends React.Component {
           {this.state.items.map((item, index) => {
           
             return (  
-              <View key={index}>
-                <TouchableOpacity onPress={this._onPressButton.bind(this, item.not, item.refkey)} underlayColor="white">
-                  <Text style={styles.itemtext}>{item.yazid}....=>{item.not}</Text>
+              <View  key={index}>
+                <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
+                
+                  <Text style={{  margin: 3,
+                   width: Dimensions.get('window').width / 2 -10,
+                   height: 200,
+                   borderWidth: 0.9,
+                   borderColor: '#ddd',
+                   //shadowColor: 'black',
+                   //shadowOpacity: .2,
+                  // shadowRadius: 2,
+                   justifyContent: 'center',
+                   alignItems: 'center',
+                   color:'black',
+                   backgroundColor: item.noteBgColor}}> 
+                   <Text style={{fontWeight:'bold'}}>{item.noteTitle}{"\n"}</Text>
+                  
+                   
+                   {item.not}</Text>
                 </TouchableOpacity>
               </View>
             );
