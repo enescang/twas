@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Platform, Image, Text, View, ScrollView, BackHandler, TextInput, TouchableOpacity, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -14,6 +14,7 @@ export default class Show extends React.Component {
   noteBgColor:this.props.navigation.state.params.noteBgColor,
   noteTitle:this.props.navigation.state.params.noteTitle,
 }
+
 
   update = () =>{
     const { not }       = this.state;
@@ -52,6 +53,33 @@ static navigationOptions = {
   headerTintColor: '#fff',
  /* header: null*/
 };
+
+
+//Geri Tuşuna Basıldığında update() fonksiyonu çalışır START
+onButtonPress = () => {
+  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+  // then navigate
+  //navigate('NewScreen');
+}
+
+handleBackButton = () => {
+  this.update();
+//BackHandler.exitApp();
+ } 
+
+
+ componentDidMount() {
+  BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
+}
+
+componentWillUnmount() {
+  BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+}
+//Geri Tuşuna Basıldığında update() fonksiyonu çalışır END
+
+
+
+
   render() {
     const { text, textareaHeight } = this.state;
     return (
@@ -75,7 +103,7 @@ static navigationOptions = {
 
 <ScrollView>
             <InputScrollView>        
-            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500 }}
+            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:18 }}
                        value={this.state.not}
                        placeholder={"Not Gir"}
                        ref={(input) => { this.not = input; }}

@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image, Dimensions, ScrollView } from 'react-native'
+import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -23,6 +23,7 @@ export default class Loading extends React.Component {
 
 //
 componentDidMount=()=>{
+ BackHandler.addEventListener('hardwareBackPress', this.handleBackButton);
   const { currentUser } = firebase.auth();
   this.setState({ currentUser });
   const updateref= "/LastId/"+currentUser.uid;
@@ -122,6 +123,34 @@ componentDidMount=()=>{
       _onContentSizeChange = ({nativeEvent:event}) => {
         this.setState({ textareaHeight: event.contentSize.height });
       };
+
+
+//Geri Tuşuna Basınca da Kayıt Etme Özelliği START
+      onButtonPress = () => {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+        // then navigate
+        //navigate('NewScreen');
+      }
+      
+      componentWillUnmount() {
+        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
+      }
+    
+      handleBackButton = () => {
+        var app = {
+          backButtonDialog: this.props.navigation.state.routeName
+      };
+        if(app.backButtonDialog === 'Addnote')
+        {
+          this.git();
+         // alert("Addnote içinde" +this.props.navigation.state.routeName);
+        }
+        else{
+          alert("Different Addnote");
+        }
+        //BackHandler.exitApp();
+       } 
+       //Geri Tuşuna Basınca da Kayıt Etme Özelliği END
 
   render() {
     const { text, textareaHeight } = this.state;

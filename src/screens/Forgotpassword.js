@@ -1,11 +1,10 @@
 import React from 'react'
-import { View, Text, Button, StyleSheet, TextInput,} from 'react-native'
+import { View, Text, Button, StyleSheet, TextInput, Alert} from 'react-native'
 import firebase from 'react-native-firebase'
 
 export default class Forgotpassword extends React.Component {
     
     state={eposta:''}
-
 
     resetMyPassword = () => {
         firebase.auth().sendPasswordResetEmail(this.state.eposta)
@@ -15,6 +14,8 @@ export default class Forgotpassword extends React.Component {
            alert(e);
           })
       }
+
+
 
 
   render() {
@@ -34,6 +35,7 @@ export default class Forgotpassword extends React.Component {
         title="Sıfırla"
         onPress={this.resetMyPassword}
       />
+
 
         </View>
     )
