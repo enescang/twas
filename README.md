@@ -1,4 +1,4 @@
-native-input-scroll-view --save kurmanız gerekiyor.
+npm i react-native-input-scroll-view kurmanız gerekiyor.
 
 //05.07.2019 
 +notların renklendirilmesi.
