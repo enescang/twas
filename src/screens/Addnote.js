@@ -95,12 +95,7 @@ componentDidMount=()=>{
   /* Gelen verileri firebase'e kaydetme END */
 
 
-      username = () =>{
-        const { currentUser } = firebase.auth()
-        this.setState({ currentUser })
 
-        alert(currentUser.uid);
-      }
 
       /*Auto Growing Text Input START */
       updateSize = (height) => {
@@ -110,8 +105,9 @@ componentDidMount=()=>{
       }
        /* Auto Growing TextInput END */
        
-       static navigationOptions = {
-         
+
+       //Header START
+       static navigationOptions = {  
         title: 'Yeni Not Ekle',
         headerStyle: {
         backgroundColor: '#f4511e'
@@ -119,10 +115,17 @@ componentDidMount=()=>{
         headerTintColor: '#fff',
        /* header: null*/
       };
+      //Header END
 
+
+        //TextInput'un uzun metinlerde aşağı doğru kayması START
       _onContentSizeChange = ({nativeEvent:event}) => {
         this.setState({ textareaHeight: event.contentSize.height });
       };
+       //TextInput'un uzun metinlerde aşağı doğru kayması END
+
+
+
 
 
 //Geri Tuşuna Basınca da Kayıt Etme Özelliği START
@@ -151,6 +154,9 @@ componentDidMount=()=>{
         //BackHandler.exitApp();
        } 
        //Geri Tuşuna Basınca da Kayıt Etme Özelliği END
+
+
+
 
   render() {
     const { text, textareaHeight } = this.state;

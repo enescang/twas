@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView, BackHandler, TextInput, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Platform, Image, Text, View, ScrollView, BackHandler, TextInput, ToastAndroid, TouchableOpacity, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -13,6 +13,8 @@ export default class Show extends React.Component {
   textareaHeight: null,
   noteBgColor:this.props.navigation.state.params.noteBgColor,
   noteTitle:this.props.navigation.state.params.noteTitle,
+  isEdit:true,
+  editIcon:"toggle-off"
 }
 
 
@@ -38,6 +40,46 @@ export default class Show extends React.Component {
         //error callback
         alert(error);
     })
+}
+
+editOrRead=()=>{
+  const textareaHeight = this.state.textareaHeight;
+  if(this.state.isEdit)
+  {
+    return (
+      <ScrollView>
+            <InputScrollView>        
+            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:18 }}
+                       value={this.state.not}
+                       placeholder={"Not Gir"}
+                       ref={(input) => { this.not = input; }}
+                       onChangeText={not => this.setState({ not })}
+                       onContentSizeChange={this._onContentSizeChange}
+                       multiline={true} />
+      	</InputScrollView>
+        </ScrollView>
+    )
+  }
+  else {
+    return(
+      <ScrollView>
+<Text style={{fontSize:18, marginTop:10, marginLeft:4}}>{this.state.not}</Text>
+  </ScrollView>
+    )
+  }
+}
+
+checkEditStatus=()=>{
+  if(this.state.isEdit)
+  {
+   this.setState({isEdit:false, editIcon:'toggle-on'});
+   ToastAndroid.show('Okuma Modu Açık', ToastAndroid.SHORT);
+  }
+     else
+     {
+       this.setState({isEdit:true, editIcon:'toggle-off'});
+       ToastAndroid.show('Okuma Modu Kapalı', ToastAndroid.SHORT);
+     }
 }
 
 
@@ -101,17 +143,7 @@ componentWillUnmount() {
 
    
 
-<ScrollView>
-            <InputScrollView>        
-            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:18 }}
-                       value={this.state.not}
-                       placeholder={"Not Gir"}
-                       ref={(input) => { this.not = input; }}
-                       onChangeText={not => this.setState({ not })}
-                       onContentSizeChange={this._onContentSizeChange}
-                       multiline={true} />
-      	</InputScrollView>
-        </ScrollView>
+        {this.editOrRead()}
 
       <View style={styles.savecontainer}>
        <TouchableOpacity style={styles.savebutton} onPress={this.update}>
@@ -122,6 +154,17 @@ componentWillUnmount() {
         size={25}
       />
        </TouchableOpacity>
+
+       <TouchableOpacity style={styles.savebutton} onPress={this.checkEditStatus}>
+      <Icon
+        name={this.state.editIcon}
+        type='font-awesome'
+        color="#db3434"
+        size={25}
+      />
+       </TouchableOpacity>
+        
+
 
         </View>
 
@@ -182,6 +225,7 @@ const styles = StyleSheet.create({
    },
    
    savecontainer:{
+     flexDirection:'row',
      marginBottom: 1,
      width:80,
      marginLeft: Dimensions.get('window').width / 2-40 ,
