@@ -1,5 +1,5 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView, BackHandler, TextInput, ToastAndroid, TouchableOpacity, Dimensions } from 'react-native';
+import { StyleSheet, Platform, Image, Text, View, ScrollView, BackHandler,Clipboard, TextInput, ToastAndroid, TouchableOpacity, Dimensions } from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
 import { Button } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
@@ -120,7 +120,11 @@ componentWillUnmount() {
 //Geri Tuşuna Basıldığında update() fonksiyonu çalışır END
 
 
-
+_setContent=async(text)=> {
+ // await Clipboard.setString(text);
+ await Clipboard.setString(this.state.not);
+ ToastAndroid.show('Not Panoya Kopyalandı', ToastAndroid.SHORT);
+}
 
   render() {
     const { text, textareaHeight } = this.state;
@@ -145,27 +149,36 @@ componentWillUnmount() {
 
         {this.editOrRead()}
 
-      <View style={styles.savecontainer}>
-       <TouchableOpacity style={styles.savebutton} onPress={this.update}>
+      <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
+       <TouchableOpacity style={{     width:Dimensions.get('window').width /3,  backgroundColor:this.state.noteBgColor, }} 
+       onPress={this.update}>
       <Icon
         name="update"
         type='material'
-        color="#db3434"
-        size={25}
+        color="black"
+        size={23}
       />
        </TouchableOpacity>
 
-       <TouchableOpacity style={styles.savebutton} onPress={this.checkEditStatus}>
+       <TouchableOpacity style={{width:Dimensions.get('window').width /3, backgroundColor:this.state.noteBgColor,marginBottom:2}} 
+       onPress={this._setContent}>
+      <Icon
+        name='clone'
+        type='font-awesome'
+        color="black"     
+        size={23}
+      />
+       </TouchableOpacity>
+
+       <TouchableOpacity style={{width:Dimensions.get('window').width /3, backgroundColor:this.state.noteBgColor,}} 
+       onPress={this.checkEditStatus}>
       <Icon
         name={this.state.editIcon}
         type='font-awesome'
-        color="#db3434"
-        size={25}
+        color="black"
+        size={23}
       />
        </TouchableOpacity>
-        
-
-
         </View>
 
         <View style={{ flexDirection: 'row', backgroundColor:'white', borderColor:'white', borderWidth:2, zIndex:50}}>
@@ -227,25 +240,17 @@ const styles = StyleSheet.create({
    savecontainer:{
      flexDirection:'row',
      marginBottom: 1,
-     width:80,
+     width:40,
      marginLeft: Dimensions.get('window').width / 2-40 ,
  
    },
  
    savebutton:{
-     borderWidth:2,
-     width:80,
-     marginRight:90,
+    // borderWidth:2,
+     width:Dimensions.get('window').width /3,
+    
      backgroundColor:'#fff', 
-     paddingVertical:15,
-     paddingHorizontal:20,
-     marginVertical:18,
-     borderRadius:15,
-     shadowColor:'black',
-     shadowOpacity:.8,
-     shadowRadius:3,
-     shadowOffset:{width:0, height:2},
-     elevation:4
+
    }
 });
  

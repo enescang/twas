@@ -13,4 +13,5 @@ npm i react-native-input-scroll-view kurmanız gerekiyor.
 
 
 //09.07.2019 @canesnet
-+Güncellem kısmına Okuma Modu eklendi
++Güncellem kısmına Okuma Modu eklendi.
++Not Güncelleme kısmına Panoya Kopyala Özelliği eklendi.
