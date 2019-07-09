@@ -175,7 +175,7 @@ componentDidMount=()=>{
         backgroundColor:this.state.noteBgColor}}>
         
         <TextInput style={styles.notetitle}
-        placeholder ="Not Başlığı....."
+        placeholder ="Başlık"
         editable = {true}
         maxLength = {50}
         returnKeyType={"next"}
@@ -192,7 +192,8 @@ componentDidMount=()=>{
             <InputScrollView>        
             <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:20 }}
                        value={this.state.not}
-                       placeholder={"Not Gir"}
+                       placeholder={"Not"}
+                       autoFocus={true}
                        ref={(input) => { this.not = input; }}
                        onChangeText={not => this.setState({ not })}
                        onContentSizeChange={this._onContentSizeChange}
