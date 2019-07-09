@@ -75,9 +75,7 @@ export default class Main extends React.Component {
           
             return (  
               <View  key={index}>
-                <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
-                
-                  <Text style={{  margin: 3,
+                <TouchableOpacity style={{  margin: 3,
                    width: Dimensions.get('window').width / 2 -10,
                    height: 200,
                    borderWidth: 0.9,
@@ -87,11 +85,13 @@ export default class Main extends React.Component {
                   // shadowRadius: 2,
                   borderRadius:10,
                    color:'black',
-                   backgroundColor: item.noteBgColor}}> 
-                   <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{"\n"}</Text>
+                   backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
+                
+                  <Text style={{marginLeft:4, padding:2,marginTop:10}}> 
+                   <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
                   
                    
-                  {" "} {item.not}</Text>
+                  {item.not}</Text>
                 </TouchableOpacity>
               </View>
             );
@@ -101,10 +101,10 @@ export default class Main extends React.Component {
         </View>
       </ScrollView>
 
-      <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
+      <View style={{flexDirection: 'row', zIndex:50}}>
        <TouchableOpacity style={styles.savebutton  }
        onPress={this.git}>
-      <Text>      Not Ekle...</Text>
+      <Text>      Not alın...</Text>
        </TouchableOpacity>
 
         </View>
@@ -139,6 +139,7 @@ export default class Main extends React.Component {
     width:Dimensions.get('window').width / 1-15,
     marginBottom:3, 
     borderColor:'gray', 
+    marginBottom:8,
     borderWidth:2,
     paddingVertical:8,
     marginVertical:8,
