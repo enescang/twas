@@ -101,16 +101,13 @@ export default class Main extends React.Component {
         </View>
       </ScrollView>
 
+      <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
+       <TouchableOpacity style={styles.savebutton  }
+       onPress={this.git}>
+      <Text>      Not Ekle...</Text>
+       </TouchableOpacity>
 
-
-  <View style={{ height: 65, marginTop: 0 }}>
-    <View style={styles.savecontainer}>
-      <Button styls={styles.savebutton}
-          title="+  Ekle"
-          onPress={this.git}
-      />
-    </View>
-  </View>
+        </View>
 </View>
     )
   }
@@ -120,7 +117,8 @@ export default class Main extends React.Component {
     container: {
         flex: 1,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        
     },
 
   
@@ -137,44 +135,37 @@ export default class Main extends React.Component {
   },
 
 
-  itemtext: {
-      margin: 2,
-      width: Dimensions.get('window').width / 2 -6,
-      height: 200,
-      borderWidth: 1,
-      borderColor: '#ddd',
-      shadowColor: 'black',
-      shadowOpacity: .2,
-      shadowRadius: 2,
-      justifyContent: 'center',
-      alignItems: 'center',
-      backgroundColor: 'white'
-  },
-
-  savebutton: {
+  savebutton:{
+    width:Dimensions.get('window').width / 1-15,
+    marginBottom:3, 
+    borderColor:'gray', 
     borderWidth:2,
-    width:80,
-    marginRight:90,
-    backgroundColor:'#000',
-    paddingVertical:15,
-    paddingHorizontal:20,
-    marginVertical:18,
+    paddingVertical:8,
+    marginVertical:8,
     borderRadius:15,
-    shadowColor: "#fff",
-    shadowOffset:{width:0, height:12},
-    shadowOpacity: 0.58,
-    shadowRadius: 16.00,
-    elevation: 24,
-    
-},
+  },
 
   savecontainer:{
       flex: 1,
       justifyContent: 'flex-end',
       marginBottom: 13,
       width:80,
-      marginLeft: Dimensions.get('window').width / 10-40,
+      marginRight: Dimensions.get('window').width / 1-100,
+      
   },
 })
 
 
+//borderWidth:2,
+   // width:3,
+   // marginRight:90,
+   // backgroundColor:'#db3434', 
+    //paddingVertical:18,
+    //paddingHorizontal:195,
+  //  marginVertical:8,
+   // borderRadius:15,
+   // shadowColor:'purple',
+   // shadowOpacity:.8,
+   // shadowRadius:3,
+   // shadowOffset:{width:0, height:0},
+   // elevation:8
