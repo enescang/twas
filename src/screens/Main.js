@@ -105,20 +105,16 @@ export default class Main extends React.Component {
 
   <View style={{ height: 65, marginTop: 0 }}>
     <View style={styles.savecontainer}>
-      <Button style={styles.savebutton}
+      <Button styls={styles.savebutton}
           title="+  Ekle"
           onPress={this.git}
       />
-
-
     </View>
   </View>
 </View>
     )
   }
 }
-
-
 
   const styles = StyleSheet.create({
     container: {
@@ -155,6 +151,22 @@ export default class Main extends React.Component {
       backgroundColor: 'white'
   },
 
+  savebutton: {
+    borderWidth:2,
+    width:80,
+    marginRight:90,
+    backgroundColor:'#000',
+    paddingVertical:15,
+    paddingHorizontal:20,
+    marginVertical:18,
+    borderRadius:15,
+    shadowColor: "#fff",
+    shadowOffset:{width:0, height:12},
+    shadowOpacity: 0.58,
+    shadowRadius: 16.00,
+    elevation: 24,
+    
+},
 
   savecontainer:{
       flex: 1,
@@ -163,22 +175,6 @@ export default class Main extends React.Component {
       width:80,
       marginLeft: Dimensions.get('window').width / 10-40,
   },
-
-  savebutton:{
-      borderWidth:2,
-      width:80,
-      marginRight:90,
-      backgroundColor:'#fff',
-      paddingVertical:15,
-      paddingHorizontal:20,
-      marginVertical:18,
-      borderRadius:15,
-      shadowColor:'black',
-      shadowOpacity:.8,
-      shadowRadius:8,
-      shadowOffset:{width:0, height:2},
-      elevation:4
-  }
 })
 
 
