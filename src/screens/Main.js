@@ -1,5 +1,5 @@
 import React from 'react'
-import {TouchableHighlight, StyleSheet, Platform, Image, Text, View, ScrollView, TouchableOpacity, Alert, Dimensions} from 'react-native'
+import { TouchableHighlight, StyleSheet, Platform, Image, Text, View, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
 import PropTypes from 'prop-types';
 import firebase from 'react-native-firebase'
 import {NavigationActions} from 'react-navigation'
@@ -10,7 +10,9 @@ import { Icon } from 'react-native-elements'
 
 export default class Main extends React.Component {
     state = { currentUser: null , items : [], son: [], numChild:null}
- 
+
+
+  
   git = () => {
   
       this.props.navigation.navigate('Addnote', {num:this.state.numChild});
@@ -62,27 +64,6 @@ export default class Main extends React.Component {
   }
 
 
-
-  showalert=()=>{
-    Alert.alert(
-      'Ne Yapmak istiyorsunuz?',
-      'Not Tarihi: 07.07.2019 | 15:11',
-      [
-        {text: 'Düzenle', onPress:()=> console.log('düzenle')},
-        {
-          text: 'İptal',
-          onPress: () => console.log('Cancel Pressed'),
-          style: 'cancel',
-        },
-        {text: 'SİL', onPress: () => console.log('OK Pressed')},
-      ],
-      {cancelable: false},
-    );
-  }
-
-
-
-
   render() {
       const { currentUser } = this.state
 
@@ -94,24 +75,23 @@ export default class Main extends React.Component {
           
             return (  
               <View  key={index}>
-                <TouchableOpacity  style={{  margin: 3,
+                <TouchableOpacity  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
+                
+                  <Text style={{  margin: 3,
                    width: Dimensions.get('window').width / 2 -10,
                    height: 200,
                    borderWidth: 0.9,
                    borderColor: '#ddd',
-                   borderRadius:10,         
-                   backgroundColor: item.noteBgColor}} 
-                   onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)}
-                   onLongPress={this.showalert}
-                   underlayColor="white">
-                
-                  <Text style={{height:190, marginLeft:10, marginRight:10, color:'black',}}> 
-                   
+                   //shadowColor: 'black',
+                   //shadowOpacity: .2,
+                  // shadowRadius: 2,
+                  borderRadius:10,
+                   color:'black',
+                   backgroundColor: item.noteBgColor}}> 
                    <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{"\n"}</Text>
                   
                    
                   {" "} {item.not}</Text>
-            
                 </TouchableOpacity>
               </View>
             );
@@ -123,32 +103,16 @@ export default class Main extends React.Component {
 
 
 
-  <Text style={{color: 'purple', fontSize: 25, fontWeight: 'bold', height: 30,}}>
-      MERHABA HOŞGELDİNİZ. 
-  </Text>
-
-  <Text style={{color: 'black', fontSize: 15, height: 30,}}>
-      Not Eklemeye Başlayabilirsiniz.
-  </Text>
-
   <View style={{ height: 65, marginTop: 0 }}>
     <View style={styles.savecontainer}>
       <Button style={styles.savebutton}
-          title="+"
+          title="+  Ekle"
           onPress={this.git}
       />
 
 
     </View>
   </View>
-
-  <Button 
-      icon={<Icon name="close" size={25} color="white" />}
-      containerStyle={{ padding: 8,}}
-      title="Çıkış"
-      onPress={this.cik}
-  />
-
 </View>
     )
   }
@@ -162,28 +126,6 @@ export default class Main extends React.Component {
         justifyContent: 'center',
         alignItems: 'center'
     },
-
-
-  submit:{
-      marginRight:80,
-      marginLeft:80,
-      paddingLeft:30,
-      paddingRight:30,
-      marginTop:10,
-      paddingTop:20,
-      paddingBottom:20,
-      backgroundColor:'#68a0cf',
-      borderRadius:10,
-      borderWidth: 1,
-      borderColor: 'blue'
-  },
-
-
-  submitText:{
-      fontSize:20,
-      color:'white',
-      textAlign:'center',
-  },
 
   
   ScrollContainer:{
@@ -217,11 +159,10 @@ export default class Main extends React.Component {
   savecontainer:{
       flex: 1,
       justifyContent: 'flex-end',
-      marginBottom: 20,
+      marginBottom: 13,
       width:80,
-      marginLeft: Dimensions.get('window').width / 2-40,
+      marginLeft: Dimensions.get('window').width / 10-40,
   },
-
 
   savebutton:{
       borderWidth:2,
@@ -234,7 +175,7 @@ export default class Main extends React.Component {
       borderRadius:15,
       shadowColor:'black',
       shadowOpacity:.8,
-      shadowRadius:3,
+      shadowRadius:8,
       shadowOffset:{width:0, height:2},
       elevation:4
   }
