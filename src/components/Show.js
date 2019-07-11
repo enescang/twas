@@ -5,7 +5,6 @@ import { Button } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
 import { Icon } from 'react-native-elements';
 import firebase from 'react-native-firebase';
-
 export default class Show extends React.Component {
   state = { not: this.props.navigation.state.params.data, 
   currentUser : null,
@@ -212,6 +211,7 @@ _setContent=async(text)=> {
     );
   }
 }
+
 
 const styles = StyleSheet.create({
   noteTexta: {

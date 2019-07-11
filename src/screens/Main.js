@@ -7,11 +7,27 @@ import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
+import SideMenu from 'react-native-side-menu';
+import Menu from './../menu/Menu'
+
+const image = require('./../menu/assets/menu.png');
 
 export default class Main extends React.Component {
-    state = { currentUser: null , items : [], son: [], numChild:null}
+   // state = {}
 
+    constructor(props) {
+      super(props);
+      this.toggle = this.toggle.bind(this);
 
+      this.state = {
+        isOpen: false,
+        selectedItem: 'About',
+        currentUser: null , 
+        items : [], 
+        son: [], 
+        numChild:null
+      };
+    }
   
   git = () => {
   
@@ -32,6 +48,10 @@ export default class Main extends React.Component {
 
 
   componentDidMount() {
+    //menünün açılması için Params olarak fonksiyonu tanıtmak gerekiyormuş.
+    this.props.navigation.setParams({ toggle: this.toggle });
+
+
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
     const referans = "/Users/"+currentUser.uid;
@@ -63,11 +83,56 @@ export default class Main extends React.Component {
       alert(this.state.son)
   }
 
+/* Menu START*/
+toggle() {
+  this.setState({
+    isOpen: !this.state.isOpen,
+  });
+}
 
+updateMenuState(isOpen) {
+  this.setState({ isOpen });
+}
+
+onMenuItemSelected = item =>
+  this.setState({
+    isOpen: false,
+    selectedItem: item,
+  });
+
+
+
+  static navigationOptions =({ navigation }) => {
+    return {
+    title: 'Home',
+    headerStyle: {
+      backgroundColor: 'orange',
+    },
+    headerLeft: (
+     <TouchableOpacity style={{marginLeft: 10 }} onPress={navigation.getParam('toggle')}>
+          <Image
+            source={image}
+            style={{ width: 32, height: 32 }}
+          />
+      
+        </TouchableOpacity>
+     
+    )
+    }
+}
+
+
+/*Menu END */
   render() {
       const { currentUser } = this.state
+      const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
   return (
+    <SideMenu
+    menu={menu}
+    isOpen={this.state.isOpen}
+    onChange={isOpen => this.updateMenuState(isOpen)}
+  >
     <View style={styles.container}>
       <ScrollView  style={styles.ScrollContainer} >
         <View style={styles.itemsList}>
@@ -87,7 +152,7 @@ export default class Main extends React.Component {
                    color:'black',
                    backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
                 
-                  <Text style={{marginLeft:4, padding:2,marginTop:10}}> 
+                  <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
                    <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
                   
                    
@@ -109,6 +174,8 @@ export default class Main extends React.Component {
 
         </View>
 </View>
+
+      </SideMenu>
     )
   }
 }
@@ -118,6 +185,7 @@ export default class Main extends React.Component {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
+        backgroundColor:'white'
         
     },
 
