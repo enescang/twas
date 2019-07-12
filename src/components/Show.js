@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
 import { Icon } from 'react-native-elements';
 import firebase from 'react-native-firebase';
+import Hyperlink from 'react-native-hyperlink';
+
 export default class Show extends React.Component {
   state = { not: this.props.navigation.state.params.data, 
   currentUser : null,
@@ -13,7 +15,7 @@ export default class Show extends React.Component {
   noteBgColor:this.props.navigation.state.params.noteBgColor,
   noteTitle:this.props.navigation.state.params.noteTitle,
   isEdit:true,
-  editIcon:"toggle-off"
+  editIcon:"toggle-off",
 }
 
 
@@ -62,7 +64,15 @@ editOrRead=()=>{
   else {
     return(
       <ScrollView>
-<Text style={{fontSize:18, marginTop:10, marginLeft:4}}>{this.state.not}</Text>
+           <Hyperlink
+    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkDefault={true}
+    linkText={ url => url === 'www.instagram.com/fridayteam23' ? 'Friday Team' : url }
+   >
+    <Text style={{fontSize:18, marginTop:10, marginLeft:4}}>
+     {this.state.not}
+    </Text>
+  </Hyperlink>
   </ScrollView>
     )
   }
@@ -118,12 +128,13 @@ componentWillUnmount() {
 }
 //Geri Tuşuna Basıldığında update() fonksiyonu çalışır END
 
-
+//Metni Panoya Kopyalama START
 _setContent=async(text)=> {
  // await Clipboard.setString(text);
  await Clipboard.setString(this.state.not);
  ToastAndroid.show('Not Panoya Kopyalandı', ToastAndroid.SHORT);
 }
+//Metni Panoya Kopyalama END
 
   render() {
     const { text, textareaHeight } = this.state;

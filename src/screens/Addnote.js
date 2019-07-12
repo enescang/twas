@@ -1,10 +1,11 @@
 import React from 'react'
-import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
+import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, ToastAndroid, TextInput, Clipboard, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
+import Hyperlink from 'react-native-hyperlink';
 
 export default class Loading extends React.Component {
   state = { not: '', 
@@ -17,7 +18,9 @@ export default class Loading extends React.Component {
   lastId:1,
   items:[],
   howmany:5,
-  noteBgColor:'white'}
+  isEdit:true,
+  noteBgColor:'white',
+  editIcon:"toggle-off"}
 
 
 
@@ -128,13 +131,7 @@ componentDidMount=()=>{
 
 
 
-//Geri Tuşuna Basınca da Kayıt Etme Özelliği START
-      onButtonPress = () => {
-        BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
-        // then navigate
-        //navigate('NewScreen');
-      }
-      
+//Geri Tuşuna Basınca da Kayıt Etme Özelliği START    
       componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
       }
@@ -155,8 +152,66 @@ componentDidMount=()=>{
        } 
        //Geri Tuşuna Basınca da Kayıt Etme Özelliği END
 
+ //Okuma Modu mu Değil mi? START
+ editOrRead=()=>{
+  const textareaHeight = this.state.textareaHeight;
+  if(this.state.isEdit)
+  {
+    return (
+      <ScrollView>
+      <InputScrollView>        
+      <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:20 }}
+                 value={this.state.not}
+                 placeholder={"Not"}
+                 autoFocus={true}
+                 ref={(input) => { this.not = input; }}
+                 onChangeText={not => this.setState({ not })}
+                 onContentSizeChange={this._onContentSizeChange}
+                 multiline={true} />
+  </InputScrollView>
+  </ScrollView>
+    )
+  }
+  else {
+    return(
+     <ScrollView>
+           <Hyperlink
+    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkDefault={true}
+    linkText={ url => url === 'www.instagram.com/fridayteam23' ? 'Friday Team' : url }
+   >
+    <Text style={{fontSize:18, marginTop:10, marginLeft:4}}>
+     {this.state.not}
+    </Text>
+  </Hyperlink>
+  </ScrollView>
+    )
+  }
+} 
+ //Okuma Modu mu Değil mi? END
 
+ //Okuma Modu Icon Değişimi START      
+checkEditStatus=()=>{
+  if(this.state.isEdit)
+  {
+   this.setState({isEdit:false, editIcon:'toggle-on'});
+   ToastAndroid.show('Okuma Modu Açık', ToastAndroid.SHORT);
+  }
+     else
+     {
+       this.setState({isEdit:true, editIcon:'toggle-off'});
+       ToastAndroid.show('Okuma Modu Kapalı', ToastAndroid.SHORT);
+     }
+}
+ //Okuma Modu Icon Değişimi END
 
+//Metni Panoya Kopyalama START
+_setContent=async(text)=> {
+  // await Clipboard.setString(text);
+  await Clipboard.setString(this.state.not);
+  ToastAndroid.show('Not Panoya Kopyalandı', ToastAndroid.SHORT);
+ }
+ //Metni Panoya Kopyalama END
 
   render() {
     const { text, textareaHeight } = this.state;
@@ -186,31 +241,40 @@ componentDidMount=()=>{
   <View style={{borderBottomColor:'gray',
   borderBottomWidth:1,}} />
 
-   
+   {this.editOrRead()}
 
-<ScrollView>
-            <InputScrollView>        
-            <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:20 }}
-                       value={this.state.not}
-                       placeholder={"Not"}
-                       autoFocus={true}
-                       ref={(input) => { this.not = input; }}
-                       onChangeText={not => this.setState({ not })}
-                       onContentSizeChange={this._onContentSizeChange}
-                       multiline={true} />
-      	</InputScrollView>
-        </ScrollView>
 
-      <View style={styles.savecontainer}>
-       <TouchableOpacity style={styles.savebutton} onPress={this.git}>
+
+        <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
+       <TouchableOpacity style={{width:Dimensions.get('window').width /3,  backgroundColor:this.state.noteBgColor, }} 
+       onPress={this.git}>
       <Icon
-        name="create"
+        name="done"
         type='material'
-        color="#db3434"
-        size={25}
+        color="black"
+        size={28}
       />
        </TouchableOpacity>
 
+       <TouchableOpacity style={{width:Dimensions.get('window').width /3, backgroundColor:this.state.noteBgColor,marginBottom:2}} 
+       onPress={this._setContent}>
+      <Icon
+        name='clone'
+        type='font-awesome'
+        color="black"     
+        size={23}
+      />
+       </TouchableOpacity>
+
+       <TouchableOpacity style={{width:Dimensions.get('window').width /3, backgroundColor:this.state.noteBgColor,}} 
+       onPress={this.checkEditStatus}>
+      <Icon
+        name={this.state.editIcon}
+        type='font-awesome'
+        color="black"
+        size={23}
+      />
+       </TouchableOpacity>
         </View>
 
         <View style={{ flexDirection: 'row', backgroundColor:'white', borderColor:'white', borderWidth:2, zIndex:50}}>
