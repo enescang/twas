@@ -104,21 +104,12 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-<<<<<<< HEAD
           <View style = {styles.background}>
         <Image
         style= {styles.bak}
           source={require('../../images/bak.png')}
-=======
-        <View style = {styles.background}/>
-        <View >
-
-          <Image
-        style= {styles.image}
-          source={require('../../images/twas3.png')}
->>>>>>> c63ea4ff8dd4d8403e8b412e1602e42f4b910555
         /> 
-     </View>
+        </View>
        
        
         
@@ -154,26 +145,17 @@ export default class Login extends React.Component {
     <Text style = {{color: 'white'}}>Giriş</Text>
           
         </TouchableOpacity>
-<<<<<<< HEAD
         <TouchableOpacity style={styles.forgetpassword} onPress={()=> this.props.navigation.navigate('Forgotpassword')}>
           <Text style = {{color: '#8c52ff'}}>
             Şifremi Unuttum
             </Text>
           </TouchableOpacity>
-=======
-          <Button
-            title="Şifremi Unuttum"
-            onPress={()=> this.props.navigation.navigate('Forgotpassword')}
-            style={styles.forgetpassword}
-          />
->>>>>>> c63ea4ff8dd4d8403e8b412e1602e42f4b910555
     <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/> 
         </View>
 
         
       </View>
 
-<<<<<<< HEAD
       <View style = {styles.GirisKayitYazi}>
       
           <Text style = {styles.KayitYazi}>Giriş </Text>
@@ -184,13 +166,6 @@ export default class Login extends React.Component {
           </View>
 
         <View style= {styles.ImageSosyal}>
-=======
-      <Text>Hesabın Yokmu?</Text>
-      <TouchableOpacity style = {styles.butonlar2} onPress={() => this.props.navigation.navigate('SignUp')}>
-          <Text>Kayıt Ol</Text>
-        </TouchableOpacity>
-        <View style= {styles.imageFacebook1}>
->>>>>>> c63ea4ff8dd4d8403e8b412e1602e42f4b910555
 
           <TouchableOpacity onPress={this.openUrl.bind(this, "https://facebook.com/fridayteam23")}>
         <Image
@@ -237,7 +212,6 @@ const styles = StyleSheet.create({
    bottom: 50,
   },
   imageFacebook : {
-<<<<<<< HEAD
     // marginRight: 120,
     
     flexDirection: 'row',
@@ -246,16 +220,6 @@ const styles = StyleSheet.create({
      width : 60,
      height : 60,
    },
-=======
-   // marginRight: 120,
-   
-   flexDirection: 'row',
-   
-   padding : 1,
-    width : 40,
-    height : 40, 
-  },
->>>>>>> c63ea4ff8dd4d8403e8b412e1602e42f4b910555
   imageFacebook2 : {
     width : 45,
     height : 45,
@@ -367,11 +331,7 @@ const styles = StyleSheet.create({
 
   forgetpassword:{
     alignItems:'center',
-<<<<<<< HEAD
     marginLeft:5,
     backgroundColor: 'white'
-=======
-    marginLeft:55,
->>>>>>> c63ea4ff8dd4d8403e8b412e1602e42f4b910555
   }
 })
