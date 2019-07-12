@@ -1,10 +1,12 @@
 import React from 'react'
 import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
-import MainService from '../services/mainservice';
 import * as Progress from 'react-native-progress';
 
 export default class SignUp extends React.Component {
+  state = {
+    color : 'white'
+  };
 
   constructor(){
     super();
@@ -13,8 +15,10 @@ export default class SignUp extends React.Component {
       kayitolBtn : 
       {
         marginVertical: 15,
-        paddingHorizontal : 25,
+        marginTop: 60,
+        paddingHorizontal : 45,
         paddingVertical: 20,
+        
         backgroundColor : '#8c52ff',
         borderRadius : 10,
         alignItems : 'center',
@@ -29,6 +33,27 @@ export default class SignUp extends React.Component {
   }
   
   state = { email: '', password: '', errorMessage: null }
+
+  makeSignUp=()=>{
+    const id =10000;
+    const { currentUser } = firebase.auth();
+    const refkey= Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15);
+
+    const ref ="/LastId/"+currentUser.uid;
+    const mail = this.state.email;
+    firebase.database().ref(ref).set({
+      mail, 
+      id,
+      refkey
+    }).then((data)=>{
+        //success callback
+       //alert("Başarılı");
+       this.props.navigation.navigate('Main');
+    }).catch((error)=>{
+        //error callback
+        alert(error);
+    })
+  }
   handleSignUp = () => {
 
     this.setState(
@@ -54,7 +79,7 @@ export default class SignUp extends React.Component {
     firebase
       .auth()
       .createUserWithEmailAndPassword(this.state.email, this.state.password)
-      .then(() => this.props.navigation.navigate('Login'))
+      .then(this.makeSignUp)
       .catch(error => this.setState(
         { errorMessage: error.message,
           kayitolBtn : {
@@ -90,22 +115,23 @@ render() {
     return (
       
       <View style={styles.container}>
-        <View style = {styles.background}/>
-        <View >
+        <View style = {styles.background}>
         <Image
-        style= {styles.image}
-          source={require('../../images/twas3.png')}
+        style= {styles.bak}
+          source={require('../../images/bak.png')}
         /> 
         </View>
+        
        
        
         
           <View style = {styles.loginArea}>
-          <Text style = {styles.kayitOl}>Kayıt Ol</Text>
+          <Text style = {styles.kayitOl}>Kayıt  Ol</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
           </Text>}
+         
         <TextInput
           placeholder="Mail Adresi"
           autoCapitalize="none"
@@ -144,17 +170,23 @@ render() {
         
         
       </View>
-      <Text>Hesabın Varmı?</Text>
-      <TouchableOpacity style = {styles.butonlar2} onPress={() => this.props.navigation.navigate('Login')}>
-          <Text>Giriş Yap</Text>
-        </TouchableOpacity>
-        <View style= {styles.imageFacebook1}>
+      <View style = {styles.GirisKayitYazi}>
+      
+          <Text style = {styles.KayitYazi}>Kayıt Ol </Text>
+
+          <TouchableOpacity  onPress={() => this.props.navigation.navigate('Login')}>
+          <Text style = {styles.GirisYazi}>Giriş Yap</Text>
+          </TouchableOpacity>
+          </View>
+        
+        
+        <View style= {styles.ImageSosyal}>
         <Image
         style= {styles.imageFacebook}
           source={require('../../images/facebook.png')}
         />
         <Image
-        style= {styles.imageFacebook2}
+        style= {styles.imageFacebook}
           source={require('../../images/twitter.png')}
         />  
         
@@ -178,12 +210,12 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
     backgroundColor : '#FBFBFB'
   },
-  imageFacebook1 : 
+ 
+  ImageSosyal : 
   {
-    
-   
    flexDirection: 'row',
    justifyContent: 'space-between',
+   bottom: 50,
   },
   imageFacebook : {
    // marginRight: 120,
@@ -191,13 +223,10 @@ const styles = StyleSheet.create({
    flexDirection: 'row',
    
    padding : 1,
-    width : 40,
-    height : 40,
+    width : 60,
+    height : 60,
   },
-  imageFacebook2 : {
-    width : 45,
-    height : 45,
-  },
+ 
   image: {
     width : 500,
     height : 300,
@@ -212,7 +241,10 @@ const styles = StyleSheet.create({
     color : 'white'
   },
   kayitOl : {
-    fontWeight :'600'
+    fontWeight :'bold',
+    right:30,
+    marginBottom:20
+
   },
   butonlar1 : 
   {
@@ -224,17 +256,48 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     
   },
-  butonlar2 : {
-    color : '#999'
+  GirisKayitYazi : {
+    color : '#f1f1f1',
+    flexDirection: "row",
+    marginHorizontal:80,
+    bottom : '115%',
+    //right : '-8%',
+    
+
+   
+    
+
+    
   },
+  GirisYazi: {
+    color : '#eee',
+    fontSize : 20,
+    marginTop:13
+    
+  
+   
+
+    
+  },
+  KayitYazi: {
+    color : 'white',
+    fontSize : 40,
+    marginRight : 55,
+    fontWeight : 'bold'
+
+    
+  },
+ 
   loginArea : {
     
-    marginTop : Dimensions.get('window').width / 2-450 ,
+    marginTop : Dimensions.get('window').width / 2-50 ,
     marginHorizontal : 50,
-    marginVertical: 40,
+    marginVertical: 20,
     backgroundColor : 'white',
-    padding: 30,
-    borderRadius: 5,
+    padding: 50,
+    height : 350,
+    width : 350,
+    borderRadius: 15,
     shadowColor: 'black',
     shadowOpacity: .2,
     shadowRadius: 3,
@@ -244,13 +307,20 @@ const styles = StyleSheet.create({
   background : {
     
     position : 'absolute',
-    top : 0,
+    top : -100,
     left : 0,
-    height : 250,
+    height : '200%',
     width : '100%',
     backgroundColor : '#f4f1f1',
     paddingVertical : 80,
     
+  },
+  bak : {
+    position : 'absolute',
+    top : 0,
+    left : 0,
+    width : '100%',
+    height : '100%'
   },
  
   logoDescription : {
@@ -272,8 +342,8 @@ const styles = StyleSheet.create({
     color : '#999',
     fontSize :14,
     fontWeight :'600',
-    
-    width: 220,
+    left:-30,
+    width: 300,
     marginTop: 8
-  }
+  },
 })

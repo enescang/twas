@@ -1,18 +1,17 @@
 import React from 'react'
-import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
-import firebase from 'react-native-firebase'
-import MainService from '../services/mainservice';
+import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator,Linking, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import firebase from 'react-native-firebase';
 import * as Progress from 'react-native-progress';
 
 export default class Login extends React.Component {
   constructor(){
     super();
-
     this.state = {
       kayitolBtn : 
       {
         marginVertical: 15,
         paddingHorizontal : 25,
+        marginTop: 60,
         paddingVertical: 20,
         backgroundColor : '#8c52ff',
         borderRadius : 10,
@@ -24,11 +23,27 @@ export default class Login extends React.Component {
         height:0,
       }
     };
-
   }
+
+  //Url açma fonksiyonu
+  openUrl = (url) =>{
+    Linking.canOpenURL(url).then(supported => {
+      if (supported) {
+        Linking.openURL(url);
+      } else {
+        alert("url açılamıyor.");
+      }
+    });
+  }
+  //Url açma fonksiyonu
+
+ 
+
   
-  state = { email: '', password: '', errorMessage: null }
+  state = { email: 'ml', password: '', errorMessage: null }
   handleLogin = () => {
+    const { email, password } = this.state
+   
     this.setState(
       {
         kayitolBtn : {
@@ -45,13 +60,15 @@ export default class Login extends React.Component {
            height : 40,
            marginTop : 15,
            marginLeft: 90,
-        }
+        },
+        text:'',
+        visible:false,
       }
     );
-    const { email, password } = this.state
+   
     firebase
       .auth()
-      .signInWithEmailAndPassword(email, password)
+      .signInWithEmailAndPassword(email.trim(), password) //trim() fonksiyonu email için boşluk oluştuğunda onu kesiyor. @canesnet
       .then(() => this.props.navigation.navigate('Main'))
       .catch(error => this.setState(
         { errorMessage: error.message,
@@ -70,10 +87,9 @@ export default class Login extends React.Component {
              marginLeft: 90,
           }
         
-        },
+        }
         )
       )
-      
   }
   static navigationOptions = {
     title: 'Home',
@@ -88,11 +104,10 @@ export default class Login extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style = {styles.background}/>
-        <View >
+          <View style = {styles.background}>
         <Image
-        style= {styles.image}
-          source={require('../../images/twas3.png')}
+        style= {styles.bak}
+          source={require('../../images/bak.png')}
         /> 
         </View>
        
@@ -107,7 +122,7 @@ export default class Login extends React.Component {
         <TextInput
           placeholder="Mail Adresi"
           autoCapitalize="none"
-          style={styles.textInput}
+          style={styles.textInput} 
           onChangeText={email => this.setState({ email })}
           value={this.state.email}
           returnKeyType = {"next"}
@@ -130,31 +145,50 @@ export default class Login extends React.Component {
     <Text style = {{color: 'white'}}>Giriş</Text>
           
         </TouchableOpacity>
-        <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/>
-        
+        <TouchableOpacity style={styles.forgetpassword} onPress={()=> this.props.navigation.navigate('Forgotpassword')}>
+          <Text style = {{color: '#8c52ff'}}>
+            Şifremi Unuttum
+            </Text>
+          </TouchableOpacity>
+    <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/> 
         </View>
 
         
       </View>
 
-      <Text>Hesabın Yokmu?</Text>
-      <TouchableOpacity style = {styles.butonlar2} onPress={() => this.props.navigation.navigate('SignUp')}>
-          <Text>Kayıt Ol</Text>
-        </TouchableOpacity>
-        <View style= {styles.imageFacebook1}>
+      <View style = {styles.GirisKayitYazi}>
+      
+          <Text style = {styles.KayitYazi}>Giriş </Text>
+
+          <TouchableOpacity  onPress={() => this.props.navigation.navigate('SignUp')}>
+          <Text style = {styles.GirisYazi}>Kayıt Ol</Text>
+          </TouchableOpacity>
+          </View>
+
+        <View style= {styles.ImageSosyal}>
+
+          <TouchableOpacity onPress={this.openUrl.bind(this, "https://facebook.com/fridayteam23")}>
         <Image
         style= {styles.imageFacebook}
           source={require('../../images/facebook.png')}
-        />
+        /> 
+        </TouchableOpacity>
+
+        <TouchableOpacity onPress={this.openUrl.bind(this, "https://twitter.com/fridayteam23")}>
         <Image
-        style= {styles.imageFacebook2}
+        style= {styles.imageFacebook}
           source={require('../../images/twitter.png')}
         />  
+        </TouchableOpacity>
         
+        <TouchableOpacity onPress={this.openUrl.bind(this, "https://instagram.com/fridayteam23")}>
         <Image
          style= {styles.imageFacebook}
         source={require('../../images/instagram.png')}
       />  
+      </TouchableOpacity>
+
+
       </View>
         
       </View>
@@ -171,22 +205,21 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
     backgroundColor : '#FBFBFB'
   },
-  imageFacebook1 : 
+  ImageSosyal : 
   {
-    
-   
    flexDirection: 'row',
    justifyContent: 'space-between',
+   bottom: 50,
   },
   imageFacebook : {
-   // marginRight: 120,
-   
-   flexDirection: 'row',
-   
-   padding : 1,
-    width : 40,
-    height : 40,
-  },
+    // marginRight: 120,
+    
+    flexDirection: 'row',
+    
+    padding : 1,
+     width : 60,
+     height : 60,
+   },
   imageFacebook2 : {
     width : 45,
     height : 45,
@@ -195,17 +228,15 @@ const styles = StyleSheet.create({
     width : 500,
     height : 300,
     marginBottom : '50%'
-    
-
-       
-
   },
   tiklayazi : {
     fontWeight : '600',
     color : 'white'
   },
   kayitOl : {
-    fontWeight :'600'
+    fontWeight :'bold',
+    right:30,
+    marginBottom:20
   },
   butonlar1 : 
   {
@@ -217,17 +248,44 @@ const styles = StyleSheet.create({
     alignItems : 'center',
     
   },
-  butonlar2 : {
-    color : '#999'
+   GirisKayitYazi : {
+    color : '#f1f1f1',
+    flexDirection: "row",
+    marginHorizontal:80,
+    bottom : '115%',
+    //right : '-8%',
+    
+
+   
+    
+
+    
+  },
+  GirisYazi: {
+    color : '#eee',
+    fontSize : 20,
+    marginTop:15
+ 
+    
+  },
+  KayitYazi: {
+    color : 'white',
+    fontSize : 40,
+    marginRight : 55,
+    fontWeight : 'bold'
+
+    
   },
   loginArea : {
     
-    marginTop : Dimensions.get('window').width / 2-450 ,
+    marginTop : Dimensions.get('window').width / 2-50 ,
     marginHorizontal : 50,
-    marginVertical: 40,
+    marginVertical: 20,
     backgroundColor : 'white',
-    padding: 30,
-    borderRadius: 5,
+    padding: 50,
+    height : 350,
+    width : 350,
+    borderRadius: 15,
     shadowColor: 'black',
     shadowOpacity: .2,
     shadowRadius: 3,
@@ -237,9 +295,9 @@ const styles = StyleSheet.create({
   background : {
     
     position : 'absolute',
-    top : 0,
-    left : 0,
-    height : 250,
+    top : -100,
+    left : -100,
+    height : '300%',
     width : '100%',
     backgroundColor : '#f4f1f1',
     paddingVertical : 80,
@@ -256,6 +314,7 @@ const styles = StyleSheet.create({
     color :'#999',
     marginTop : Dimensions.get('window').width / 2-248 
   },
+  
   textInput: {
     height: 40,
     paddingHorizontal: 5,
@@ -265,8 +324,14 @@ const styles = StyleSheet.create({
     color : '#999',
     fontSize :14,
     fontWeight :'600',
-    
-    width: 220,
+    left:-30,
+    width: 300,
     marginTop: 8
+  },
+
+  forgetpassword:{
+    alignItems:'center',
+    marginLeft:5,
+    backgroundColor: 'white'
   }
 })
