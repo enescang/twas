@@ -1,11 +1,20 @@
-<<<<<<< HEAD
-# twas a
-=======
-# twas
-hello baba
-Enes friday
-<<<<<<< HEAD
->>>>>>> 0e1abc17a75761314a023c71beedfe8242b66863
-=======
-İkinci değişiklik
->>>>>>> b755e1b89b9638f973aa8dd3322fee8e5b26c628
+npm i react-native-input-scroll-view kurmanız gerekiyor.
+
+//05.07.2019 @canesnet
++notların renklendirilmesi.
++textInput içerisine uzun yazı eklendiğinde oluşan sıkıntının giderilmesi.
++Güncelleme ve not ekleme kısımlarının tasarımı aynı yapıldı.
++Main.js içinde borderRadius uygulandı.
++Addnote.js içinde fontSize uygulandı.
+
+//07.07.2019 @canesnet
++Addnote.js ve Show.js içerisinde geri tuşuna basınca not kaydetme ve not güncelleme yapmaktadır.
++Main.js içinde notlara uzun basınca düzenle/sil için Alert eklendi henüz düzenle/sil çalışmamaktadır.
+
+
+//09.07.2019 @canesnet
++Güncellem kısmına Okuma Modu eklendi.
++Not Güncelleme kısmına Panoya Kopyala Özelliği eklendi.
+
+//11.07.2019
+Menüyü kurmak için npm install react-native-side-menu --save

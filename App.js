@@ -11,6 +11,8 @@ import Main from './src/screens/Main'
 import Addnote from './src/screens/Addnote'
 import Show from './src/components/Show'
 import ItemComponent from './src/components/ItemComponent'
+import Forgotpassword from './src/screens/Forgotpassword'
+import Menu from'./src/menu/Menu';
 
 const AppNavigator = createStackNavigator ({
   Loading,
@@ -20,6 +22,8 @@ const AppNavigator = createStackNavigator ({
   Addnote,
   Show,
   ItemComponent,
+  Forgotpassword,
+  Menu,
 },
 {
   initialRouteName: 'Loading',
