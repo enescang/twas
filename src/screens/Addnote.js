@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
+import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, TextInput, Image, BackHandler, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -110,7 +110,7 @@ componentDidMount=()=>{
        static navigationOptions = {  
         title: 'Yeni Not Ekle',
         headerStyle: {
-        backgroundColor: '#f4511e'
+        backgroundColor: '#8c52ff'
         },
         headerTintColor: '#fff',
        /* header: null*/
@@ -206,7 +206,7 @@ componentDidMount=()=>{
       <Icon
         name="create"
         type='material'
-        color="#db3434"
+        color="purple"
         size={25}
       />
        </TouchableOpacity>

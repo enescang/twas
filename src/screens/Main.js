@@ -8,7 +8,10 @@ import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
 import SideMenu from 'react-native-side-menu';
-import Menu from './../menu/Menu'
+import Menu from './../menu/Menu';
+import Friday from './Friday';
+import About from './About';
+
 
 const image = require('./../menu/assets/menu.png');
 
@@ -38,9 +41,10 @@ export default class Main extends React.Component {
       ) : (
         <Text>No items</Text>
       )}*/
-
   }
 
+
+  
 
   _onPressButton=(itemq, itemk, itemc, itemt)=>{
       this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, noteBgColor:itemc, noteTitle:itemt});
@@ -63,8 +67,8 @@ export default class Main extends React.Component {
         let items = Object.values(data);
         this.setState({ items });
 
-       //   const numChild = snapshot.numChildren();
-        //  this.setState({ numChild });
+      //   const numChild = snapshot.numChildren();
+      //  this.setState({ numChild });
       //  alert(snapshot.numChildren());
 
         let key = child.key;
@@ -94,19 +98,35 @@ updateMenuState(isOpen) {
   this.setState({ isOpen });
 }
 
-onMenuItemSelected = item =>
+onMenuItemSelected= (item) =>{
   this.setState({
     isOpen: false,
     selectedItem: item,
   });
 
+  if(item === 'Ana Sayfa'){
+    this.props.navigation.navigate('Main');
+  }
 
+  else if(item === 'About')
+  {
+      this.props.navigation.navigate('About');
+  }
 
+  else if (item === 'Friday'){
+        this.props.navigation.navigate('Friday');
+      }
+}
+ 
   static navigationOptions =({ navigation }) => {
     return {
-    title: 'Home',
+    title: 'Ana Sayfa',
     headerStyle: {
-      backgroundColor: 'orange',
+      backgroundColor: '#8c52ff',
+    },
+    headerTintColor: '#fff',
+    headerTitleStyle: {
+      fontWeight: 'bold',
     },
     headerLeft: (
      <TouchableOpacity style={{marginLeft: 10 }} onPress={navigation.getParam('toggle')}>
@@ -114,15 +134,13 @@ onMenuItemSelected = item =>
             source={image}
             style={{ width: 32, height: 32 }}
           />
-      
         </TouchableOpacity>
-     
     )
     }
 }
-
-
 /*Menu END */
+
+
   render() {
       const { currentUser } = this.state
       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
