@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator,Linking, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text,Image,setTimeout, Alert,TextInput,ActivityIndicator,Linking, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase';
 import * as Progress from 'react-native-progress';
 
@@ -37,13 +37,27 @@ export default class Login extends React.Component {
   }
   //Url açma fonksiyonu
 
- 
+
+  state = { email: 'ml', password: '', errorMessage: null }
 
   
-  state = { email: 'ml', password: '', errorMessage: null }
   handleLogin = () => {
     const { email, password } = this.state
-   
+
+    if(email == null  || email =='' || email == ' ' || password =='' || password ==' ' || password == null)
+    {
+      Alert.alert(
+        'Hata',
+        'Email | Şifre',
+        [
+          {text: 'OK'},
+        ],
+        {cancelable: false},
+      );
+    }
+
+    else 
+    {
     this.setState(
       {
         kayitolBtn : {
@@ -90,8 +104,11 @@ export default class Login extends React.Component {
         }
         )
       )
-  }
-  static navigationOptions = {
+    }//else
+
+  }//function
+
+  static navigationOptions = { //dayı sanki ben bu header kısmını değiştirmiştim. ben buralara hiç karışmadım hata yoksa dokunmayak zaten null vemişriz sorun yok
     title: 'Home',
     headerStyle: {
       backgroundColor: 'orange',

@@ -21,4 +21,7 @@ npm i react-native-input-scroll-view kurmanız gerekiyor.
 
 //12.07.2019
 +Addnote.js ve Show.js içerisindeki Okuma Modu özelliğine, eğer yazı içerisinde link varsa onu tıklanabilir hale getirmek için paket kuruldu:</br>
-npm i --save react-native-hyperlink
+npm i --save react-native-hyperlink<br>
+
+//14.07.2019
++SignUp.js, Login.js, Forgotpassword.js içindeki inputlar boş gidince uyarı vermesi eklendi. @yasuo and @canesnet

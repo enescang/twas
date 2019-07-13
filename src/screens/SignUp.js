@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text,Image,setTimeout, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text,Image,setTimeout, Alert, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
 import * as Progress from 'react-native-progress';
 
@@ -54,8 +54,23 @@ export default class SignUp extends React.Component {
         alert(error);
     })
   }
-  handleSignUp = () => {
 
+
+  handleSignUp = () => {
+    if(this.state.email == null  || this.state.email =='' || this.state.email == ' ' || this.state.password =='' || this.state.password ==' ' || this.state.password == null)
+    {
+      Alert.alert(
+        'Hata',
+        'Email | Şifre',
+        [
+          {text: 'OK'},
+        ],
+        {cancelable: false},
+      );
+    }
+
+    else
+    {
     this.setState(
       {
         kayitolBtn : {
@@ -75,10 +90,10 @@ export default class SignUp extends React.Component {
         }
       }
     );
- 
+
     firebase
       .auth()
-      .createUserWithEmailAndPassword(this.state.email, this.state.password)
+      .createUserWithEmailAndPassword(this.state.email.trim(), this.state.password) //trim()  fonksiyonu boşlukları kesiyor.
       .then(this.makeSignUp)
       .catch(error => this.setState(
         { errorMessage: error.message,
@@ -100,8 +115,11 @@ export default class SignUp extends React.Component {
         },
         )
       )
+    }//else
       
   }
+
+
   static navigationOptions = {
     title: 'Home',
     headerStyle: {
