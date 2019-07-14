@@ -302,8 +302,6 @@ _setContent=async(text)=> {
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#C0C0C0'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#C0C0C0'}} /></TouchableOpacity>
       </View>
        
-
-
 </View>
     )
   }
