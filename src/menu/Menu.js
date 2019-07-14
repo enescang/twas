@@ -54,6 +54,13 @@ export default function Menu({ onItemSelected }) {
       </View>
 
       <Text
+        onPress={() => onItemSelected('Ana Sayfa')}
+        style={styles.item}
+      >
+        Ana Sayfa
+      </Text>
+
+      <Text
         onPress={() => onItemSelected('About')}
         style={styles.item}
       >
@@ -61,11 +68,12 @@ export default function Menu({ onItemSelected }) {
       </Text>
 
       <Text
-        onPress={() => onItemSelected('Contacts')}
+        onPress={() => onItemSelected('Friday')}
         style={styles.item}
       >
-        Contacts
+        Friday
       </Text>
+     
     </ScrollView>
   );
 }
