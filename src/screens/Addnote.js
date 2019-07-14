@@ -1,7 +1,5 @@
 import React from 'react'
-
-import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, ToastAndroid, TextInput, Clipboard, Image, BackHandler, Dimensions, ScrollView } from 'react-native'
-
+import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, ToastAndroid, TextInput, Clipboard, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';
@@ -296,14 +294,12 @@ _setContent=async(text)=> {
 
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#FFFFFF'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#FFFFFF'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#95B3D7'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#95B3D7'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#D99694'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor:'#D99694'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14e2af'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14e2af'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#D99694'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#D99694'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14E2AF'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14E2AF'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#DABFFF'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#DABFFF'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#FAC08F'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#FAC08F'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#FFFF99'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#FFFF99'}} /></TouchableOpacity>
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#C0C0C0'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#C0C0C0'}} /></TouchableOpacity>
-
-    
       </View>
        
 
