@@ -5,6 +5,8 @@ import { Button } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
 import { Icon } from 'react-native-elements';
 import firebase from 'react-native-firebase';
+import Hyperlink from 'react-native-hyperlink';
+
 export default class Show extends React.Component {
   state = { not: this.props.navigation.state.params.data, 
   currentUser : null,
@@ -13,7 +15,7 @@ export default class Show extends React.Component {
   noteBgColor:this.props.navigation.state.params.noteBgColor,
   noteTitle:this.props.navigation.state.params.noteTitle,
   isEdit:true,
-  editIcon:"toggle-off"
+  editIcon:"toggle-off",
 }
 
 
@@ -62,7 +64,15 @@ editOrRead=()=>{
   else {
     return(
       <ScrollView>
-<Text style={{fontSize:18, marginTop:10, marginLeft:4}}>{this.state.not}</Text>
+           <Hyperlink
+    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkDefault={true}
+    linkText={ url => url === 'www.instagram.com/fridayteam23' ? 'Friday Team' : url }
+   >
+    <Text style={{fontSize:18, marginTop:10, marginLeft:4}}>
+     {this.state.not}
+    </Text>
+  </Hyperlink>
   </ScrollView>
     )
   }
@@ -118,12 +128,13 @@ componentWillUnmount() {
 }
 //Geri Tuşuna Basıldığında update() fonksiyonu çalışır END
 
-
+//Metni Panoya Kopyalama START
 _setContent=async(text)=> {
  // await Clipboard.setString(text);
  await Clipboard.setString(this.state.not);
  ToastAndroid.show('Not Panoya Kopyalandı', ToastAndroid.SHORT);
 }
+//Metni Panoya Kopyalama END
 
   render() {
     const { text, textareaHeight } = this.state;
@@ -192,22 +203,16 @@ _setContent=async(text)=> {
       <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{borderRadius:600,width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
           */}
 
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f6aa1c'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f6aa1c'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#72e0d9'}) } ><View style={{ width: Dimensions.get('window').width / 8, height: 50, backgroundColor:'#72e0d9'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#ffffb3'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#ffffb3'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#f9ddd6'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#f9ddd6'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#92374d'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#92374d'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#fff'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50,    backgroundColor: '#fff'   }} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14e2af'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14e2af'}} /></TouchableOpacity>
-      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#dabfff'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#dabfff'}} /></TouchableOpacity>
-
-    
-      </View>
-       
-
-
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#FFFFFF'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#FFFFFF'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#95B3D7'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#95B3D7'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#D99694'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor:'#D99694'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#14E2AF'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#14E2Af'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#DABFFF'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#DABFFF'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#FAC08F'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#FAC08F'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#FFFF99'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#FFFF99'}} /></TouchableOpacity>
+      <TouchableOpacity onPress={()=>this.setState({ noteBgColor:'#C0C0C0'}) } ><View style={{width: Dimensions.get('window').width / 8, height: 50, backgroundColor: '#C0C0C0'}} /></TouchableOpacity>
+      </View>  
 </View>
-
     );
   }
 }

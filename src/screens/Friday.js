@@ -1,9 +1,11 @@
-import React from 'react';
+import React from 'react'
+import { TouchableHighlight, StyleSheet, Platform, Image, Text, View, ScrollView, TouchableOpacity, Dimensions} from 'react-native'
+import PropTypes from 'prop-types';
 import firebase from 'react-native-firebase'
-import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Icon } from 'react-native-elements';
-import InputScrollView from 'react-native-input-scroll-view';
-import { Alert, View, Text, Image, TextInput, Dimensions, StyleSheet, ActivityIndicator} from 'react-native'
+import {NavigationActions} from 'react-navigation'
+import ItemComponent from '../components/ItemComponent'
+import {Button} from 'react-native-elements'
+import { Icon } from 'react-native-elements'
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu';
 
@@ -26,6 +28,11 @@ export default class Friday extends React.Component {
     };
   }
 
+  
+  componentDidMount() {
+    //menünün açılması için Params olarak fonksiyonu tanıtmak gerekiyormuş.
+    this.props.navigation.setParams({ toggle: this.toggle });
+  }
 
 
   toggle() {
@@ -44,23 +51,32 @@ export default class Friday extends React.Component {
       selectedItem: item,
     });
   
-    if(item === 'Ana Sayfa'){
-      this.props.navigation.navigate('Main');
-    }
-  
-    else if(item === 'About')
-    {
-        this.props.navigation.navigate('About');
-    }
-  
-    else if (item === 'Friday'){
+      if(item === 'Ana Sayfa'){
+        this.props.navigation.navigate('Main');
+      }
+
+      else if(item === 'Arsiv')
+      {
+          this.props.navigation.navigate('Arsiv');
+      }
+    
+      else if(item === 'About')
+      {
+          this.props.navigation.navigate('About');
+      }
+    
+      else if (item === 'Friday'){
           this.props.navigation.navigate('Friday');
-        }
-  }
+      }
+          
+      else if (item === 'Ayarlar'){
+          this.props.navigation.navigate('Ayarlar');
+      }
+ }
    
     static navigationOptions =({ navigation }) => {
       return {
-      title: 'Friday',
+      title: 'Çöp Kutusu',
       headerStyle: {
         backgroundColor: '#8c52ff',
       },
@@ -81,11 +97,20 @@ export default class Friday extends React.Component {
 
 
    render(){
+
+    const { currentUser } = this.state
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
+
         return(
+        <SideMenu
+            menu={menu}
+            isOpen={this.state.isOpen}
+            onChange={isOpen => this.updateMenuState(isOpen)}>
+
         <View style={styles.container}>
-           <Text>Burası Friday</Text>
+           <Text>Burası Çöp Kutusu Sayfası</Text>
         </View>
-        
+        </SideMenu>
         );
 }
 }
@@ -95,5 +120,18 @@ const styles = StyleSheet.create({
       flex: 1,
       justifyContent: 'center',
       alignItems: 'center',
-    }
+      backgroundColor:'white',
+    },
+    ScrollContainer:{
+        flex: 1,
+        },
+
+        savecontainer:{
+            flex: 1,
+            justifyContent: 'flex-end',
+            marginBottom: 13,
+            width:80,
+            marginRight: Dimensions.get('window').width / 1-100,
+            
+        },
   })
