@@ -15,6 +15,8 @@ import Forgotpassword from './src/screens/Forgotpassword'
 import Menu from'./src/menu/Menu'
 import Friday from './src/screens/Friday'
 import About from './src/screens/About'
+import Arsiv from './src/screens/Arsiv'
+import Ayarlar from './src/screens/Ayarlar'
 
 const AppNavigator = createStackNavigator ({
   Loading,
@@ -28,6 +30,8 @@ const AppNavigator = createStackNavigator ({
   Menu,
   Friday,
   About,
+  Arsiv,
+  Ayarlar,
 },
 {
   initialRouteName: 'Loading',
