@@ -24,4 +24,9 @@ npm i react-native-input-scroll-view kurmanız gerekiyor.
 npm i --save react-native-hyperlink<br>
 
 //14.07.2019
-+SignUp.js, Login.js, Forgotpassword.js içindeki inputlar boş gidince uyarı vermesi eklendi. @yasuo and @canesnet
++SignUp.js, Login.js, Forgotpassword.js içindeki inputlar boş gidince uyarı vermesi eklendi. @yasuo and @canesnet<br>
+
+//16.07.2019 @canesnet
+react-native-image-picker@0.27.2 paketini kurmanız gerekiyor.<br>
+Daha sonra<br> 
+react-native link react-native-image-picker
