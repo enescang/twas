@@ -57,23 +57,37 @@ export default function Menu({ onItemSelected }) {
         onPress={() => onItemSelected('Ana Sayfa')}
         style={styles.item}
       >
-        Ana Sayfa
+        Notlar
       </Text>
 
       <Text
-        onPress={() => onItemSelected('About')}
+        onPress={() => onItemSelected('Arsiv')}
         style={styles.item}
       >
-        About
+        Arşiv
       </Text>
 
       <Text
         onPress={() => onItemSelected('Friday')}
         style={styles.item}
       >
-        Friday
+        Çöp Kutusu
       </Text>
-     
+
+      <Text
+        onPress={() => onItemSelected('About')}
+        style={styles.item}
+      >
+        Hakkında
+      </Text>
+
+      <Text
+        onPress={() => onItemSelected('Ayarlar')}
+        style={styles.item}
+      >
+        Ayarlar
+      </Text>
+      
     </ScrollView>
   );
 }

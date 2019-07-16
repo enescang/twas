@@ -12,12 +12,12 @@ import Menu from './../menu/Menu';
 
 const image = require('./../menu/assets/menu.png');
 
-export default class About extends React.Component {
+export default class Ayarlar extends React.Component {
 
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-
+    
     this.state = {
       isOpen: false,
       selectedItem: 'About',
@@ -28,7 +28,7 @@ export default class About extends React.Component {
     };
   }
 
-  
+
   componentDidMount() {
     //menünün açılması için Params olarak fonksiyonu tanıtmak gerekiyormuş.
     this.props.navigation.setParams({ toggle: this.toggle });
@@ -51,39 +51,43 @@ export default class About extends React.Component {
       selectedItem: item,
     });
   
-      if(item === 'Ana Sayfa'){
+        if(item === 'Ana Sayfa'){
         this.props.navigation.navigate('Main');
-      }
+        }
 
-      else if(item === 'Arsiv')
-      {
-        this.props.navigation.navigate('Arsiv');
-      }
+        else if(item === 'Arsiv')
+        {
+            this.props.navigation.navigate('Arsiv');
+        }
     
-      else if(item === 'About')
-      {
-        this.props.navigation.navigate('About');
-      }
+        else if(item === 'About')
+        {
+            this.props.navigation.navigate('About');
+        }
     
-      else if (item === 'Friday'){
-        this.props.navigation.navigate('Friday');
-      }
-          
-      else if (item === 'Ayarlar'){
-        this.props.navigation.navigate('Ayarlar');
-      }
-  }
-   
-    static navigationOptions =({ navigation }) => {
+        else if (item === 'Friday'){
+            this.props.navigation.navigate('Friday');
+            }
+
+        else if (item === 'Ayarlar'){
+            this.props.navigation.navigate('Ayarlar');
+            }
+        }
+  
+
+static navigationOptions =({ navigation }) => {
+
       return {
-      title: 'Hakkında',
-      headerStyle: {
-        backgroundColor: '#8c52ff',
-      },
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-        fontWeight: 'bold',
-      },
+        title: 'Ayarlar',
+        headerStyle: {
+            backgroundColor: '#8c52ff',
+        },
+
+        headerTintColor: '#fff',
+        headerTitleStyle: {
+            fontWeight: 'bold',
+        },
+
       headerLeft: (
        <TouchableOpacity style={{marginLeft: 10 }} onPress={navigation.getParam('toggle')}>
             <Image
@@ -93,8 +97,7 @@ export default class About extends React.Component {
           </TouchableOpacity>
       )
       }
-  }
-
+}
 
    render(){
 
@@ -108,7 +111,7 @@ export default class About extends React.Component {
             onChange={isOpen => this.updateMenuState(isOpen)}>
 
         <View style={styles.container}>
-           <Text>Burası Hakkında Sayfası</Text>
+           <Text>Burası Ayarlar Sayfası</Text>
         </View>
         </SideMenu>
         );
