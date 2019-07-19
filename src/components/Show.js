@@ -99,7 +99,7 @@ static navigationOptions = {
          
   title: 'Not Güncelle',
   headerStyle: {
-  backgroundColor: 'purple'
+  backgroundColor: '#8c52ff'
   },
   headerTintColor: '#fff',
  /* header: null*/
