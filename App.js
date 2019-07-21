@@ -13,6 +13,8 @@ import Show from './src/components/Show'
 import ItemComponent from './src/components/ItemComponent'
 import Forgotpassword from './src/screens/Forgotpassword'
 import Menu from'./src/menu/Menu';
+import copkutusu from './src/screens/copkutusu';
+import arcieve from './src/screens/arcieve';
 
 const AppNavigator = createStackNavigator ({
   Loading,
@@ -24,6 +26,8 @@ const AppNavigator = createStackNavigator ({
   ItemComponent,
   Forgotpassword,
   Menu,
+  copkutusu,
+  arcieve
 },
 {
   initialRouteName: 'Loading',

@@ -6,8 +6,6 @@ import {NavigationActions} from 'react-navigation'
 import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
-import copkutusu from './copkutusu'
-import arcieve from './arcieve'
 
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
@@ -42,7 +40,7 @@ import Modal from "react-native-simple-modal";
 
 const image = require('./../menu/assets/menu.png');
 
-export default class Main extends React.Component {
+export default class copkutusu extends React.Component {
   state = { open: false };
 
   modalDidOpen = () => console.log("Modal did open.");
@@ -52,12 +50,13 @@ export default class Main extends React.Component {
     console.log("Modal did close.");
   };
 
-  sil = () => this.props.navigation.navigate('copkutusu');
+  sil = () => this.setState({ offset: -100 });
 
-  arsivle = () => this.props.navigation.navigate('arcieve');
+  arsivle = () => this.setState({ offset: 0 });
+
   openModal = () => this.setState({ open: true });
 
-  gonder = () => this.setState({ open: false });
+  arsivle = () => this.setState({ open: false });
 
 
     constructor(props) {
@@ -151,7 +150,7 @@ onMenuItemSelected = item =>
 
   static navigationOptions =({ navigation }) => {
     return {
-    title: 'Home',
+    title: 'Çöp Kutusu',
     headerStyle: {
       backgroundColor: 'orange',
     },
@@ -240,13 +239,7 @@ onMenuItemSelected = item =>
           </View>
         </Modal>
 
-      <View style={{flexDirection: 'row', zIndex:50}}>
-       <TouchableOpacity style={styles.savebutton  }
-       onPress={this.git}>
-      <Text>      Not alın...</Text>
-       </TouchableOpacity>
-
-        </View>
+      
 </View>
 
       </SideMenu>
