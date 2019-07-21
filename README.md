@@ -29,4 +29,20 @@ npm i --save react-native-hyperlink<br>
 //16.07.2019 @canesnet
 react-native-image-picker@0.27.2 paketini kurmanız gerekiyor.<br>
 Daha sonra<br> 
-react-native link react-native-image-picker
+react-native link react-native-image-picker<br>
+
+//18.07.2019<br>
+Dosyalama işlemleri için paket indirildi => rn-fetch-blob<br>
+npm install rn-fetch-blog@0.10.13 --save<br>
+react-native link rn-fetch-blob<br>
+android/build.gradle 39 ve 42. satırlara kod ve açıklaması eklendi bu otomatik olarak github ile gelecektir.
+
+Image Picker ile android kısmında kırpma sorunu olduğu için <br> 
+react-native-image-crop-picker@0.24.1 paketi kuruldu<br>
+react-native link react-native-image-crop-picker<br>
+Profil.js oluşturuldu.<br>
+
+//19.07.2019<br>
+Firebase'da SQL'deki gibi where komutunu kullanmak için örnek:<br>
+..... .orderByChil('placeId').equalTo('1')  ......
+
