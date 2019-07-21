@@ -9,6 +9,8 @@ import { Icon } from 'react-native-elements'
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu';
 
+var width = Dimensions.get('window').width;
+var height = Dimensions.get('window').height;
 
 const image = require('./../menu/assets/menu.png');
 
@@ -17,7 +19,7 @@ export default class About extends React.Component {
   constructor(props) {
     super(props);
     this.toggle = this.toggle.bind(this);
-
+    
     this.state = {
       isOpen: false,
       selectedItem: 'About',
@@ -107,31 +109,88 @@ export default class About extends React.Component {
             isOpen={this.state.isOpen}
             onChange={isOpen => this.updateMenuState(isOpen)}>
 
-        <View style={styles.container}>
-           <Text>Burası Hakkında Sayfası</Text>
+
+
+      <View style={styles.container}>
+        <Text style={{fontSize: 50, fontWeight: 'bold', color: '#8c52ff',}}>
+          TWAS
+        </Text>
+
+        <Text style={{color: 'blue'}}>
+          Think!
+          <Text style={{color: 'green'}}> Write!</Text>
+          <Text style={{color: 'red'}}> Access!</Text>
+        </Text>
         </View>
+
+      <View style={styles.thirdrow}>
+          <Text>
+          TWAS, Friday Team tarafından geliştirilen online bir not alma uygulamasıdır.
+          Online olduğu için de notlarınıza istediğiniz zaman, istediğiniz mobil cihaz ile erişim kolaylığı sağlıyor. 
+          {"\n"}
+          Uygulamanın temel amacı insanların yapacakları işi unutmamaları için her an yanlarında bulunan bir şeye not almaları gerekiyor işte burada TWAS devreye giriyor. 
+          TWAS sayesinde kolaylıkla ve hızlıca not alabiliyorsunuz, ayrıca telefonunuzun başına bir şey gelse dahi notlarınızı bulut depolama hizmeti ile güvenli bir şekilde depolandığı için istediğiniz zaman başka bir cihaz ile notlarınızı tekrar görebiliyorsunuz.
+          {"\n"}
+          Ayrıca yakın zamanda gelecek olan TWAS masaüstü versiyonu ile notlarınızı ister kişisel bilgisayarımızdan ister telefonunuzdan yazıp istediğiniz zaman istediğiniz cihazınızdan anında erişim sağlayabileceksiniz.
+          
+          </Text>
+          <Text style={{fontSize: 25, color: '#8c52ff', fontWeight: 'bold' }}>
+            <Text style={{color: 'black', fontSize: 15}}>Kolayca not al. {""}
+            </Text>
+            TWAS 
+            <Text style={{color: 'black', fontSize: 15}}> {""} Teşekkürler.</Text>
+          </Text>
+      </View>
+
+      <View style={styles.fourthrow}>
+          <Text style={{fontSize: 20, fontWeight: 'bold',}}>
+            Destek
+          </Text>
+          <Text>
+            Lütfen soru, hata raporu veya yorumlarınızı bize bildiriniz.
+            {"\n"}
+          </Text>
+          <Text>
+            Web Sitesi - https://www.fridayteam23.com
+          </Text>
+          <Text>
+            Instagram - https://www.instagram.com/fridayteam23
+          </Text>
+          <Text>
+
+          </Text>
+          
+      </View>
+
+
         </SideMenu>
         );
 }
 }
 
 const styles = StyleSheet.create({
+  
     container: {
       flex: 1,
-      justifyContent: 'center',
+      //justifyContent: 'center', 
       alignItems: 'center',
       backgroundColor:'white',
-    },
-    ScrollContainer:{
-        flex: 1,
-        },
+      top: 28,
+      
+    }, 
 
-        savecontainer:{
-            flex: 1,
-            justifyContent: 'flex-end',
-            marginBottom: 13,
-            width:80,
-            marginRight: Dimensions.get('window').width / 1-100,
-            
-        },
+    thirdrow:{
+      textAlign: 'center',
+      width: 390,
+      left: 15,
+      backgroundColor:'white',
+      color: 'black'
+    },
+
+    fourthrow: {
+      flex: 1,
+      backgroundColor:'white',
+      justifyContent: 'flex-end',
+      left: 15,
+    },
   })

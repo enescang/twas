@@ -7,9 +7,6 @@ import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
-import copkutusu from './copkutusu'
-import arcieve from './arcieve'
-
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
 import Modal from "react-native-simple-modal";
@@ -40,14 +37,10 @@ import Modal from "react-native-simple-modal";
   }}
 />;
 
-import SideMenu from 'react-native-side-menu';
-import Menu from './../menu/Menu';
-
-
 
 const image = require('./../menu/assets/menu.png');
 
-export default class Main extends React.Component {
+export default class copkutusu extends React.Component {
   state = { open: false };
 
   modalDidOpen = () => console.log("Modal did open.");
@@ -57,12 +50,13 @@ export default class Main extends React.Component {
     console.log("Modal did close.");
   };
 
-  sil = () => this.props.navigation.navigate('copkutusu');
+  sil = () => this.setState({ offset: -100 });
 
-  arsivle = () => this.props.navigation.navigate('arcieve');
+  arsivle = () => this.setState({ offset: 0 });
+
   openModal = () => this.setState({ open: true });
 
-  gonder = () => this.setState({ open: false });
+  arsivle = () => this.setState({ open: false });
 
 
     constructor(props) {
@@ -80,6 +74,7 @@ export default class Main extends React.Component {
     }
   
   git = () => {
+  
       this.props.navigation.navigate('Addnote', {num:this.state.numChild});
       /*
       {this.state.items.length > 0 ? (
@@ -87,6 +82,7 @@ export default class Main extends React.Component {
       ) : (
         <Text>No items</Text>
       )}*/
+
   }
 
 
@@ -100,17 +96,23 @@ export default class Main extends React.Component {
   componentDidMount() {
     //menünün açılması için Params olarak fonksiyonu tanıtmak gerekiyormuş.
     this.props.navigation.setParams({ toggle: this.toggle });
+
+
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
     const referans = "/Users/"+currentUser.uid;
     firebase.database().ref(referans).orderByKey().limitToLast(10000).on('value', snapshot => {
+
       snapshot.forEach((child) => {
+
         let data = snapshot.val();
         let items = Object.values(data);
         this.setState({ items });
-      //  const numChild = snapshot.numChildren();
-      //  this.setState({ numChild });
+
+       //   const numChild = snapshot.numChildren();
+        //  this.setState({ numChild });
       //  alert(snapshot.numChildren());
+
         let key = child.key;
         let son = Object.values(key);
         this.setState({ son });
@@ -123,11 +125,9 @@ export default class Main extends React.Component {
       firebase.auth().signOut();
   }
 
-
   readDataUser = ()=>{
       alert(this.state.son)
   }
-
 
 /* Menu START*/
 toggle() {
@@ -140,61 +140,35 @@ updateMenuState(isOpen) {
   this.setState({ isOpen });
 }
 
-onMenuItemSelected= (item) =>{
+onMenuItemSelected = item =>
   this.setState({
     isOpen: false,
     selectedItem: item,
   });
 
-  if(item === 'Ana Sayfa'){
-    this.props.navigation.navigate('Main');
-  }
 
-  else if(item === 'Arsiv')
-  {
-      this.props.navigation.navigate('Arsiv');
-  }
 
-  else if(item === 'About')
-  {
-      this.props.navigation.navigate('About');
-  }
-
-  else if (item === 'Friday'){
-        this.props.navigation.navigate('Friday');
-  }
-      
-  else if (item === 'Ayarlar'){
-        this.props.navigation.navigate('Ayarlar');
-  }
-}
- 
   static navigationOptions =({ navigation }) => {
-
     return {
-      title: 'Notlar',
-      headerStyle: {
-      backgroundColor: '#8c52ff',
-      },
-
-      headerTintColor: '#fff',
-      headerTitleStyle: {
-      fontWeight: 'bold',
-      },
-
+    title: 'Arşiv',
+    headerStyle: {
+      backgroundColor: 'orange',
+    },
     headerLeft: (
      <TouchableOpacity style={{marginLeft: 10 }} onPress={navigation.getParam('toggle')}>
           <Image
             source={image}
             style={{ width: 32, height: 32 }}
           />
+      
         </TouchableOpacity>
+     
     )
     }
 }
+
+
 /*Menu END */
-
-
   render() {
       const { currentUser } = this.state
       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
@@ -203,8 +177,8 @@ onMenuItemSelected= (item) =>{
     <SideMenu
     menu={menu}
     isOpen={this.state.isOpen}
-    onChange={isOpen => this.updateMenuState(isOpen)}>
-
+    onChange={isOpen => this.updateMenuState(isOpen)}
+  >
     <View style={styles.container}>
       <ScrollView  style={styles.ScrollContainer} >
         <View style={styles.itemsList}>
@@ -218,31 +192,27 @@ onMenuItemSelected= (item) =>{
                    height: 200,
                    borderWidth: 0.9,
                    borderColor: '#ddd',
-                  //shadowColor: 'black',
-                  //shadowOpacity: .2,
+                   //shadowColor: 'black',
+                   //shadowOpacity: .2,
                   // shadowRadius: 2,
-                   borderRadius:10,
+                  borderRadius:10,
                    color:'black',
-
                    backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white"
                    onLongPress = {this.openModal}
                    >
                     
                 
                   <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
-
-                   backgroundColor: item.noteBgColor}} onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
-                   <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
-
                    <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
-                   {item.not}</Text>
+                  
+                   
+                  {item.not}</Text>
                 </TouchableOpacity>
               </View>
             );
           }
         )
       }
-
         </View>
       </ScrollView>
       <Modal
@@ -269,35 +239,28 @@ onMenuItemSelected= (item) =>{
           </View>
         </Modal>
 
-      </View>
-    </ScrollView>
+      
+</View>
 
-
-    <View style={{flexDirection: 'row', zIndex:50}}>
-       <TouchableOpacity style={styles.savebutton  }
-       onPress={this.git}>
-      <Text>      Not alın...</Text>
-       </TouchableOpacity>
-
-    </View>
-   </View>
-</SideMenu>
+      </SideMenu>
     )
   }
 }
 
   const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor:'white'
+        
     },
 
+  
   ScrollContainer:{
       flex: 1,
       },
+
 
   itemsList: {
       flex: 1,
@@ -305,6 +268,7 @@ onMenuItemSelected= (item) =>{
       flexWrap: 'wrap',
       padding: 2,
   },
+
 
   savebutton:{
     width:Dimensions.get('window').width / 1-15,
@@ -323,20 +287,21 @@ onMenuItemSelected= (item) =>{
       marginBottom: 13,
       width:80,
       marginRight: Dimensions.get('window').width / 1-100,
+      
   },
 })
 
 
-  //borderWidth:2,
-  //width:3,
-  //marginRight:90,
-  //backgroundColor:'#db3434', 
-  //paddingVertical:18,
-  //paddingHorizontal:195,
-  //marginVertical:8,
-  //borderRadius:15,
-  //shadowColor:'purple',
-  //shadowOpacity:.8,
-  //shadowRadius:3,
-  //shadowOffset:{width:0, height:0},
-  //elevation:8
+//borderWidth:2,
+   // width:3,
+   // marginRight:90,
+   // backgroundColor:'#db3434', 
+    //paddingVertical:18,
+    //paddingHorizontal:195,
+  //  marginVertical:8,
+   // borderRadius:15,
+   // shadowColor:'purple',
+   // shadowOpacity:.8,
+   // shadowRadius:3,
+   // shadowOffset:{width:0, height:0},
+   // elevation:8
