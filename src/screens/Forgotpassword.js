@@ -14,6 +14,20 @@ export default class Forgotpassword extends React.Component {
     state={eposta:''}
 
     resetMyPassword = () => {
+      //sanki tamam alerti düzeltcem bi deniyorum o zaman konsolu kapatıp
+      const{eposta} = this.state
+  if (eposta == null || eposta == '' || eposta == ' ')
+  {
+    Alert.alert(
+      'Hata',
+      'Email Kısmını Doldurunuz',
+      [
+        {text: 'OK'},
+      ],
+      {cancelable: false},
+    );
+  }
+  else {
         firebase.auth().sendPasswordResetEmail(this.state.eposta)
           .then(function (user) {
             alert('Please check your email...')
@@ -21,6 +35,7 @@ export default class Forgotpassword extends React.Component {
            alert(e);
           })
       }
+    }
 
 
 

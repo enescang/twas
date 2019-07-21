@@ -12,9 +12,17 @@ import Addnote from './src/screens/Addnote'
 import Show from './src/components/Show'
 import ItemComponent from './src/components/ItemComponent'
 import Forgotpassword from './src/screens/Forgotpassword'
+
 import Menu from'./src/menu/Menu';
 import copkutusu from './src/screens/copkutusu';
 import arcieve from './src/screens/arcieve';
+
+import Menu from'./src/menu/Menu'
+import Friday from './src/screens/Friday'
+import About from './src/screens/About'
+import Arsiv from './src/screens/Arsiv'
+import Ayarlar from './src/screens/Ayarlar'
+
 
 const AppNavigator = createStackNavigator ({
   Loading,
@@ -26,8 +34,15 @@ const AppNavigator = createStackNavigator ({
   ItemComponent,
   Forgotpassword,
   Menu,
+
   copkutusu,
-  arcieve
+  arcieve,
+
+  Friday,
+  About,
+  Arsiv,
+  Ayarlar,
+
 },
 {
   initialRouteName: 'Loading',
