@@ -21,7 +21,7 @@ const styles = StyleSheet.create({
     padding: 20,
   },
   avatarContainer: {
-    marginBottom: 20,
+    marginBottom: 8,
     marginTop: 20,
   },
   avatar: {
@@ -33,18 +33,23 @@ const styles = StyleSheet.create({
   name: {
     position: 'absolute',
     left: 70,
-    top: 20,
+    top: 15,
+    fontSize: 15,
   },
   item: {
-    fontSize: 14,
-    fontWeight: '300',
-    paddingTop: 5,
+    fontSize: 20,
+    fontWeight: '500',
+    paddingTop: 15,
+    
   },
 });
 
 export default function Menu({ onItemSelected }) {
   return (
     <ScrollView scrollsToTop={false} style={styles.menu}>
+      <Text style={{fontSize: 25, fontWeight: 'bold', color: '#8c52ff', paddingBottom: 8, }}>
+        TWAS
+      </Text>
       <View style={styles.avatarContainer}>
         <Image
           style={styles.avatar}
@@ -53,7 +58,7 @@ export default function Menu({ onItemSelected }) {
         <Text style={styles.name}>Your name</Text>
       </View>
 
-      <Text
+      <Text 
         onPress={() => onItemSelected('Ana Sayfa')}
         style={styles.item}
       >
