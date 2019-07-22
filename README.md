@@ -44,5 +44,13 @@ Profil.js oluşturuldu.<br>
 
 //19.07.2019<br>
 Firebase'da SQL'deki gibi where komutunu kullanmak için örnek:<br>
-..... .orderByChil('placeId').equalTo('1')  ......
+..... .orderByChil('placeId').equalTo('1')  ......<br>
+
+//22.07.2019<br>
+Cihazın dil ayarlarına göre "strings" leri değişmeye yarayan paket<br>
+npm install react-native-localization<br>
+react-native link react-native-localization<br>
+<br>
+Profil.js için TR/EN 
+src/components/Localization.js içinde dil ayarları yapıldı
 

@@ -40,8 +40,8 @@ import Modal from "react-native-simple-modal";
   }}
 />;
 
-import SideMenu from 'react-native-side-menu';
-import Menu from './../menu/Menu';
+//import SideMenu from 'react-native-side-menu';
+//import Menu from './../menu/Menu';
 
 
 
@@ -166,7 +166,10 @@ onMenuItemSelected= (item) =>{
       
   else if (item === 'Ayarlar'){
         this.props.navigation.navigate('Ayarlar');
-  }
+  } 
+  else if (item === 'Profile'){
+    this.props.navigation.navigate('Profile');
+}
 }
  
   static navigationOptions =({ navigation }) => {
@@ -225,17 +228,15 @@ onMenuItemSelected= (item) =>{
                    color:'black',
 
                    backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white"
-                   onLongPress = {this.openModal}
-                   >
-                    
-                
-                  <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
-
-                   backgroundColor: item.noteBgColor}} onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white">
+                   onLongPress = {this.openModal}>
+                   
+                  
+                  
                    <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
 
                    <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
                    {item.not}</Text>
+
                 </TouchableOpacity>
               </View>
             );
@@ -270,8 +271,7 @@ onMenuItemSelected= (item) =>{
         </Modal>
 
       </View>
-    </ScrollView>
-
+   
 
     <View style={{flexDirection: 'row', zIndex:50}}>
        <TouchableOpacity style={styles.savebutton  }
@@ -280,7 +280,7 @@ onMenuItemSelected= (item) =>{
        </TouchableOpacity>
 
     </View>
-   </View>
+  
 </SideMenu>
     )
   }

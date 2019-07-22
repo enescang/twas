@@ -87,6 +87,12 @@ export default function Menu({ onItemSelected }) {
       </Text>
 
       <Text
+        onPress={() => onItemSelected('Profile')}
+        style={styles.item}
+      >
+        Profil
+      </Text>
+      <Text
         onPress={() => onItemSelected('Ayarlar')}
         style={styles.item}
       >

@@ -144,6 +144,7 @@ android {
 }
 
 dependencies {
+    implementation project(':react-native-localization')
     implementation project(':react-native-image-crop-picker')
     implementation project(':rn-fetch-blob')
     implementation project(':react-native-image-picker')

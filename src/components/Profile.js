@@ -6,6 +6,7 @@ import firebase from 'react-native-firebase';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Icon, Tooltip, Badge} from 'react-native-elements';
 
+import {strings} from './../components/Localization';
 
 ///
 
@@ -36,14 +37,14 @@ const getPhoto=(image)=>{
         alert(error)
       })
   })
-
-
 }
+
+
 export default class Profile extends React.Component {
   state = {
     photo: null,
     currentUser:null,
-    image:'file:///sdcard/Android/data/com.friday.twas/movietwas/.tt.png',
+    image:'file:///sdcard/Android/data/com.friday.twas/cloudtwas/.tt.png',
     imageMenu:false,
     noteValue:0,
     noteDeletedValue:0,
@@ -134,7 +135,7 @@ export default class Profile extends React.Component {
 
   handlePhotoWithCamera =()=>{
     ImagePicker.openCamera( {
-    width:1080,
+      width:1080,
       height:1080,
       cropping:true,
     }).then(image=>{
@@ -145,13 +146,13 @@ export default class Profile extends React.Component {
         window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
         window.Blob = Blob
 
-RNFetchBlob.fs.mkdir("/sdcard/Android/data/com.friday.twas/movietwas")
-.then(() => { alert("dfsd") })
-.catch((err) => { alert("noo") })
+RNFetchBlob.fs.mkdir("/sdcard/Android/data/com.friday.twas/cloudtwas")
+    .then(() => { /*alert("dfsd")*/ })
+    .catch((err) => { /*alert("noo")*/ })
 
-RNFetchBlob.fs.cp(image.path, "/sdcard/Android/data/com.friday.twas/movietwas/.tt.png")
-.then(() => { alert("copy") })
-.catch((error) => { alert("no copy"+error) })
+RNFetchBlob.fs.cp(image.path, "/sdcard/Android/data/com.friday.twas/cloudtwas/.tt.png")
+    .then(() => {/* alert("copy") */})
+    .catch((error) => {/* alert("no copy"+error)*/ })
 
 const { currentUser } = firebase.auth();
 this.setState({ currentUser });
@@ -200,13 +201,13 @@ handlePhotoWithGallery =()=>{
           window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest
           window.Blob = Blob
 
-RNFetchBlob.fs.mkdir("/sdcard/Android/data/com.friday.twas/movietwas")
-.then(() => { alert("dfsd") })
-.catch((err) => { alert("noo") })
+RNFetchBlob.fs.mkdir("/sdcard/Android/data/com.friday.twas/cloudtwas")
+    .then(() => { /*alert("dfsd") */})
+    .catch((err) => {/* alert("noo")*/ })
 
-RNFetchBlob.fs.cp(image.path, "/sdcard/Android/data/com.friday.twas/movietwas/.tt.png")
-.then(() => { alert("copy") })
-.catch((error) => { alert("no copy"+error) })
+RNFetchBlob.fs.cp(image.path, "/sdcard/Android/data/com.friday.twas/cloudtwas/.tt.png")
+    .then(() => {/* alert("copy") */})
+    .catch((error) => {/* alert("no copy"+error) */})
 
 const { currentUser } = firebase.auth();
   this.setState({ currentUser });
@@ -258,8 +259,7 @@ return new Promise((resolve, reject) => {
   };*/
 
   signOut = () =>{
-    alert("j")
-   // firebase.auth().signOut();
+    firebase.auth().signOut();
 }
 
 closeToApp=()=>{
@@ -302,7 +302,7 @@ closeToApp=()=>{
     else {
       return(
         <TouchableOpacity onPress={()=>this.setState({imageMenu:true})}>
-<Text style={styles.name}>Change Profil</Text>
+<Text style={styles.name}>{strings.profilJs.changeProfilTitle}</Text>
 </TouchableOpacity>
       )
     }
@@ -316,7 +316,9 @@ closeToApp=()=>{
 
       this.reauthenticate(currentPassword).then(()=>{
         user.delete().then(function() {
-          alert("hesabınız silindi")
+          //account deleting
+          alert(strings.profilJs.accountDeleted)
+
         }, function(error) {
           alert(error)
         });
@@ -327,7 +329,8 @@ closeToApp=()=>{
     }
     else
     {
-      alert("Güvenlik kodu yanlış");
+      //captcha error
+      alert(strings.profilJs.captchaIsWrong);
     }
 
   }
@@ -345,7 +348,7 @@ closeToApp=()=>{
       this.reauthenticate(currentPassword).then(() => {
         var user = firebase.auth().currentUser;
         user.updatePassword(newPassword).then(() => {
-         alert("we changed your passw")
+         alert(strings.profilJs.passwordChanged)
         }).catch((error) => { alert(error)});
       }).catch((error) => { alert(error) });
   }
@@ -356,7 +359,7 @@ closeToApp=()=>{
   this.reauthenticate(currentPassword).then(() => {
     var user = firebase.auth().currentUser;
     user.updateEmail(newEmail).then(() => {
-     alert("email değiştirildi")
+     alert(strings.profilJs.emailChanged)
     }).catch((error) => { alert(error) });
   }).catch((error) => { alert(error); });
   }
@@ -371,7 +374,7 @@ closeToApp=()=>{
           <Text style={{textAlign:'center', fontWeight:'bold'}}>{this.state.kral}</Text>
 
         <TextInput style={styles.textInput}
-        placeholder ="Şifreniz"
+        placeholder ={strings.profilJs.currentPassword}
         editable = {true}
         maxLength = {40}
         value={this.state.oldPassword3}
@@ -382,7 +385,7 @@ closeToApp=()=>{
       />
 
 <TextInput style={styles.textInput}
-        placeholder ="Captcha"
+        placeholder ={strings.profilJs.captchaCode}
         editable = {true}
         maxLength = {15}
         value={this.state.captcha}
@@ -413,7 +416,7 @@ closeToApp=()=>{
       </View>
 
       )
-        alert('are you sure to delete your account')
+      //  alert('are you sure to delete your account')
     }
 
     if(this.state.accountStatus === 'changePassword')
@@ -421,7 +424,7 @@ closeToApp=()=>{
       return (
       <View>
       <TextInput style={styles.textInput}
-      placeholder ="Eski Şifre"
+      placeholder ={strings.profilJs.currentPassword}
       editable = {true}
       maxLength = {40}
       value={this.state.oldPassword}
@@ -432,7 +435,7 @@ closeToApp=()=>{
     />
 
     <TextInput style={styles.textInput}
-    placeholder ="Yeni Şifre"
+    placeholder ={strings.profilJs.newPassword}
     editable = {true}
     maxLength = {40}
     value={this.state.newPassword}
@@ -464,7 +467,7 @@ closeToApp=()=>{
     </View>
       );
 
-      alert("do yu want to change your password")
+      //alert("do yu want to change your password")
     }
 
 
@@ -473,7 +476,7 @@ closeToApp=()=>{
       return(
         <View>
            <TextInput style={styles.textInput}
-    placeholder ="Mevcut Şifreniz"
+    placeholder ={strings.profilJs.currentEmail}
     editable = {true}
     maxLength = {40}
     value={this.state.oldPassword2}
@@ -484,7 +487,7 @@ closeToApp=()=>{
   />
 
              <TextInput style={styles.textInput}
-    placeholder ="Yeni Email"
+    placeholder ={strings.profilJs.newEmail}
     editable = {true}
     maxLength = {30}
     value={this.state.newEmail}
@@ -551,7 +554,7 @@ closeToApp=()=>{
 
             <View style={styles.bodyContent}>
               <View style={styles.menuBox}>
-                <Tooltip height={40} popover={<Text>Not Sayısı</Text>}>
+                <Tooltip height={40} popover={<Text>{strings.profilJs.twasNote}</Text>}>
                     <Icon
                      name="trending-up"
                      type='material'
@@ -563,7 +566,7 @@ closeToApp=()=>{
               </View>
 
               <View style={styles.menuBox}>
-                  <Tooltip height={40} popover={<Text>Arşiv Kutusu</Text>}>
+                  <Tooltip height={40} popover={<Text>{strings.profilJs.archiveBox}</Text>}>
                    <Icon
                     name="archive"
                     type='material'
@@ -575,7 +578,7 @@ closeToApp=()=>{
              </View> 
 
              <View style={styles.menuBox}>
-                 <Tooltip height={40} popover={<Text>Çöp Kutusu</Text>}>
+                 <Tooltip height={40} popover={<Text>{strings.profilJs.trashBox}</Text>}>
                    <Icon
                     name="delete"
                     type='material'
@@ -597,7 +600,7 @@ closeToApp=()=>{
                     size={30}
                     />         
                     
-              <Text style={styles.info}>Ayarlar</Text>
+              <Text style={styles.info}>{strings.profilJs.settings}</Text>
               </View>
 
 
@@ -610,7 +613,7 @@ closeToApp=()=>{
                     color="black"
                     size={30}
                     />                  
-              <Text style={styles.info}>Çıkış Yap</Text>
+              <Text style={styles.info}>{strings.profilJs.signOut}</Text>
               </TouchableOpacity>
               </View>
 
@@ -622,7 +625,7 @@ closeToApp=()=>{
                     color="black"
                     size={30}
                     />                      
-              <Text style={styles.info}>Kapat</Text>
+              <Text style={styles.info}>{strings.profilJs.closeApp}</Text>
               </TouchableOpacity>
               </View>
 
@@ -634,7 +637,7 @@ closeToApp=()=>{
                     color="black"
                     size={30}
                     />                      
-              <Text style={styles.info}>Şifre Değiş</Text>            
+              <Text style={styles.info}> {strings.profilJs.changePassword}</Text>            
               </TouchableOpacity>            
               </View>
 
@@ -646,7 +649,7 @@ closeToApp=()=>{
                     color="#db3434"
                     size={30}
                     />                      
-              <Text style={styles.info}>Hesabı Sil</Text>            
+              <Text style={styles.info}>{strings.profilJs.deleteAccount}</Text>            
               </TouchableOpacity>   
               </View>
 
@@ -658,7 +661,7 @@ closeToApp=()=>{
                     color="black"
                     size={30}
                     />                      
-              <Text style={styles.info}>Mail Değiş</Text>
+              <Text style={styles.info}>{strings.profilJs.changeEmail}</Text>
               </TouchableOpacity>   
               </View>
         
@@ -718,7 +721,7 @@ const styles = StyleSheet.create({
     height:100,
     alignItems: 'center',
     justifyContent: 'center',
-    margin:12,
+    margin:14,
     shadowColor: 'black',
     shadowOpacity: .2,
     shadowOffset: {
@@ -732,7 +735,7 @@ const styles = StyleSheet.create({
     height:60,
   },
   info:{
-    fontSize:16,
+    fontSize:14,
     color: "#696969",
   },
   textInput: {
