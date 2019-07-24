@@ -6,6 +6,7 @@ import { TouchableOpacity } from 'react-native-gesture-handler';
 import { Icon } from 'react-native-elements';
 import InputScrollView from 'react-native-input-scroll-view';
 import Hyperlink from 'react-native-hyperlink';
+import {strings} from './../components/Localization';
 
 export default class Loading extends React.Component {
   state = { not: '', 
@@ -69,6 +70,7 @@ componentDidMount=()=>{
     
           //Notları listelemek için tuttuğumuz LastId için ref
         const updateref= "/LastId/"+currentUser.uid;
+        const placeId=1;
     
       const yazid = this.state.howmany-1;
         firebase.database().ref(ref).set({
@@ -76,6 +78,7 @@ componentDidMount=()=>{
             noteTitle,
             not,
             noteBgColor,
+            placeId,
             yazid,
         }).then((data)=>{
 
@@ -111,7 +114,7 @@ componentDidMount=()=>{
 
        //Header START
        static navigationOptions = {  
-        title: 'Yeni Not Ekle',
+        title: strings.addnoteJs.title,
         headerStyle: {
         backgroundColor: '#8c52ff'
         },
@@ -162,7 +165,7 @@ componentDidMount=()=>{
       <InputScrollView>        
       <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:20 }}
                  value={this.state.not}
-                 placeholder={"Not"}
+                 placeholder={strings.addnoteJs.note}
                  autoFocus={true}
                  ref={(input) => { this.not = input; }}
                  onChangeText={not => this.setState({ not })}
@@ -195,12 +198,12 @@ checkEditStatus=()=>{
   if(this.state.isEdit)
   {
    this.setState({isEdit:false, editIcon:'toggle-on'});
-   ToastAndroid.show('Okuma Modu Açık', ToastAndroid.SHORT);
+   ToastAndroid.show(strings.addnoteJs.readModeOn, ToastAndroid.SHORT);
   }
      else
      {
        this.setState({isEdit:true, editIcon:'toggle-off'});
-       ToastAndroid.show('Okuma Modu Kapalı', ToastAndroid.SHORT);
+       ToastAndroid.show(strings.addnoteJs.readModeOff, ToastAndroid.SHORT);
      }
 }
  //Okuma Modu Icon Değişimi END
@@ -209,7 +212,7 @@ checkEditStatus=()=>{
 _setContent=async(text)=> {
   // await Clipboard.setString(text);
   await Clipboard.setString(this.state.not);
-  ToastAndroid.show('Not Panoya Kopyalandı', ToastAndroid.SHORT);
+  ToastAndroid.show(strings.addnoteJs.copyClipBoard, ToastAndroid.SHORT);
  }
  //Metni Panoya Kopyalama END
 
@@ -230,7 +233,7 @@ _setContent=async(text)=> {
         backgroundColor:this.state.noteBgColor}}>
         
         <TextInput style={styles.notetitle}
-        placeholder ="Başlık"
+        placeholder ={strings.addnoteJs.noteTitle}
         editable = {true}
         maxLength = {50}
         returnKeyType={"next"}

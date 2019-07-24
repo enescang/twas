@@ -5,7 +5,8 @@ import RNFetchBlob from 'rn-fetch-blob';
 import firebase from 'react-native-firebase';
 import { TouchableOpacity } from 'react-native-gesture-handler';
 import {Icon, Tooltip, Badge} from 'react-native-elements';
-
+import SideMenu from 'react-native-side-menu';
+import Menu from './../menu/Menu'
 import {strings} from './../components/Localization';
 
 ///
@@ -39,9 +40,15 @@ const getPhoto=(image)=>{
   })
 }
 
+const image = require('./../menu/assets/menu.png');
 
 export default class Profile extends React.Component {
-  state = {
+  constructor(props) {
+    super(props);
+    this.toggle = this.toggle.bind(this);
+    this.state = {
+    isOpen: false,
+    selectedItem: 'About',
     photo: null,
     currentUser:null,
     image:'file:///sdcard/Android/data/com.friday.twas/cloudtwas/.tt.png',
@@ -59,7 +66,75 @@ export default class Profile extends React.Component {
     newEmail:null,
     oldPassword2:null,
     oldPassword3:null,
-  };
+    }
+  }
+
+  /* Menu START*/
+toggle() {
+  this.setState({
+    isOpen: !this.state.isOpen,
+  });
+}
+
+updateMenuState(isOpen) {
+  this.setState({ isOpen });
+}
+
+onMenuItemSelected= (item) =>{
+  this.setState({
+    isOpen: false,
+    selectedItem: item,
+  });
+
+  if(item === 'Ana Sayfa'){
+    this.props.navigation.navigate('Main');
+  }
+
+  else if(item === 'Arsiv')
+  {
+      this.props.navigation.navigate('Arsiv');
+  }
+
+  else if(item === 'About')
+  {
+      this.props.navigation.navigate('About');
+  }
+
+  else if (item === 'Trash'){
+        this.props.navigation.navigate('Trash');
+  }
+      
+  else if (item === 'Ayarlar'){
+        this.props.navigation.navigate('Ayarlar');
+  } 
+  else if (item === 'Profile'){
+    this.props.navigation.navigate('Profile');
+}
+}
+ 
+  static navigationOptions =({ navigation }) => {
+    return {
+      title: strings.profilJs.title,
+      headerStyle: {
+      backgroundColor: '#8c52ff',
+      },
+
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+      fontWeight: 'bold',
+      },
+
+    headerLeft: (
+     <TouchableOpacity style={{marginLeft: 10 }} onPress={navigation.getParam('toggle')}>
+          <Image
+            source={image}
+            style={{ width: 32, height: 32 }}
+          />
+        </TouchableOpacity>
+    )
+    }
+}
+/*Menu END */
 
    replaceAll(str, find, replace) {
     return str.replace(new RegExp(find, 'g'), replace);
@@ -95,6 +170,7 @@ export default class Profile extends React.Component {
 
 
   componentDidMount=async()=>{
+    this.props.navigation.setParams({ toggle: this.toggle });
    const code = Math.random().toString(36).substring(2, 15);
    this.setState({kral:code})
     const { currentUser } = firebase.auth();
@@ -345,23 +421,37 @@ closeToApp=()=>{
   changePassword=()=>{
     const currentPassword = this.state.oldPassword;
     const newPassword = this.state.newPassword;
+
+    if(currentPassword === null || currentPassword === '' || currentPassword === ' ' || newPassword === null || newPassword === '' || newPassword === ' ')
+    {
+        alert(strings.profilJs.validationError)
+    }else {
+
       this.reauthenticate(currentPassword).then(() => {
         var user = firebase.auth().currentUser;
         user.updatePassword(newPassword).then(() => {
          alert(strings.profilJs.passwordChanged)
         }).catch((error) => { alert(error)});
       }).catch((error) => { alert(error) });
+    }
+
   }
 
   changeEmail=()=>{
     const currentPassword = this.state.oldPassword2;
     const newEmail = this.state.newEmail;
+    if(currentPassword === null || currentPassword === '' || currentPassword === ' ' || newEmail === null || newEmail === '' || newEmail === ' ')
+    {
+        alert(strings.profilJs.validationError)
+    }else {
+
   this.reauthenticate(currentPassword).then(() => {
     var user = firebase.auth().currentUser;
     user.updateEmail(newEmail).then(() => {
      alert(strings.profilJs.emailChanged)
     }).catch((error) => { alert(error) });
   }).catch((error) => { alert(error); });
+}
   }
 
 
@@ -476,7 +566,7 @@ closeToApp=()=>{
       return(
         <View>
            <TextInput style={styles.textInput}
-    placeholder ={strings.profilJs.currentEmail}
+    placeholder ={strings.profilJs.currentPassword}
     editable = {true}
     maxLength = {40}
     value={this.state.oldPassword2}
@@ -526,8 +616,13 @@ closeToApp=()=>{
     const { currentUser } = firebase.auth();
     const { photo, image, noteDeletedValue} = this.state;
     const { main, archive, recycle} = this.state;
+    const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
 
     return (
+      <SideMenu
+      menu={menu}
+      isOpen={this.state.isOpen}
+      onChange={isOpen => this.updateMenuState(isOpen)}> 
       <ScrollView>
       <View style={styles.container}>
           <View style={styles.header}>
@@ -672,12 +767,16 @@ closeToApp=()=>{
         </View>
       </View>
       </ScrollView>
+      </SideMenu>
     );
   }
 }
 
 
 const styles = StyleSheet.create({
+  container:{
+    backgroundColor: "white",
+  },
   header:{
     backgroundColor: "#00BFFF",
   },

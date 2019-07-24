@@ -67,8 +67,8 @@ export default class About extends React.Component {
         this.props.navigation.navigate('About');
       }
     
-      else if (item === 'Friday'){
-        this.props.navigation.navigate('Friday');
+      else if (item === 'Trash'){
+        this.props.navigation.navigate('Trash');
       }
           
       else if (item === 'Ayarlar'){

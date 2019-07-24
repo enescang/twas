@@ -9,9 +9,11 @@ import {
   Text,
 } from 'react-native';
 
-const window = Dimensions.get('window');
-const uri = 'https://pickaface.net/gallery/avatar/Opi51c74d0125fd4.png';
+import {strings} from './../components/Localization';
 
+
+const window = Dimensions.get('window');
+const uri = 'file:///sdcard/Android/data/com.friday.twas/cloudtwas/.tt.png';
 const styles = StyleSheet.create({
   menu: {
     flex: 1,
@@ -39,7 +41,7 @@ const styles = StyleSheet.create({
   item: {
     fontSize: 20,
     fontWeight: '500',
-    paddingTop: 15,
+    paddingTop: 45,
     
   },
 });
@@ -55,48 +57,43 @@ export default function Menu({ onItemSelected }) {
           style={styles.avatar}
           source={{ uri }}
         />
-        <Text style={styles.name}>Your name</Text>
+        <Text style={styles.name}>{strings.menuJs.sayHello}</Text>
       </View>
 
       <Text 
         onPress={() => onItemSelected('Ana Sayfa')}
-        style={styles.item}
-      >
-        Notlar
+        style={styles.item}>
+        {strings.menuJs.notes}
       </Text>
 
       <Text
         onPress={() => onItemSelected('Arsiv')}
-        style={styles.item}
-      >
-        Arşiv
+        style={styles.item}>
+        {strings.menuJs.archive}
       </Text>
 
       <Text
-        onPress={() => onItemSelected('Friday')}
-        style={styles.item}
-      >
-        Çöp Kutusu
+        onPress={() => onItemSelected('Trash')}
+        style={styles.item}>
+        {strings.menuJs.trash}
       </Text>
 
       <Text
         onPress={() => onItemSelected('About')}
-        style={styles.item}
-      >
-        Hakkında
+        style={styles.item}>
+        {strings.menuJs.aboutUs}
       </Text>
 
       <Text
         onPress={() => onItemSelected('Profile')}
-        style={styles.item}
-      >
-        Profil
+        style={styles.item}>
+       {strings.menuJs.profile}
       </Text>
+
       <Text
         onPress={() => onItemSelected('Ayarlar')}
-        style={styles.item}
-      >
-        Ayarlar
+        style={styles.item}>
+      {strings.menuJs.settings}
       </Text>
       
     </ScrollView>

@@ -6,6 +6,7 @@ import InputScrollView from 'react-native-input-scroll-view';
 import { Icon } from 'react-native-elements';
 import firebase from 'react-native-firebase';
 import Hyperlink from 'react-native-hyperlink';
+import {strings} from './Localization';
 
 export default class Show extends React.Component {
   state = { not: this.props.navigation.state.params.data, 
@@ -52,7 +53,7 @@ editOrRead=()=>{
             <InputScrollView>        
             <TextInput style={{ height: textareaHeight, backgroundColor:this.state.noteBgColor, maxHeight:500, fontSize:18 }}
                        value={this.state.not}
-                       placeholder={"Not Gir"}
+                       placeholder={strings.showJs.note}
                        ref={(input) => { this.not = input; }}
                        onChangeText={not => this.setState({ not })}
                        onContentSizeChange={this._onContentSizeChange}
@@ -82,12 +83,12 @@ checkEditStatus=()=>{
   if(this.state.isEdit)
   {
    this.setState({isEdit:false, editIcon:'toggle-on'});
-   ToastAndroid.show('Okuma Modu Açık', ToastAndroid.SHORT);
+   ToastAndroid.show(strings.showJs.readModeOn, ToastAndroid.SHORT);
   }
      else
      {
        this.setState({isEdit:true, editIcon:'toggle-off'});
-       ToastAndroid.show('Okuma Modu Kapalı', ToastAndroid.SHORT);
+       ToastAndroid.show(strings.showJs.readModeOff, ToastAndroid.SHORT);
      }
 }
 
@@ -97,7 +98,7 @@ _onContentSizeChange = ({nativeEvent:event}) => {
 };
 static navigationOptions = {
          
-  title: 'Not Güncelle',
+  title: strings.showJs.title,
   headerStyle: {
   backgroundColor: '#8c52ff'
   },
@@ -132,7 +133,7 @@ componentWillUnmount() {
 _setContent=async(text)=> {
  // await Clipboard.setString(text);
  await Clipboard.setString(this.state.not);
- ToastAndroid.show('Not Panoya Kopyalandı', ToastAndroid.SHORT);
+ ToastAndroid.show(strings.showJs.copyClipBoard, ToastAndroid.SHORT);
 }
 //Metni Panoya Kopyalama END
 
@@ -143,7 +144,7 @@ _setContent=async(text)=> {
         backgroundColor:this.state.noteBgColor}}>
         
         <TextInput style={styles.notetitle}
-        placeholder ="Not Başlığı....."
+        placeholder ={strings.showJs.noteTitle}
         editable = {true}
         maxLength = {50}
         value={this.state.noteTitle}

@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text,Image,setTimeout, Alert,TextInput,ActivityIndicator,Linking, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase';
 import * as Progress from 'react-native-progress';
+import {strings} from './../components/Localization';
 
 export default class Login extends React.Component {
   constructor(){
@@ -31,7 +32,7 @@ export default class Login extends React.Component {
       if (supported) {
         Linking.openURL(url);
       } else {
-        alert("url açılamıyor.");
+        alert(strings.loginJs.urlError);
       }
     });
   }
@@ -47,10 +48,10 @@ export default class Login extends React.Component {
     if(email == null  || email =='' || email == ' ' || password =='' || password ==' ' || password == null)
     {
       Alert.alert(
-        'Hata',
-        'Email | Şifre',
+        strings.loginJs.errorTitle,
+        strings.loginJs.errorDetails,
         [
-          {text: 'OK'},
+          {text: strings.loginJs.errorAction},
         ],
         {cancelable: false},
       );
@@ -131,13 +132,13 @@ export default class Login extends React.Component {
        
         
           <View style = {styles.loginArea}>
-          <Text style = {styles.kayitOl}>Giriş Yap</Text>
+          <Text style = {styles.kayitOl}>{strings.loginJs.logIn}</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
           </Text>}
         <TextInput
-          placeholder="Mail Adresi"
+          placeholder={strings.loginJs.email}
           autoCapitalize="none"
           style={styles.textInput} 
           onChangeText={email => this.setState({ email })}
@@ -147,7 +148,7 @@ export default class Login extends React.Component {
         />
         <TextInput
           secureTextEntry
-          placeholder="Şifre"
+          placeholder={strings.loginJs.password}
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={password => this.setState({ password })}
@@ -159,12 +160,12 @@ export default class Login extends React.Component {
        
         <View>
         <TouchableOpacity style = {this.state.kayitolBtn} onPress={this.handleLogin}>
-    <Text style = {{color: 'white'}}>Giriş</Text>
+    <Text style = {{color: 'white'}}>{strings.loginJs.logIn}</Text>
           
         </TouchableOpacity>
         <TouchableOpacity style={styles.forgetpassword} onPress={()=> this.props.navigation.navigate('Forgotpassword')}>
           <Text style = {{color: '#8c52ff'}}>
-            Şifremi Unuttum
+          {strings.loginJs.forgotPassword}
             </Text>
           </TouchableOpacity>
     <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/> 
@@ -175,10 +176,10 @@ export default class Login extends React.Component {
 
       <View style = {styles.GirisKayitYazi}>
       
-          <Text style = {styles.KayitYazi}>Giriş </Text>
+          <Text style = {styles.KayitYazi}>{strings.loginJs.logIn} </Text>
 
           <TouchableOpacity  onPress={() => this.props.navigation.navigate('SignUp')}>
-          <Text style = {styles.GirisYazi}>Kayıt Ol</Text>
+          <Text style = {styles.GirisYazi}>{strings.loginJs.signUp}</Text>
           </TouchableOpacity>
           </View>
 

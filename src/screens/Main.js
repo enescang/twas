@@ -9,13 +9,15 @@ import { Icon } from 'react-native-elements'
 
 import copkutusu from './copkutusu'
 import arcieve from './arcieve'
-
+ 
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
 import Modal from "react-native-simple-modal";
 
+import {strings} from './../components/Localization';
+
 <Modal
-  animationDuration={200}
+  animationDuration={2000}
   animationTension={40}
   closeOnTouchOutside={true}
   containerProps={undefined}
@@ -60,7 +62,11 @@ export default class Main extends React.Component {
   sil = () => this.props.navigation.navigate('copkutusu');
 
   arsivle = () => this.props.navigation.navigate('arcieve');
-  openModal = () => this.setState({ open: true });
+
+  openModal = (noteKey) => {
+    this.setState({ open: true });
+    this.setState({noteKey:noteKey})
+  }
 
   gonder = () => this.setState({ open: false });
 
@@ -75,7 +81,8 @@ export default class Main extends React.Component {
         currentUser: null , 
         items : [], 
         son: [], 
-        numChild:null
+        numChild:null,
+        noteKey:null,
       };
     }
   
@@ -94,7 +101,26 @@ export default class Main extends React.Component {
       this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, noteBgColor:itemc, noteTitle:itemt});
   }
 
- 
+ updatePlaceId=(placeId)=>{
+  const { currentUser } = firebase.auth();
+  this.setState({ currentUser });
+ const mail = currentUser.email;
+ const noteItemKey = this.state.noteKey;
+
+ const ref ="Users/"+currentUser.uid+"/"+noteItemKey;
+  firebase.database().ref(ref).update({
+     placeId:placeId,
+  }).then((data)=>{
+      //success callback
+    // alert("Başarılı");
+   //this.props.navigation.navigate('Arsiv');
+  }).catch((error)=>{
+      //error callback
+      alert(error);
+  })
+
+  this.setState({open:false})
+ }
 
 
   componentDidMount() {
@@ -103,7 +129,7 @@ export default class Main extends React.Component {
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
     const referans = "/Users/"+currentUser.uid;
-    firebase.database().ref(referans).orderByKey().limitToLast(10000).on('value', snapshot => {
+    firebase.database().ref(referans).orderByChild('placeId').equalTo(1).on('value', snapshot => {
       snapshot.forEach((child) => {
         let data = snapshot.val();
         let items = Object.values(data);
@@ -160,8 +186,8 @@ onMenuItemSelected= (item) =>{
       this.props.navigation.navigate('About');
   }
 
-  else if (item === 'Friday'){
-        this.props.navigation.navigate('Friday');
+  else if (item === 'Trash'){
+        this.props.navigation.navigate('Trash');
   }
       
   else if (item === 'Ayarlar'){
@@ -173,9 +199,8 @@ onMenuItemSelected= (item) =>{
 }
  
   static navigationOptions =({ navigation }) => {
-
     return {
-      title: 'Notlar',
+      title: strings.mainJs.title,
       headerStyle: {
       backgroundColor: '#8c52ff',
       },
@@ -228,7 +253,7 @@ onMenuItemSelected= (item) =>{
                    color:'black',
 
                    backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white"
-                   onLongPress = {this.openModal}>
+                   onLongPress = {this.openModal.bind(this, item.yazid)}>
                    
                   
                   
@@ -238,35 +263,60 @@ onMenuItemSelected= (item) =>{
                    {item.not}</Text>
 
                 </TouchableOpacity>
+
+               
+
               </View>
             );
           }
         )
       }
 
+
+
         </View>
       </ScrollView>
+   
       <Modal
           offset={this.state.offset}
           open={this.state.open}
           modalDidOpen={this.modalDidOpen}
           modalDidClose={this.modalDidClose}
-          style={{ alignItems: "center" }}
-        >
+          style={{ alignItems: "center" }}>
+        
           <View style={{ alignItems: "center" }}>
-            <Text style={{ fontSize: 20, marginBottom: 10 }}>Ne Yapmak İstiyorsun</Text>
-            <TouchableOpacity style={{ margin: 5 }} onPress={this.sil}>
-              <Text>Sil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ margin: 5 }}
-              onPress={this.arsivle}
-            >
-              <Text>Arşivle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 5 }} onPress={this.gonder}>
-              <Text>Gönder</Text>
-            </TouchableOpacity>
+            <Text style={{margin:10, fontSize:20}}>İşlem Seçin</Text>
+          <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
+       <TouchableOpacity style={{width:Dimensions.get('window').width /6-10,  backgroundColor:this.state.noteBgColor, }} 
+       onPress={this.updatePlaceId.bind(this, 2)}>
+      <Icon
+        name="archive"
+        type='material'
+        color="black"
+        size={28}
+      />
+       </TouchableOpacity>
+
+       <TouchableOpacity style={{width:Dimensions.get('window').width /6-10, backgroundColor:this.state.noteBgColor,marginBottom:2}} 
+     onPress={this.updatePlaceId.bind(this, 3)}>
+      <Icon
+        name='delete'
+        type='material'
+        color="black"     
+        size={23}
+      />
+       </TouchableOpacity>
+
+       <TouchableOpacity style={{width:Dimensions.get('window').width /6-10, backgroundColor:this.state.noteBgColor,}} 
+       onPress={()=>this.setState({open:false})}>
+      <Icon
+        name="close"
+        type='font-awesome'
+        color="black"
+        size={23}
+      />
+       </TouchableOpacity>
+        </View>
           </View>
         </Modal>
 
@@ -276,7 +326,7 @@ onMenuItemSelected= (item) =>{
     <View style={{flexDirection: 'row', zIndex:50}}>
        <TouchableOpacity style={styles.savebutton  }
        onPress={this.git}>
-      <Text>      Not alın...</Text>
+      <Text>      {strings.mainJs.takeNote}</Text>
        </TouchableOpacity>
 
     </View>

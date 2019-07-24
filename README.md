@@ -52,5 +52,11 @@ npm install react-native-localization<br>
 react-native link react-native-localization<br>
 <br>
 Profil.js için TR/EN 
-src/components/Localization.js içinde dil ayarları yapıldı
+src/components/Localization.js içinde dil ayarları yapıldı<br>
+
+//24.07.2019<br>
+About.js dışındaki sayfalara TR/EN dil ayarları yapıldı.<br>
+**v0.1** 
+
+
 

@@ -7,12 +7,15 @@ import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
+import copkutusu from './copkutusu'
+import arcieve from './arcieve'
+
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
 import Modal from "react-native-simple-modal";
 
 <Modal
-  animationDuration={200}
+  animationDuration={2000}
   animationTension={40}
   closeOnTouchOutside={true}
   containerProps={undefined}
@@ -37,10 +40,14 @@ import Modal from "react-native-simple-modal";
   }}
 />;
 
+//import SideMenu from 'react-native-side-menu';
+//import Menu from './../menu/Menu';
+
+
 
 const image = require('./../menu/assets/menu.png');
 
-export default class copkutusu extends React.Component {
+export default class Trash extends React.Component {
   state = { open: false };
 
   modalDidOpen = () => console.log("Modal did open.");
@@ -50,13 +57,16 @@ export default class copkutusu extends React.Component {
     console.log("Modal did close.");
   };
 
-  sil = () => this.setState({ offset: -100 });
+  sil = () => this.props.navigation.navigate('copkutusu');
 
-  arsivle = () => this.setState({ offset: 0 });
+  arsivle = () => this.props.navigation.navigate('arcieve');
 
-  openModal = () => this.setState({ open: true });
+  openModal = (noteKey) => {
+    this.setState({ open: true });
+    this.setState({noteKey:noteKey})
+  }
 
-  arsivle = () => this.setState({ open: false });
+  gonder = () => this.setState({ open: false });
 
 
     constructor(props) {
@@ -69,50 +79,73 @@ export default class copkutusu extends React.Component {
         currentUser: null , 
         items : [], 
         son: [], 
-        numChild:null
+        numChild:null,
+        noteKey:null,
       };
     }
   
-  git = () => {
-  
-      this.props.navigation.navigate('Addnote', {num:this.state.numChild});
-      /*
-      {this.state.items.length > 0 ? (
-        <ItemComponent items={this.state.items} />
-      ) : (
-        <Text>No items</Text>
-      )}*/
-
-  }
 
 
   _onPressButton=(itemq, itemk, itemc, itemt)=>{
       this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, noteBgColor:itemc, noteTitle:itemt});
   }
 
- 
+  deleteNote=()=>{
+   const { currentUser } = firebase.auth();
+   this.setState({ currentUser });
+   const noteItemKey = this.state.noteKey;
+   const ref ="Users/"+currentUser.uid+"/"+noteItemKey;
+
+   firebase.database().ref(ref).remove().then((data)=>{
+     //success callback
+   // alert("Başarılı");
+  //this.props.navigation.navigate('Arsiv');
+  alert("not silindi")
+ }).catch((error)=>{
+     //error callback
+     alert(error);
+ })
+
+ this.setState({open:false})
+
+  }
+
+ updatePlaceId=(placeId)=>{
+  const { currentUser } = firebase.auth();
+  this.setState({ currentUser });
+ const mail = currentUser.email;
+ const noteItemKey = this.state.noteKey;
+
+ const ref ="Users/"+currentUser.uid+"/"+noteItemKey;
+  firebase.database().ref(ref).update({
+     placeId:placeId,
+  }).then((data)=>{
+      //success callback
+    // alert("Başarılı");
+   //this.props.navigation.navigate('Arsiv');
+  }).catch((error)=>{
+      //error callback
+      alert(error);
+  })
+
+  this.setState({open:false})
+ }
 
 
   componentDidMount() {
     //menünün açılması için Params olarak fonksiyonu tanıtmak gerekiyormuş.
     this.props.navigation.setParams({ toggle: this.toggle });
-
-
     const { currentUser } = firebase.auth()
     this.setState({ currentUser })
     const referans = "/Users/"+currentUser.uid;
-    firebase.database().ref(referans).orderByKey().limitToLast(10000).on('value', snapshot => {
-
+    firebase.database().ref(referans).orderByChild('placeId').equalTo(3).on('value', snapshot => {
       snapshot.forEach((child) => {
-
         let data = snapshot.val();
         let items = Object.values(data);
         this.setState({ items });
-
-       //   const numChild = snapshot.numChildren();
-        //  this.setState({ numChild });
+      //  const numChild = snapshot.numChildren();
+      //  this.setState({ numChild });
       //  alert(snapshot.numChildren());
-
         let key = child.key;
         let son = Object.values(key);
         this.setState({ son });
@@ -125,9 +158,11 @@ export default class copkutusu extends React.Component {
       firebase.auth().signOut();
   }
 
+
   readDataUser = ()=>{
       alert(this.state.son)
   }
+
 
 /* Menu START*/
 toggle() {
@@ -140,35 +175,64 @@ updateMenuState(isOpen) {
   this.setState({ isOpen });
 }
 
-onMenuItemSelected = item =>
+onMenuItemSelected= (item) =>{
   this.setState({
     isOpen: false,
     selectedItem: item,
   });
 
+  if(item === 'Ana Sayfa'){
+    this.props.navigation.navigate('Main');
+  }
 
+  else if(item === 'Arsiv')
+  {
+      this.props.navigation.navigate('Arsiv');
+  }
 
+  else if(item === 'About')
+  {
+      this.props.navigation.navigate('About');
+  }
+
+  else if (item === 'Trash'){
+        this.props.navigation.navigate('Trash');
+  }
+      
+  else if (item === 'Ayarlar'){
+        this.props.navigation.navigate('Ayarlar');
+  } 
+  else if (item === 'Profile'){
+    this.props.navigation.navigate('Profile');
+}
+}
+ 
   static navigationOptions =({ navigation }) => {
+
     return {
-    title: 'Çöp Kutususss',
-    headerStyle: {
-      backgroundColor: 'orange',
-    },
+      title: 'Çöp Kutusu',
+      headerStyle: {
+      backgroundColor: '#8c52ff',
+      },
+
+      headerTintColor: '#fff',
+      headerTitleStyle: {
+      fontWeight: 'bold',
+      },
+
     headerLeft: (
      <TouchableOpacity style={{marginLeft: 10 }} onPress={navigation.getParam('toggle')}>
           <Image
             source={image}
             style={{ width: 32, height: 32 }}
           />
-      
         </TouchableOpacity>
-     
     )
     }
 }
-
-
 /*Menu END */
+
+
   render() {
       const { currentUser } = this.state
       const menu = <Menu onItemSelected={this.onMenuItemSelected} />;
@@ -177,8 +241,8 @@ onMenuItemSelected = item =>
     <SideMenu
     menu={menu}
     isOpen={this.state.isOpen}
-    onChange={isOpen => this.updateMenuState(isOpen)}
-  >
+    onChange={isOpen => this.updateMenuState(isOpen)}>
+
     <View style={styles.container}>
       <ScrollView  style={styles.ScrollContainer} >
         <View style={styles.itemsList}>
@@ -192,75 +256,99 @@ onMenuItemSelected = item =>
                    height: 200,
                    borderWidth: 0.9,
                    borderColor: '#ddd',
-                   //shadowColor: 'black',
-                   //shadowOpacity: .2,
+                  //shadowColor: 'black',
+                  //shadowOpacity: .2,
                   // shadowRadius: 2,
-                  borderRadius:10,
+                   borderRadius:10,
                    color:'black',
-                   backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white"
-                   onLongPress = {this.openModal}
-                   >
-                    
-                
-                  <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
-                   <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
-                  
+
+                   backgroundColor: item.noteBgColor}}  onPress={()=>alert("Çöp Kutusundaki notlar düzenlenemez")} underlayColor="white"
+                   onLongPress = {this.openModal.bind(this, item.yazid)}>
                    
-                  {item.not}</Text>
+                  
+                  
+                   <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
+
+                   <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
+                   {item.not}</Text>
+
                 </TouchableOpacity>
+
+               
+
               </View>
             );
           }
         )
       }
+
+
+
         </View>
       </ScrollView>
+   
       <Modal
           offset={this.state.offset}
           open={this.state.open}
           modalDidOpen={this.modalDidOpen}
           modalDidClose={this.modalDidClose}
-          style={{ alignItems: "center" }}
-        >
+          style={{ alignItems: "center" }}>
+        
           <View style={{ alignItems: "center" }}>
-            <Text style={{ fontSize: 20, marginBottom: 10 }}>Ne Yapmak İstiyorsun</Text>
-            <TouchableOpacity style={{ margin: 5 }} onPress={this.sil}>
-              <Text>Sil</Text>
-            </TouchableOpacity>
-            <TouchableOpacity
-              style={{ margin: 5 }}
-              onPress={this.arsivle}
-            >
-              <Text>Arşivle</Text>
-            </TouchableOpacity>
-            <TouchableOpacity style={{ margin: 5 }} onPress={this.gonder}>
-              <Text>Gönder</Text>
-            </TouchableOpacity>
+            <Text style={{margin:10, fontSize:20}}>İşlem Seçin</Text>
+          <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
+       <TouchableOpacity style={{width:Dimensions.get('window').width /6-10,  backgroundColor:this.state.noteBgColor, }} 
+       onPress={this.updatePlaceId.bind(this, 1)}>
+      <Icon
+        name="delete-restore"
+        type='material-community'
+        color="black"
+        size={28}
+      />
+       </TouchableOpacity>
+
+       <TouchableOpacity style={{width:Dimensions.get('window').width /6-10, backgroundColor:this.state.noteBgColor,marginBottom:2}} 
+     onPress={this.deleteNote}>
+      <Icon
+        name='delete-forever'
+        type='material'
+        color="black"     
+        size={23}
+      />
+       </TouchableOpacity>
+
+       <TouchableOpacity style={{width:Dimensions.get('window').width /6-10, backgroundColor:this.state.noteBgColor,}} 
+       onPress={()=>this.setState({open:false})}>
+      <Icon
+        name="close"
+        type='font-awesome'
+        color="black"
+        size={23}
+      />
+       </TouchableOpacity>
+        </View>
           </View>
         </Modal>
 
-      
-</View>
-
-      </SideMenu>
+      </View>
+  
+</SideMenu>
     )
   }
 }
 
   const styles = StyleSheet.create({
+
     container: {
         flex: 1,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor:'white'
-        
     },
 
-  
   ScrollContainer:{
       flex: 1,
       },
-
 
   itemsList: {
       flex: 1,
@@ -268,7 +356,6 @@ onMenuItemSelected = item =>
       flexWrap: 'wrap',
       padding: 2,
   },
-
 
   savebutton:{
     width:Dimensions.get('window').width / 1-15,
@@ -287,21 +374,6 @@ onMenuItemSelected = item =>
       marginBottom: 13,
       width:80,
       marginRight: Dimensions.get('window').width / 1-100,
-      
   },
 })
 
-
-//borderWidth:2,
-   // width:3,
-   // marginRight:90,
-   // backgroundColor:'#db3434', 
-    //paddingVertical:18,
-    //paddingHorizontal:195,
-  //  marginVertical:8,
-   // borderRadius:15,
-   // shadowColor:'purple',
-   // shadowOpacity:.8,
-   // shadowRadius:3,
-   // shadowOffset:{width:0, height:0},
-   // elevation:8

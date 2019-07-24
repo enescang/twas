@@ -2,6 +2,7 @@ import React from 'react'
 import { StyleSheet, Text,Image,setTimeout, Alert, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
 import firebase from 'react-native-firebase'
 import * as Progress from 'react-native-progress';
+import {strings} from './../components/Localization';
 
 export default class SignUp extends React.Component {
   state = {
@@ -60,10 +61,10 @@ export default class SignUp extends React.Component {
     if(this.state.email == null  || this.state.email =='' || this.state.email == ' ' || this.state.password =='' || this.state.password ==' ' || this.state.password == null)
     {
       Alert.alert(
-        'Hata',
-        'Email | Şifre',
+        strings.signupJs.errorTitle,
+        strings.signupJs.errorDetails,
         [
-          {text: 'OK'},
+          {text:  strings.signupJs.errorAction},
         ],
         {cancelable: false},
       );
@@ -144,14 +145,14 @@ render() {
        
         
           <View style = {styles.loginArea}>
-          <Text style = {styles.kayitOl}>Kayıt  Ol</Text>
+          <Text style = {styles.kayitOl}>{strings.signupJs.signUp}</Text>
         {this.state.errorMessage &&
           <Text style={{ color: 'red' }}>
             {this.state.errorMessage}
           </Text>}
          
         <TextInput
-          placeholder="Mail Adresi"
+          placeholder={strings.signupJs.email}
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={email => this.setState({ email })}
@@ -161,7 +162,7 @@ render() {
         />
         <TextInput
           secureTextEntry
-          placeholder="Şifre"
+          placeholder={ strings.signupJs.password}
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={password => this.setState({ password })}
@@ -175,7 +176,7 @@ render() {
         
 
         <TouchableOpacity style = {this.state.kayitolBtn} onPress={this.handleSignUp}>
-    <Text style = {{color: 'white'}}>Kayıt Ol</Text>
+    <Text style = {{color: 'white'}}>{ strings.signupJs.signUp}</Text>
           
         </TouchableOpacity>
         <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/>
@@ -190,10 +191,10 @@ render() {
       </View>
       <View style = {styles.GirisKayitYazi}>
       
-          <Text style = {styles.KayitYazi}>Kayıt Ol </Text>
+          <Text style = {styles.KayitYazi}>{strings.signupJs.signUp} </Text>
 
           <TouchableOpacity  onPress={() => this.props.navigation.navigate('Login')}>
-          <Text style = {styles.GirisYazi}>Giriş Yap</Text>
+          <Text style = {styles.GirisYazi}>{strings.signupJs.logIn}</Text>
           </TouchableOpacity>
           </View>
         

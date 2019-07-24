@@ -19,7 +19,7 @@ import copkutusu from './src/screens/copkutusu';
 import arcieve from './src/screens/arcieve';
 
 
-import Friday from './src/screens/Friday'
+import Trash from './src/screens/Trash'
 import About from './src/screens/About'
 import Arsiv from './src/screens/Arsiv'
 import Ayarlar from './src/screens/Ayarlar'
@@ -39,7 +39,7 @@ const AppNavigator = createStackNavigator ({
   copkutusu,
   arcieve,
 
-  Friday,
+  Trash,
   About,
   Arsiv,
   Ayarlar,

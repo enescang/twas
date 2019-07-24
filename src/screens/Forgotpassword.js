@@ -1,12 +1,13 @@
 import React from 'react'
 import { View, Text, Button,Image,Dimensions,TouchableOpacity, StyleSheet, TextInput, Alert} from 'react-native'
 import firebase from 'react-native-firebase'
+import {strings} from './../components/Localization';
 
 export default class Forgotpassword extends React.Component {
 
   static navigationOptions = {
-    title : 'Şifre Yenileme',
-    
+    title : strings.forgotpasswordJs.title,
+    headerTintColor: '#fff',
       headerTransparent: true
     
   }
@@ -19,18 +20,18 @@ export default class Forgotpassword extends React.Component {
   if (eposta == null || eposta == '' || eposta == ' ')
   {
     Alert.alert(
-      'Hata',
-      'Email Kısmını Doldurunuz',
+      strings.forgotpasswordJs.errorTitle,
+      strings.forgotpasswordJs.errorDetails,
       [
-        {text: 'OK'},
+        {text: strings.forgotpasswordJs.errorAction},
       ],
       {cancelable: false},
     );
   }
   else {
-        firebase.auth().sendPasswordResetEmail(this.state.eposta)
+        firebase.auth().sendPasswordResetEmail(this.state.eposta.trim())
           .then(function (user) {
-            alert('Please check your email...')
+            alert(strings.forgotpasswordJs.checkYourEmail)
           }).catch(function (e) {
            alert(e);
           })
@@ -51,10 +52,10 @@ export default class Forgotpassword extends React.Component {
         </View>
         <View style = {styles.loginArea}>
       <View>
-            <Text style = {{fontWeight : 'bold',marginBottom:40}}>Şifrenizi Sıfırlayabilirsiniz</Text>
+            <Text style = {{fontWeight : 'bold',marginBottom:40}}>{strings.forgotpasswordJs.youCanReset}</Text>
 
             <TextInput style={styles.notetitle}
-        placeholder ="Eposta adresinizi yazın"
+        placeholder ={strings.forgotpasswordJs.email}
         editable = {true}
         maxLength = {50}
         autoFocus = {true}   
@@ -62,7 +63,7 @@ export default class Forgotpassword extends React.Component {
       />
       <TouchableOpacity onPress={this.resetMyPassword}>
       
-      <Text style = {{color : '#8c52ff'}}> Sıfırla </Text> 
+      <Text style = {{color : '#8c52ff'}}> {strings.forgotpasswordJs.sendPasswordEmail} </Text> 
       
       </TouchableOpacity>
       </View>
