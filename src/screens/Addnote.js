@@ -1,5 +1,5 @@
 import React from 'react'
-import { Alert, View, Text, Button, ActivityIndicator, StyleSheet, ToastAndroid, TextInput, Clipboard, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
+import { Alert, View, Text, Button, StyleSheet, ToastAndroid, TextInput, Clipboard, Image,BackHandler, Dimensions, ScrollView } from 'react-native'
 import firebase from 'react-native-firebase'
 import { genericTypeAnnotation } from '@babel/types';
 import { TouchableOpacity } from 'react-native-gesture-handler';

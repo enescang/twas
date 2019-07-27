@@ -4,19 +4,16 @@ import firebase from 'react-native-firebase'
 import {strings} from './../components/Localization';
 
 export default class Forgotpassword extends React.Component {
-
   static navigationOptions = {
     title : strings.forgotpasswordJs.title,
     headerTintColor: '#fff',
-      headerTransparent: true
-    
+      headerTransparent: true  
   }
     
     state={eposta:''}
 
     resetMyPassword = () => {
-      //sanki tamam alerti düzeltcem bi deniyorum o zaman konsolu kapatıp
-      const{eposta} = this.state
+      const{eposta} = this.state;
   if (eposta == null || eposta == '' || eposta == ' ')
   {
     Alert.alert(
@@ -38,9 +35,6 @@ export default class Forgotpassword extends React.Component {
       }
     }
 
-
-
-
   render() {
     return (
       <View style={styles.container}>
@@ -61,21 +55,16 @@ export default class Forgotpassword extends React.Component {
         autoFocus = {true}   
         onChangeText={(eposta) => this.setState({eposta})}
       />
-      <TouchableOpacity onPress={this.resetMyPassword}>
-      
-      <Text style = {{color : '#8c52ff'}}> {strings.forgotpasswordJs.sendPasswordEmail} </Text> 
-      
+
+      <TouchableOpacity onPress={this.resetMyPassword}>    
+      <Text style = {{color : '#8c52ff'}}> {strings.forgotpasswordJs.sendPasswordEmail} </Text>     
       </TouchableOpacity>
-      </View>
-
-
-        </View>
+           </View>
+         </View>
         </View>
     )
   }
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
@@ -85,6 +74,7 @@ const styles = StyleSheet.create({
     paddingVertical: 80,
     backgroundColor : '#FBFBFB'
   },
+
   background : {
     
     position : 'absolute',
@@ -94,8 +84,8 @@ const styles = StyleSheet.create({
     width : '100%',
     backgroundColor : '#f4f1f1',
     paddingVertical : 80,
-    
   },
+
   loginArea : {
     
     marginTop : Dimensions.get('window').width / 2-200 ,
@@ -109,14 +99,13 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: .2,
     shadowRadius: 3,
-    
     elevation : 4
   },
-notetitle : {
+
+  notetitle : {
   borderWidth : 1,
   borderColor: '#eee',
   borderRadius : 8,
   marginBottom:20,
 },
- 
 })

@@ -3,70 +3,26 @@ import { TouchableHighlight, StyleSheet, Platform, Image, Text, View, ScrollView
 import PropTypes from 'prop-types';
 import firebase from 'react-native-firebase'
 import {NavigationActions} from 'react-navigation'
-import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
-
-import copkutusu from './copkutusu'
-import arcieve from './arcieve'
-
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
 import Modal from "react-native-simple-modal";
-
-<Modal
-  animationDuration={2000}
-  animationTension={40}
-  closeOnTouchOutside={true}
-  containerProps={undefined}
-  containerStyle={{
-    justifyContent: "center"
-  }}
-  disableOnBackPress={false}
-  modalDidClose={() => undefined}
-  modalDidOpen={() => undefined}
-  modalProps={undefined}
-  modalStyle={{
-    borderRadius: 2,
-    margin: 20,
-    padding: 10,
-    backgroundColor: "#F5F5F5"
-  }}
-  offset={0}
-  open={false}
-  overlayStyle={{
-    backgroundColor: "rgba(0, 0, 0, 0.75)",
-    flex: 1
-  }}
-/>;
-
-//import SideMenu from 'react-native-side-menu';
-//import Menu from './../menu/Menu';
-
-
+import {strings} from './../components/Localization';
 
 const image = require('./../menu/assets/menu.png');
 
 export default class Trash extends React.Component {
   state = { open: false };
 
-  modalDidOpen = () => console.log("Modal did open.");
-
   modalDidClose = () => {
     this.setState({ open: false });
-    console.log("Modal did close.");
   };
-
-  sil = () => this.props.navigation.navigate('copkutusu');
-
-  arsivle = () => this.props.navigation.navigate('arcieve');
 
   openModal = (noteKey) => {
     this.setState({ open: true });
     this.setState({noteKey:noteKey})
   }
-
-  gonder = () => this.setState({ open: false });
 
 
     constructor(props) {
@@ -75,20 +31,19 @@ export default class Trash extends React.Component {
 
       this.state = {
         isOpen: false,
-        selectedItem: 'About',
+        selectedItem: strings.trashJs.title,
         currentUser: null , 
         items : [], 
-        son: [], 
-        numChild:null,
         noteKey:null,
       };
     }
   
 
-
+//Edit Note START
   _onPressButton=(itemq, itemk, itemc, itemt)=>{
       this.props.navigation.navigate('Show', { data: itemq, notkey: itemk, noteBgColor:itemc, noteTitle:itemt});
   }
+//Edit Note END
 
   deleteNote=()=>{
    const { currentUser } = firebase.auth();
@@ -98,8 +53,6 @@ export default class Trash extends React.Component {
 
    firebase.database().ref(ref).remove().then((data)=>{
      //success callback
-   // alert("Başarılı");
-  //this.props.navigation.navigate('Arsiv');
   alert("not silindi")
  }).catch((error)=>{
      //error callback
@@ -107,14 +60,13 @@ export default class Trash extends React.Component {
  })
 
  this.setState({open:false})
-
   }
 
  updatePlaceId=(placeId)=>{
   const { currentUser } = firebase.auth();
   this.setState({ currentUser });
- const mail = currentUser.email;
- const noteItemKey = this.state.noteKey;
+  const mail = currentUser.email;
+  const noteItemKey = this.state.noteKey;
 
  const ref ="Users/"+currentUser.uid+"/"+noteItemKey;
   firebase.database().ref(ref).update({
@@ -143,26 +95,9 @@ export default class Trash extends React.Component {
         let data = snapshot.val();
         let items = Object.values(data);
         this.setState({ items });
-      //  const numChild = snapshot.numChildren();
-      //  this.setState({ numChild });
-      //  alert(snapshot.numChildren());
-        let key = child.key;
-        let son = Object.values(key);
-        this.setState({ son });
       })
     });
   }
-
-
-  cik = () =>{
-      firebase.auth().signOut();
-  }
-
-
-  readDataUser = ()=>{
-      alert(this.state.son)
-  }
-
 
 /* Menu START*/
 toggle() {
@@ -208,13 +143,11 @@ onMenuItemSelected= (item) =>{
 }
  
   static navigationOptions =({ navigation }) => {
-
     return {
-      title: 'Çöp Kutusu',
+      title: strings.trashJs.title,
       headerStyle: {
       backgroundColor: '#8c52ff',
       },
-
       headerTintColor: '#fff',
       headerTitleStyle: {
       fontWeight: 'bold',
@@ -227,7 +160,7 @@ onMenuItemSelected= (item) =>{
             style={{ width: 32, height: 32 }}
           />
         </TouchableOpacity>
-    )
+       )
     }
 }
 /*Menu END */
@@ -256,37 +189,25 @@ onMenuItemSelected= (item) =>{
                    height: 200,
                    borderWidth: 0.9,
                    borderColor: '#ddd',
-                  //shadowColor: 'black',
-                  //shadowOpacity: .2,
-                  // shadowRadius: 2,
                    borderRadius:10,
                    color:'black',
-
                    backgroundColor: item.noteBgColor}}  onPress={()=>alert("Çöp Kutusundaki notlar düzenlenemez")} underlayColor="white"
                    onLongPress = {this.openModal.bind(this, item.yazid)}>
-                   
-                  
-                  
+                 
                    <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
 
                    <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
                    {item.not}</Text>
-
-                </TouchableOpacity>
-
-               
-
+                </TouchableOpacity>        
               </View>
             );
           }
         )
       }
 
-
-
         </View>
       </ScrollView>
-   
+      
       <Modal
           offset={this.state.offset}
           open={this.state.open}
@@ -295,7 +216,7 @@ onMenuItemSelected= (item) =>{
           style={{ alignItems: "center" }}>
         
           <View style={{ alignItems: "center" }}>
-            <Text style={{margin:10, fontSize:20}}>İşlem Seçin</Text>
+            <Text style={{margin:10, fontSize:20}}>{strings.trashJs.selectOption}</Text>
           <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
        <TouchableOpacity style={{width:Dimensions.get('window').width /6-10,  backgroundColor:this.state.noteBgColor, }} 
        onPress={this.updatePlaceId.bind(this, 1)}>
@@ -313,7 +234,7 @@ onMenuItemSelected= (item) =>{
         name='delete-forever'
         type='material'
         color="black"     
-        size={23}
+        size={28}
       />
        </TouchableOpacity>
 
@@ -323,7 +244,7 @@ onMenuItemSelected= (item) =>{
         name="close"
         type='font-awesome'
         color="black"
-        size={23}
+        size={28}
       />
        </TouchableOpacity>
         </View>
@@ -338,7 +259,6 @@ onMenuItemSelected= (item) =>{
 }
 
   const styles = StyleSheet.create({
-
     container: {
         flex: 1,
         justifyContent: 'center',
@@ -355,25 +275,6 @@ onMenuItemSelected= (item) =>{
       flexDirection: 'row',
       flexWrap: 'wrap',
       padding: 2,
-  },
-
-  savebutton:{
-    width:Dimensions.get('window').width / 1-15,
-    marginBottom:3, 
-    borderColor:'gray', 
-    marginBottom:8,
-    borderWidth:2,
-    paddingVertical:8,
-    marginVertical:8,
-    borderRadius:15,
-  },
-
-  savecontainer:{
-      flex: 1,
-      justifyContent: 'flex-end',
-      marginBottom: 13,
-      width:80,
-      marginRight: Dimensions.get('window').width / 1-100,
   },
 })
 

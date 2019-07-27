@@ -8,6 +8,8 @@ import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu';
+import Hyperlink from 'react-native-hyperlink'
+import {strings} from './../components/Localization';
 
 var width = Dimensions.get('window').width;
 var height = Dimensions.get('window').height;
@@ -71,14 +73,14 @@ export default class About extends React.Component {
         this.props.navigation.navigate('Trash');
       }
           
-      else if (item === 'Ayarlar'){
-        this.props.navigation.navigate('Ayarlar');
+      else if (item === 'Profile'){
+        this.props.navigation.navigate('Profile');
       }
   }
    
     static navigationOptions =({ navigation }) => {
       return {
-      title: 'Hakkında',
+      title: strings.aboutJs.title,
       headerStyle: {
         backgroundColor: '#8c52ff',
       },
@@ -125,37 +127,48 @@ export default class About extends React.Component {
 
       <View style={styles.thirdrow}>
           <Text>
-          TWAS, Friday Team tarafından geliştirilen online bir not alma uygulamasıdır.
-          Online olduğu için de notlarınıza istediğiniz zaman, istediğiniz mobil cihaz ile erişim kolaylığı sağlıyor. 
-          {"\n"}
-          Uygulamanın temel amacı insanların yapacakları işi unutmamaları için her an yanlarında bulunan bir şeye not almaları gerekiyor işte burada TWAS devreye giriyor. 
-          TWAS sayesinde kolaylıkla ve hızlıca not alabiliyorsunuz, ayrıca telefonunuzun başına bir şey gelse dahi notlarınızı bulut depolama hizmeti ile güvenli bir şekilde depolandığı için istediğiniz zaman başka bir cihaz ile notlarınızı tekrar görebiliyorsunuz.
-          {"\n"}
-          Ayrıca yakın zamanda gelecek olan TWAS masaüstü versiyonu ile notlarınızı ister kişisel bilgisayarımızdan ister telefonunuzdan yazıp istediğiniz zaman istediğiniz cihazınızdan anında erişim sağlayabileceksiniz.
-          
+        {strings.aboutJs.text}
           </Text>
           <Text style={{fontSize: 25, color: '#8c52ff', fontWeight: 'bold' }}>
-            <Text style={{color: 'black', fontSize: 15}}>Kolayca not al. {""}
+            <Text style={{color: 'black', fontSize: 15}}>{strings.aboutJs.takeNote} {""}
             </Text>
             TWAS 
-            <Text style={{color: 'black', fontSize: 15}}> {""} Teşekkürler.</Text>
+            <Text style={{color: 'black', fontSize: 15}}> {""} {strings.aboutJs.thankYou}.</Text>
           </Text>
       </View>
 
       <View style={styles.fourthrow}>
           <Text style={{fontSize: 20, fontWeight: 'bold',}}>
-            Destek
+          {strings.aboutJs.support}
           </Text>
           <Text>
-            Lütfen soru, hata raporu veya yorumlarınızı bize bildiriniz.
+          {strings.aboutJs.sendMessage}
             {"\n"}
           </Text>
-          <Text>
-            Web Sitesi - https://www.fridayteam23.com
-          </Text>
-          <Text>
-            Instagram - https://www.instagram.com/fridayteam23
-          </Text>
+
+          <Hyperlink
+    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkDefault={true}
+    linkText={ url => url === '  http://www.fridayteam23.com' ? 'Friday Team' : url }
+   >
+  
+    <Text style={{fontSize:18, marginTop:10, textAlign:'center'}}>
+      http://www.fridayteam23.com
+    </Text>
+  </Hyperlink>
+
+  <Hyperlink
+    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkDefault={true}
+    linkText={ url => url === 'https://www.instagram.com/fridayteam23' ? '@fridayteam23' : url }
+   >
+    <Text style={{fontSize:18, marginTop:10, textAlign:'center'}}>
+      https://www.instagram.com/fridayteam23
+    </Text>
+  </Hyperlink>
+
+     
+          
           <Text>
 
           </Text>

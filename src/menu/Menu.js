@@ -89,12 +89,6 @@ export default function Menu({ onItemSelected }) {
         style={styles.item}>
        {strings.menuJs.profile}
       </Text>
-
-      <Text
-        onPress={() => onItemSelected('Ayarlar')}
-        style={styles.item}>
-      {strings.menuJs.settings}
-      </Text>
       
     </ScrollView>
   );

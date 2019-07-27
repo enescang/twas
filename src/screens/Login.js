@@ -183,31 +183,7 @@ export default class Login extends React.Component {
           </TouchableOpacity>
           </View>
 
-        <View style= {styles.ImageSosyal}>
-
-          <TouchableOpacity onPress={this.openUrl.bind(this, "https://facebook.com/fridayteam23")}>
-        <Image
-        style= {styles.imageFacebook}
-          source={require('../../images/facebook.png')}
-        /> 
-        </TouchableOpacity>
-
-        <TouchableOpacity onPress={this.openUrl.bind(this, "https://twitter.com/fridayteam23")}>
-        <Image
-        style= {styles.imageFacebook}
-          source={require('../../images/twitter.png')}
-        />  
-        </TouchableOpacity>
-        
-        <TouchableOpacity onPress={this.openUrl.bind(this, "https://instagram.com/fridayteam23")}>
-        <Image
-         style= {styles.imageFacebook}
-        source={require('../../images/instagram.png')}
-      />  
-      </TouchableOpacity>
-
-
-      </View>
+      
         
       </View>
       

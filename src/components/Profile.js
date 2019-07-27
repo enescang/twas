@@ -612,6 +612,10 @@ closeToApp=()=>{
 
   }
 
+  aboutus=()=>{
+    this.props.navigation.navigate('About');
+  }
+
   render() {
     const { currentUser } = firebase.auth();
     const { photo, image, noteDeletedValue} = this.state;
@@ -688,14 +692,16 @@ closeToApp=()=>{
 
          
               <View style={styles.menuBox}>
+              <TouchableOpacity onPress={this.aboutus}>
               <Icon
-                    name="settings"
+                    name="developer-board"
                     type='material'
                     color="black"
                     size={30}
                     />         
                     
               <Text style={styles.info}>{strings.profilJs.settings}</Text>
+              </TouchableOpacity>
               </View>
 
 

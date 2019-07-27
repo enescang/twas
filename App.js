@@ -1,7 +1,6 @@
 import React from 'react';
-import { StyleSheet, Platform, Image, Text, View, ScrollView } from 'react-native';
+import {Platform, View} from 'react-native';
 import { createStackNavigator, createAppContainer } from 'react-navigation';
- 
 import firebase from 'react-native-firebase';
 
 import Loading from './src/screens/Loading'
@@ -13,12 +12,7 @@ import Show from './src/components/Show'
 import ItemComponent from './src/components/ItemComponent'
 import Forgotpassword from './src/screens/Forgotpassword'
 import Profile from './src/components/Profile';
-
 import Menu from'./src/menu/Menu';
-import copkutusu from './src/screens/copkutusu';
-import arcieve from './src/screens/arcieve';
-
-
 import Trash from './src/screens/Trash'
 import About from './src/screens/About'
 import Arsiv from './src/screens/Arsiv'
@@ -35,16 +29,11 @@ const AppNavigator = createStackNavigator ({
   ItemComponent,
   Forgotpassword,
   Menu,
-
-  copkutusu,
-  arcieve,
-
   Trash,
   About,
   Arsiv,
   Ayarlar,
   Profile,
-
 },
 {
   initialRouteName: 'Loading',
@@ -56,19 +45,6 @@ const AppNavigator = createStackNavigator ({
 const AppContainer = createAppContainer(AppNavigator);
 
 export default class App extends React.Component {
-  constructor() {
-    super();
-    this.state = {};
-  }
-
-  async componentDidMount() {
-    // TODO: You: Do firebase things
-    // const { user } = await firebase.auth().signInAnonymously();
-    // console.warn('User -> ', user.toJSON());
-
-    // await firebase.analytics().logEvent('foo', { bar: '123'});
-  }
-
   render() {
     return (
             <AppContainer/>
@@ -76,42 +52,3 @@ export default class App extends React.Component {
   }
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: '#F5FCFF',
-  },
-  logo: {
-    height: 120,
-    marginBottom: 16,
-    marginTop: 64,
-    padding: 10,
-    width: 135,
-  },
-  welcome: {
-    fontSize: 20,
-    textAlign: 'center',
-    margin: 10,
-  },
-  instructions: {
-    textAlign: 'center',
-    color: '#333333',
-    marginBottom: 5,
-  },
-  modules: {
-    margin: 20,
-  },
-  modulesHeader: {
-    fontSize: 16,
-    
-    marginBottom: 8,
-  },
-  module: {
-    fontSize: 14,
-    marginTop: 4,
-    textAlign: 'center',
-  }
-});
- 

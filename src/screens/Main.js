@@ -7,9 +7,6 @@ import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 
-import copkutusu from './copkutusu'
-import arcieve from './arcieve'
- 
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
 import Modal from "react-native-simple-modal";
@@ -285,7 +282,7 @@ onMenuItemSelected= (item) =>{
           style={{ alignItems: "center" }}>
         
           <View style={{ alignItems: "center" }}>
-            <Text style={{margin:10, fontSize:20}}>İşlem Seçin</Text>
+            <Text style={{margin:10, fontSize:20}}>{strings.mainJs.selectOption}</Text>
           <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
        <TouchableOpacity style={{width:Dimensions.get('window').width /6-10,  backgroundColor:this.state.noteBgColor, }} 
        onPress={this.updatePlaceId.bind(this, 2)}>
@@ -303,7 +300,7 @@ onMenuItemSelected= (item) =>{
         name='delete'
         type='material'
         color="black"     
-        size={23}
+        size={28}
       />
        </TouchableOpacity>
 
@@ -313,7 +310,7 @@ onMenuItemSelected= (item) =>{
         name="close"
         type='font-awesome'
         color="black"
-        size={23}
+        size={28}
       />
        </TouchableOpacity>
         </View>

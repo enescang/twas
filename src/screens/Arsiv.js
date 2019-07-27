@@ -3,12 +3,9 @@ import { TouchableHighlight, StyleSheet, Platform, Image, Text, View, ScrollView
 import PropTypes from 'prop-types';
 import firebase from 'react-native-firebase'
 import {NavigationActions} from 'react-navigation'
-import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
-
-import copkutusu from './copkutusu'
-import arcieve from './arcieve'
+import {strings} from './../components/Localization';
 
 import SideMenu from 'react-native-side-menu';
 import Menu from './../menu/Menu'
@@ -66,7 +63,7 @@ export default class Arsiv extends React.Component {
     this.setState({noteKey:noteKey})
   }
 
-  gonder = () => this.setState({ open: false });
+ // gonder = () => this.setState({ open: false });
 
 
     constructor(props) {
@@ -75,7 +72,7 @@ export default class Arsiv extends React.Component {
 
       this.state = {
         isOpen: false,
-        selectedItem: 'About',
+        selectedItem: strings.arsivJs.title,
         currentUser: null , 
         items : [], 
         son: [], 
@@ -134,16 +131,6 @@ export default class Arsiv extends React.Component {
   }
 
 
-  cik = () =>{
-      firebase.auth().signOut();
-  }
-
-
-  readDataUser = ()=>{
-      alert(this.state.son)
-  }
-
-
 /* Menu START*/
 toggle() {
   this.setState({
@@ -190,7 +177,7 @@ onMenuItemSelected= (item) =>{
   static navigationOptions =({ navigation }) => {
 
     return {
-      title: 'Arşiv',
+      title: strings.arsivJs.title,
       headerStyle: {
       backgroundColor: '#8c52ff',
       },
@@ -235,34 +222,21 @@ onMenuItemSelected= (item) =>{
                    width: Dimensions.get('window').width / 2 -10,
                    height: 200,
                    borderWidth: 0.9,
-                   borderColor: '#ddd',
-                  //shadowColor: 'black',
-                  //shadowOpacity: .2,
-                  // shadowRadius: 2,
+                   borderColor: '#ddd',             
                    borderRadius:10,
                    color:'black',
-
                    backgroundColor: item.noteBgColor}}  onPress={this._onPressButton.bind(this, item.not, item.yazid, item.noteBgColor, item.noteTitle)} underlayColor="white"
                    onLongPress = {this.openModal.bind(this, item.yazid)}>
-                   
-                  
-                  
+                                                    
                    <Text style={{marginLeft:4, padding:2,marginTop:10, maxHeight:190}}> 
-
                    <Text style={{fontWeight:'bold', fontSize:18}}>{"  "}{item.noteTitle}{" \n "}</Text>
                    {item.not}</Text>
-
-                </TouchableOpacity>
-
-               
-
+                </TouchableOpacity>              
               </View>
             );
           }
         )
       }
-
-
 
         </View>
       </ScrollView>
@@ -275,7 +249,7 @@ onMenuItemSelected= (item) =>{
           style={{ alignItems: "center" }}>
         
           <View style={{ alignItems: "center" }}>
-            <Text style={{margin:10, fontSize:20}}>İşlem Seçin</Text>
+            <Text style={{margin:10, fontSize:20}}>{strings.arsivJs.selectOption}</Text>
           <View style={{flexDirection: 'row', backgroundColor:this.state.noteBgColor, zIndex:50}}>
        <TouchableOpacity style={{width:Dimensions.get('window').width /6-10,  backgroundColor:this.state.noteBgColor, }} 
        onPress={this.updatePlaceId.bind(this, 1)}>
@@ -293,7 +267,7 @@ onMenuItemSelected= (item) =>{
         name='delete'
         type='material'
         color="black"     
-        size={23}
+        size={28}
       />
        </TouchableOpacity>
 
@@ -303,7 +277,7 @@ onMenuItemSelected= (item) =>{
         name="close"
         type='font-awesome'
         color="black"
-        size={23}
+        size={28}
       />
        </TouchableOpacity>
         </View>

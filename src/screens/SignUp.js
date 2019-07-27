@@ -1,5 +1,5 @@
 import React from 'react'
-import { StyleSheet, Text,Image,setTimeout, Alert, TextInput,ActivityIndicator, View,Dimensions, Button,TouchableOpacity,KeyboardAvoidingView } from 'react-native'
+import { StyleSheet, Text,Image,Alert, TextInput,View,Dimensions, Button,TouchableOpacity } from 'react-native'
 import firebase from 'react-native-firebase'
 import * as Progress from 'react-native-progress';
 import {strings} from './../components/Localization';
@@ -48,7 +48,6 @@ export default class SignUp extends React.Component {
       refkey
     }).then((data)=>{
         //success callback
-       //alert("Başarılı");
        this.props.navigation.navigate('Main');
     }).catch((error)=>{
         //error callback
@@ -127,12 +126,10 @@ export default class SignUp extends React.Component {
       backgroundColor: 'orange',
     },
     header:null
+  }
 
-  /* render function, etc */
-}
 render() {
     return (
-      
       <View style={styles.container}>
         <View style = {styles.background}>
         <Image
@@ -140,10 +137,7 @@ render() {
           source={require('../../images/bak.png')}
         /> 
         </View>
-        
-       
-       
-        
+
           <View style = {styles.loginArea}>
           <Text style = {styles.kayitOl}>{strings.signupJs.signUp}</Text>
         {this.state.errorMessage &&
@@ -160,64 +154,37 @@ render() {
           returnKeyType = {"next"}
           onSubmitEditing = {() => this.passwordInput.focus() }
         />
+
         <TextInput
           secureTextEntry
           placeholder={ strings.signupJs.password}
           autoCapitalize="none"
           style={styles.textInput}
           onChangeText={password => this.setState({ password })}
-          value={this.state.password}
-          
+          value={this.state.password}       
           returnKeyType = {"go"}
           ref = {(input) => this.passwordInput = input}
         />
-       
         <View>
         
-
         <TouchableOpacity style = {this.state.kayitolBtn} onPress={this.handleSignUp}>
-    <Text style = {{color: 'white'}}>{ strings.signupJs.signUp}</Text>
-          
+           <Text style = {{color: 'white'}}>{ strings.signupJs.signUp}</Text>  
         </TouchableOpacity>
-        <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/>
 
-        
-        
-        
-        </View> 
-        
-        
-        
+        <Progress.Circle style = {this.state.kayitolProgress} size = {30} indeterminate = {true}/>
+        </View>  
       </View>
-      <View style = {styles.GirisKayitYazi}>
-      
+
+        <View style = {styles.GirisKayitYazi}>
           <Text style = {styles.KayitYazi}>{strings.signupJs.signUp} </Text>
 
           <TouchableOpacity  onPress={() => this.props.navigation.navigate('Login')}>
           <Text style = {styles.GirisYazi}>{strings.signupJs.logIn}</Text>
           </TouchableOpacity>
           </View>
-        
-        
-        <View style= {styles.ImageSosyal}>
-        <Image
-        style= {styles.imageFacebook}
-          source={require('../../images/facebook.png')}
-        />
-        <Image
-        style= {styles.imageFacebook}
-          source={require('../../images/twitter.png')}
-        />  
-        
-        <Image
-         style= {styles.imageFacebook}
-        source={require('../../images/instagram.png')}
-      />  
-      </View>
-        
-      </View>
-      
-      
+
+           
+    </View>
     )
   }
 }
@@ -237,11 +204,8 @@ const styles = StyleSheet.create({
    bottom: 50,
   },
   imageFacebook : {
-   // marginRight: 120,
-   
    flexDirection: 'row',
-   
-   padding : 1,
+    padding : 1,
     width : 60,
     height : 60,
   },
@@ -250,65 +214,40 @@ const styles = StyleSheet.create({
     width : 500,
     height : 300,
     marginBottom : '50%'
-    
-
-       
-
   },
+
   tiklayazi : {
     fontWeight : '600',
     color : 'white'
   },
+
   kayitOl : {
     fontWeight :'bold',
     right:30,
     marginBottom:20
+  },
 
-  },
-  butonlar1 : 
-  {
-    marginVertical: 15,
-    paddingHorizontal : 25,
-    paddingVertical: 20,
-    backgroundColor : '#8c52ff',
-    borderRadius : 10,
-    alignItems : 'center',
-    
-  },
+
   GirisKayitYazi : {
     color : '#f1f1f1',
     flexDirection: "row",
     marginHorizontal:80,
     bottom : '115%',
-    //right : '-8%',
-    
-
-   
-    
-
-    
   },
   GirisYazi: {
     color : '#eee',
     fontSize : 20,
-    marginTop:13
-    
-  
-   
-
-    
+    marginTop:13  
   },
+
   KayitYazi: {
     color : 'white',
     fontSize : 40,
     marginRight : 55,
     fontWeight : 'bold'
-
-    
   },
  
   loginArea : {
-    
     marginTop : Dimensions.get('window').width / 2-50 ,
     marginHorizontal : 50,
     marginVertical: 20,
@@ -320,11 +259,10 @@ const styles = StyleSheet.create({
     shadowColor: 'black',
     shadowOpacity: .2,
     shadowRadius: 3,
-    
     elevation : 4
   },
+
   background : {
-    
     position : 'absolute',
     top : -100,
     left : 0,
@@ -332,8 +270,8 @@ const styles = StyleSheet.create({
     width : '100%',
     backgroundColor : '#f4f1f1',
     paddingVertical : 80,
-    
   },
+
   bak : {
     position : 'absolute',
     top : 0,
@@ -341,17 +279,7 @@ const styles = StyleSheet.create({
     width : '100%',
     height : '100%'
   },
- 
-  logoDescription : {
-    
-    fontSize : 15,
-    position : 'absolute',
-    top : 60,
-    left : 12,
-    textAlign : 'center',
-    color :'#999',
-    marginTop : Dimensions.get('window').width / 2-248 
-  },
+
   textInput: {
     height: 40,
     paddingHorizontal: 5,

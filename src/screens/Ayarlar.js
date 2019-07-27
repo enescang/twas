@@ -72,6 +72,9 @@ export default class Ayarlar extends React.Component {
         else if (item === 'Ayarlar'){
             this.props.navigation.navigate('Ayarlar');
             }
+            else if (item === 'Profile'){
+              this.props.navigation.navigate('Profile');
+          }
         }
   
 
