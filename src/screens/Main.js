@@ -354,7 +354,8 @@ onMenuItemSelected= (item) =>{
   },
 
   savebutton:{
-    width:Dimensions.get('window').width / 1-15,
+    width:Dimensions.get('window').width -15,
+    left:7.5,
     marginBottom:3, 
     borderColor:'gray', 
     marginBottom:8,

@@ -111,13 +111,13 @@ export default class About extends React.Component {
             isOpen={this.state.isOpen}
             onChange={isOpen => this.updateMenuState(isOpen)}>
 
-
+        <ScrollView>
+          <View style={{backgroundColor:'white'}}>
 
       <View style={styles.container}>
         <Text style={{fontSize: 50, fontWeight: 'bold', color: '#8c52ff',}}>
           TWAS
         </Text>
-
         <Text style={{color: 'blue'}}>
           Think!
           <Text style={{color: 'green'}}> Write!</Text>
@@ -147,22 +147,22 @@ export default class About extends React.Component {
           </Text>
 
           <Hyperlink
-    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkStyle={ { color: '#2980b9', fontSize: 15 } }
     linkDefault={true}
     linkText={ url => url === '  http://www.fridayteam23.com' ? 'Friday Team' : url }
    >
   
-    <Text style={{fontSize:18, marginTop:10, textAlign:'center'}}>
+    <Text style={{fontSize:15, marginTop:10, textAlign:'center'}}>
       http://www.fridayteam23.com
     </Text>
   </Hyperlink>
 
   <Hyperlink
-    linkStyle={ { color: '#2980b9', fontSize: 18 } }
+    linkStyle={ { color: '#2980b9', fontSize: 15 } }
     linkDefault={true}
     linkText={ url => url === 'https://www.instagram.com/fridayteam23' ? '@fridayteam23' : url }
    >
-    <Text style={{fontSize:18, marginTop:10, textAlign:'center'}}>
+    <Text style={{fontSize:15, marginTop:10, textAlign:'center'}}>
       https://www.instagram.com/fridayteam23
     </Text>
   </Hyperlink>
@@ -174,8 +174,8 @@ export default class About extends React.Component {
           </Text>
           
       </View>
-
-
+</View>
+</ScrollView> 
         </SideMenu>
         );
 }
@@ -188,16 +188,20 @@ const styles = StyleSheet.create({
       //justifyContent: 'center', 
       alignItems: 'center',
       backgroundColor:'white',
-      top: 28,
+    //  top: 28,
       
     }, 
 
     thirdrow:{
       textAlign: 'center',
-      width: 390,
-      left: 15,
+      maxWidth: Dimensions.get('window').width-20,
+      left: 10,
+      right:10,
       backgroundColor:'white',
-      color: 'black'
+      color: 'black',
+      marginTop:90,
+      marginBottom:160,
+      
     },
 
     fourthrow: {
@@ -205,5 +209,6 @@ const styles = StyleSheet.create({
       backgroundColor:'white',
       justifyContent: 'flex-end',
       left: 15,
+
     },
   })

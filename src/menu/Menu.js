@@ -41,7 +41,7 @@ const styles = StyleSheet.create({
   item: {
     fontSize: 20,
     fontWeight: '500',
-    paddingTop: 45,
+    paddingTop: 35,
     
   },
 });
