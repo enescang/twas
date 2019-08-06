@@ -8,12 +8,17 @@ import {
   Image,
   Text,
 } from 'react-native';
+import firebase from 'react-native-firebase'
 
 import {strings} from './../components/Localization';
-
-
 const window = Dimensions.get('window');
-const uri = 'file:///sdcard/Android/data/com.friday.twas/cloudtwas/.tt.png';
+var uri = 'http://fridayteam23.com/images/user%20avatar.png';
+
+
+
+//const {currentUser} = firebase.auth();
+//var ref =  firebase.auth().onAuthStateChanged(user => {if(user){firebase.storage().ref(currentUser.uid+'/profile');}})
+
 const styles = StyleSheet.create({
   menu: {
     flex: 1,
@@ -45,6 +50,28 @@ const styles = StyleSheet.create({
     
   },
 });
+
+const functiona=firebase.auth().onAuthStateChanged(user => {
+  if(user)
+  {
+    const {currentUser} = firebase.auth();
+    var dataimage= firebase.storage().ref(currentUser.uid+'/profile').getDownloadURL().then((url) => {
+      uri = url;
+    //  alert(currentUser.uid)
+  }).catch((error)=>{
+   //alert(currentUser.uid+"hhjk")
+   uri="http://fridayteam23.com/images/user%20avatar.png";
+   });
+  
+  }
+  else{
+   //something went wrong
+  }
+})
+
+
+
+
 
 export default function Menu({ onItemSelected }) {
   return (

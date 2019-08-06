@@ -3,7 +3,7 @@ import { TouchableHighlight, StyleSheet, Platform, Image, Text, View, ScrollView
 import PropTypes from 'prop-types';
 import firebase from 'react-native-firebase'
 import {NavigationActions} from 'react-navigation'
-import ItemComponent from '../components/ItemComponent'
+//import ItemComponent from '../components/ItemComponent'
 import {Button} from 'react-native-elements'
 import { Icon } from 'react-native-elements'
 

@@ -135,9 +135,11 @@ componentDidMount=()=>{
 
 
 //Geri Tuşuna Basınca da Kayıt Etme Özelliği START    
-      componentWillUnmount() {
+     componentWillUnmount() {
         BackHandler.removeEventListener('hardwareBackPress', this.handleBackButton);
       }
+
+      
     
       handleBackButton = () => {
         var app = {

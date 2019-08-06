@@ -203,9 +203,11 @@ onMenuItemSelected= (item) =>{
   const ref = firebase.storage().ref(currentUser.uid+'/profile');
     ref.getDownloadURL()
    .then((url) => {
-   // this.setState({image:url})
+       this.setState({image:url})
     // alert(url)
-   });
+   }).catch((error)=>{
+    this.setState({image:"http://fridayteam23.com/images/user%20avatar.png"})
+    });
 
   }
 
